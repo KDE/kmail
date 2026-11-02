@@ -3045,24 +3045,15 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotEditCurrentVacation);
     }
 
-    {
-        auto action = new QAction(i18nc("@action", "&Configure Automatic Archiving…"), this);
-        actionCollection()->addAction(u"tools_automatic_archiving"_s, action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureAutomaticArchiving);
-    }
-
-    {
-        auto action = new QAction(i18nc("@action", "Delayed Messages…"), this);
-        actionCollection()->addAction(u"message_delayed"_s, action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureSendLater);
-    }
-
-    {
-        auto action = new QAction(i18nc("@action", "Followup Reminder Messages…"), this);
-        actionCollection()->addAction(u"followup_reminder_messages"_s, action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureFollowupReminder);
-    }
-
+    connect(mMsgActions->configureAutomaticArchivingAction(),
+            &QAction::triggered,
+            mLaunchExternalComponent,
+            &KMLaunchExternalComponent::slotConfigureAutomaticArchiving);
+    connect(mMsgActions->delayedMessagesAction(), &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureSendLater);
+    connect(mMsgActions->followupReminderMessagesAction(),
+            &QAction::triggered,
+            mLaunchExternalComponent,
+            &KMLaunchExternalComponent::slotConfigureFollowupReminder);
     connect(mMsgActions->configureSnoozeAction(), &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureSnooze);
 
     {

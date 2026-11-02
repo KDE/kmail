@@ -87,9 +87,15 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mExportToPdfAction(new QAction(QIcon::fromTheme(u"application-pdf"_s), i18n("Export to PDF…"), this))
     , mArchiveMessageAction(new QAction(i18nc("@action:inmenu", "Archive Message"), this))
     , mConfigureSnoozeAction(new QAction(i18nc("@action", "&Configure Snooze…"), this))
+    , mConfigureAutomaticArchivingAction(new QAction(i18nc("@action", "&Configure Automatic Archiving…"), this))
+    , mDelayedMessagesAction(new QAction(i18nc("@action", "Delayed Messages…"), this))
+    , mFollowupReminderMessagesAction(new QAction(i18nc("@action", "Followup Reminder Messages…"), this))
     , mSnoozeActionMenu(new SnoozeMenu(this))
 {
     ac->addAction(u"snooze_messages"_s, mConfigureSnoozeAction);
+    ac->addAction(u"tools_automatic_archiving"_s, mConfigureAutomaticArchivingAction);
+    ac->addAction(u"message_delayed"_s, mDelayedMessagesAction);
+    ac->addAction(u"followup_reminder_messages"_s, mFollowupReminderMessagesAction);
 
     ac->addAction(u"message_reply_menu"_s, mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
@@ -101,6 +107,8 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &MessageActions::updateAgentsAvailable);
     mSnoozeAgentAvailable = KMail::SnoozeUtil::snoozeAgentAvailable();
     mArchiveAgentAvailable = FolderArchive::FolderArchiveUtil::folderArchiveAgentAvailable();
+    mSendLaterAgentAvailable = KMail::Util::agentAvailable(u"akonadi_sendlater_agent"_s);
+    mFollowupReminderAgentAvailable = KMail::Util::agentAvailable(u"akonadi_followupreminder_agent"_s);
 
     ac->addAction(u"reply"_s, mReplyAction);
     ac->setDefaultShortcut(mReplyAction, Qt::Key_R);
@@ -211,10 +219,15 @@ void MessageActions::updateAgentsAvailable()
 {
     const bool snoozeAvailable = KMail::SnoozeUtil::snoozeAgentAvailable();
     const bool archiveAvailable = FolderArchive::FolderArchiveUtil::folderArchiveAgentAvailable();
-    if (mSnoozeAgentAvailable == snoozeAvailable && mArchiveAgentAvailable == archiveAvailable) {
+    const bool sendLaterAvailable = KMail::Util::agentAvailable(u"akonadi_sendlater_agent"_s);
+    const bool followupReminderAvailable = KMail::Util::agentAvailable(u"akonadi_followupreminder_agent"_s);
+    if (mSnoozeAgentAvailable == snoozeAvailable && mArchiveAgentAvailable == archiveAvailable && mSendLaterAgentAvailable == sendLaterAvailable
+        && mFollowupReminderAgentAvailable == followupReminderAvailable) {
         return;
     }
     mSnoozeAgentAvailable = snoozeAvailable;
+    mSendLaterAgentAvailable = sendLaterAvailable;
+    mFollowupReminderAgentAvailable = followupReminderAvailable;
     const bool archiveChanged = mArchiveAgentAvailable != archiveAvailable;
     mArchiveAgentAvailable = archiveAvailable;
     updateActions();
@@ -438,7 +451,10 @@ void MessageActions::updateActions()
     mPrintPreviewAction->setEnabled(mMessageView != nullptr);
     mExportToPdfAction->setEnabled(uniqItem && mMessageView != nullptr);
     mNewMessageFromTemplateAction->setEnabled(uniqItem);
-    mAddFollowupReminderAction->setEnabled(itemValid);
+    mAddFollowupReminderAction->setVisible(mFollowupReminderAgentAvailable);
+    mAddFollowupReminderAction->setEnabled(mFollowupReminderAgentAvailable && itemValid);
+    mFollowupReminderMessagesAction->setVisible(mFollowupReminderAgentAvailable);
+    mDelayedMessagesAction->setVisible(mSendLaterAgentAvailable);
     if (mCurrentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         if (mCurrentItem.loadedPayloadParts().contains("RFC822")) {
             updateMailingListActions(mCurrentItem);
@@ -453,6 +469,7 @@ void MessageActions::updateActions()
     mEditAsNewAction->setEnabled(uniqItem);
     mArchiveMessageAction->setVisible(mArchiveAgentAvailable);
     mArchiveMessageAction->setEnabled(mArchiveAgentAvailable && hasPayload);
+    mConfigureAutomaticArchivingAction->setVisible(mArchiveAgentAvailable);
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob *job)
@@ -854,6 +871,21 @@ void MessageActions::slotArchiveMessage()
 QAction *MessageActions::configureSnoozeAction() const
 {
     return mConfigureSnoozeAction;
+}
+
+QAction *MessageActions::configureAutomaticArchivingAction() const
+{
+    return mConfigureAutomaticArchivingAction;
+}
+
+QAction *MessageActions::delayedMessagesAction() const
+{
+    return mDelayedMessagesAction;
+}
+
+QAction *MessageActions::followupReminderMessagesAction() const
+{
+    return mFollowupReminderMessagesAction;
 }
 
 Akonadi::Item MessageActions::currentItem() const

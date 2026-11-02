@@ -101,6 +101,9 @@ public:
 
     [[nodiscard]] KActionMenu *snoozeMenu() const;
     [[nodiscard]] QAction *configureSnoozeAction() const;
+    [[nodiscard]] QAction *configureAutomaticArchivingAction() const;
+    [[nodiscard]] QAction *delayedMessagesAction() const;
+    [[nodiscard]] QAction *followupReminderMessagesAction() const;
 
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
@@ -183,8 +186,13 @@ private:
     QAction *const mExportToPdfAction;
     QAction *const mArchiveMessageAction;
     QAction *const mConfigureSnoozeAction;
+    QAction *const mConfigureAutomaticArchivingAction;
+    QAction *const mDelayedMessagesAction;
+    QAction *const mFollowupReminderMessagesAction;
     SnoozeMenu *const mSnoozeActionMenu;
     bool mSnoozeAgentAvailable = false;
     bool mArchiveAgentAvailable = false;
+    bool mSendLaterAgentAvailable = false;
+    bool mFollowupReminderAgentAvailable = false;
 };
 }
