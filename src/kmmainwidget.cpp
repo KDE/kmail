@@ -2670,7 +2670,7 @@ void KMMainWidget::slotMessageActivated(const Akonadi::Item &msg)
 
     KMReaderMainWin *win = nullptr;
     if (!mMsgView) {
-        win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
+        win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference || mHtmlLoadExtGlobalSetting);
     }
     // Try to fetch the mail, even in offline mode, it might be cached
     auto cmd = new KMFetchMessageCommand(this, msg, win ? win->viewer() : mMsgView->viewer(), win);
@@ -2690,7 +2690,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
     const Item msg = fetchCmd->item();
     KMReaderMainWin *win = fetchCmd->readerMainWin();
     if (!win) {
-        win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
+        win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference || mHtmlLoadExtGlobalSetting);
     }
     win->showMessage(overrideEncoding(), msg, CommonKernel->collectionFromId(msg.parentCollection().id()));
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : MessageViewer::MessageViewerSettings::self()->useFixedFont();
