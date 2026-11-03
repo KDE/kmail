@@ -7,13 +7,17 @@
 #include "collectionpane.h"
 #include "kmkernel.h"
 #include "snooze/snoozefilterproxymodel.h"
+#include "snooze/snoozeutil.h"
 #include <MailCommon/MailKernel>
 
+#include <Akonadi/EntityTreeModel>
 #include <Akonadi/MessageFolderAttribute>
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
 #include <MailCommon/FolderSettings>
 #include <PimCommonAkonadi/MailUtil>
+
+#include <algorithm>
 
 using namespace MailCommon;
 
@@ -31,11 +35,19 @@ void CollectionPane::writeConfig(bool /*restoreSession*/)
 
 MessageList::StorageModel *CollectionPane::createStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent)
 {
-    return new CollectionStorageModel(model, selectionModel, parent);
+    auto snoozeFilter = new SnoozeFilterProxyModel;
+    const QModelIndexList indexes = selectionModel->selectedRows();
+    snoozeFilter->setShowSnoozed(std::any_of(indexes.cbegin(), indexes.cend(), [](const QModelIndex &index) {
+        return index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>().resource() == KMail::SnoozeUtil::agentIdentifier();
+    }));
+    return new CollectionStorageModel(model, selectionModel, snoozeFilter, parent);
 }
 
-CollectionStorageModel::CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent)
-    : MessageList::StorageModel(model, selectionModel, parent)
+CollectionStorageModel::CollectionStorageModel(QAbstractItemModel *model,
+                                               QItemSelectionModel *selectionModel,
+                                               QAbstractProxyModel *itemFilterModel,
+                                               QObject *parent)
+    : MessageList::StorageModel(model, selectionModel, itemFilterModel, parent)
 {
 }
 

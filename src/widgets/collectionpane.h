@@ -8,6 +8,7 @@
 
 #include <MessageList/Pane>
 #include <MessageList/StorageModel>
+class QAbstractProxyModel;
 
 class CollectionPane : public MessageList::Pane
 {
@@ -27,7 +28,10 @@ public:
     /**
      * Create a StorageModel wrapping the specified folder.
      */
-    explicit CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = nullptr);
+    explicit CollectionStorageModel(QAbstractItemModel *model,
+                                    QItemSelectionModel *selectionModel,
+                                    QAbstractProxyModel *itemFilterModel,
+                                    QObject *parent = nullptr);
     ~CollectionStorageModel() override;
     [[nodiscard]] bool isOutBoundFolder(const Akonadi::Collection &c) const override;
 };
