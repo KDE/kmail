@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-31 00:52+0000\n"
+"POT-Creation-Date: 2026-11-03 00:56+0000\n"
 "PO-Revision-Date: 2026-09-03 16:30+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -329,7 +329,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Viele IMAP-Fehler beseitigt"
 
 #: aboutdata.cpp:195 collectionpage/collectionmailinglistpage.cpp:79
-#: kmmainwidget.cpp:211 kmmainwidget.cpp:4211 kmreaderwin.cpp:261
+#: kmmainwidget.cpp:211 kmmainwidget.cpp:4200 kmreaderwin.cpp:261
 #: kmsystemtray.cpp:45 kmsystemtray.cpp:74
 #, kde-format
 msgid "KMail"
@@ -395,7 +395,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Adresse für Nachricht an Mailingliste:"
 
-#: collectionpage/collectionmailinglistpage.cpp:113 messageactions.cpp:504
+#: collectionpage/collectionmailinglistpage.cpp:113 messageactions.cpp:556
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Mailingliste abonnieren"
@@ -1503,62 +1503,62 @@ msgstr "Drucken"
 msgid "User Feedback"
 msgstr "Benutzer-Feedback"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:201
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
 #, kde-format
 msgid "Check Before Send Plugins"
 msgstr "Module zum Prüfen vor dem Senden"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:210
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:211
 #, kde-format
 msgid "Composer Plugins"
 msgstr "Module für den E-Mail-Editor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:218
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
 #, kde-format
 msgid "Grammar Checker Plugins"
 msgstr "Module zur Grammatikprüfung"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:230
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:231
 #, kde-format
 msgid "Tools Plugins"
 msgstr "Extras-Module"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:239
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:240
 #, kde-format
 msgid "Editor Plugins"
 msgstr "Editor-Module"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:249
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
 #, kde-format
 msgid "Message Viewer"
 msgstr "Nachrichtenanzeige"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:259
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:260
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Webengine-Module"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:269
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:270
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Vorspannstil-Module"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:278
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:279
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "Module zur Textumwandlung"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:288
 #, kde-format
 msgid "Misc"
 msgstr "Verschiedenes"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:296
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:297
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Module für die Bestätigung zum Löschen von E-Mails"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:322
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:323
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi-Agenten"
@@ -1671,7 +1671,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Ordner archivieren"
 
-#: dialog/archivefolderdialog.cpp:63 kmmainwidget.cpp:3679
+#: dialog/archivefolderdialog.cpp:63 kmmainwidget.cpp:3667
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1917,7 +1917,7 @@ msgstr "Textdatei e&infügen …"
 msgid "&Insert Recent Text File"
 msgstr "&Kürzlich verwendete Textdatei einfügen"
 
-#: editor/kmcomposerwin.cpp:1328 kmmainwidget.cpp:2991
+#: editor/kmcomposerwin.cpp:1328 kmmainwidget.cpp:2992
 #, kde-format
 msgid "&Address Book"
 msgstr "Adress&buch"
@@ -2224,7 +2224,7 @@ msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Das Senden der Nachricht ist fehlgeschlagen"
 
-#: editor/kmcomposerwin.cpp:2211 kmlaunchexternalcomponent.cpp:155
+#: editor/kmcomposerwin.cpp:2211 kmlaunchexternalcomponent.cpp:156
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
@@ -2232,7 +2232,7 @@ msgstr ""
 "Das Programm „KAddressbook“ lässt sich nicht starten. Bitte überprüfen Sie "
 "die korrekte Installation."
 
-#: editor/kmcomposerwin.cpp:2213 kmlaunchexternalcomponent.cpp:157
+#: editor/kmcomposerwin.cpp:2213 kmlaunchexternalcomponent.cpp:158
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
@@ -4249,7 +4249,7 @@ msgid "F&older"
 msgstr "&Ordner"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:135 kmail_part.rc:288 kmmainwidget.cpp:3520 kmmainwin.rc:135
+#: kmail_part.rc:135 kmail_part.rc:288 kmmainwidget.cpp:3508 kmmainwin.rc:135
 #: kmmainwin.rc:290
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -4281,7 +4281,7 @@ msgid "&Forward"
 msgstr "&Weiterleiten"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:192 kmmainwidget.cpp:3344 kmmainwin.rc:192
+#: kmail_part.rc:192 kmmainwidget.cpp:3332 kmmainwin.rc:192
 #, kde-format
 msgid "A&pply Filter"
 msgstr "&Filter anwenden"
@@ -4554,33 +4554,33 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:48
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Der Agent zur E-Mail-Archivierung wurde nicht registriert."
 
-#: kmlaunchexternalcomponent.cpp:53
+#: kmlaunchexternalcomponent.cpp:54
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Der Agent zum späteren Senden wurde nicht registriert."
 
-#: kmlaunchexternalcomponent.cpp:58
+#: kmlaunchexternalcomponent.cpp:59
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Der Agent für Serien-E-Mails wurde nicht registriert."
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:64
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Der Agent zur Erinnerung an Folgenachrichten wurde nicht registriert."
 
-#: kmlaunchexternalcomponent.cpp:68
+#: kmlaunchexternalcomponent.cpp:69
 #, fuzzy, kde-format
 #| msgid "Send Later Agent was not registered."
 msgid "Snooze Agent was not registered."
 msgstr "Der Agent zum späteren Senden wurde nicht registriert."
 
-#: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81 kmlaunchexternalcomponent.cpp:89
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4589,13 +4589,13 @@ msgstr ""
 "Die Zertifikatsverwaltung lässt sich nicht starten. Stellen Sie bitte "
 "sicher, dass Kleopatra richtig installiert ist."
 
-#: kmlaunchexternalcomponent.cpp:82 kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83 kmlaunchexternalcomponent.cpp:91
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail-Fehler"
 
-#: kmlaunchexternalcomponent.cpp:104 kmlaunchexternalcomponent.cpp:112
+#: kmlaunchexternalcomponent.cpp:105 kmlaunchexternalcomponent.cpp:113
 #, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
@@ -4603,13 +4603,13 @@ msgstr ""
 "Das Programm „ImportWizard“ lässt sich nicht starten. Bitte überprüfen Sie "
 "die korrekte Installation."
 
-#: kmlaunchexternalcomponent.cpp:106 kmlaunchexternalcomponent.cpp:114
+#: kmlaunchexternalcomponent.cpp:107 kmlaunchexternalcomponent.cpp:115
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "Das Programm „ImportWizard“ lässt sich nicht starten"
 
-#: kmlaunchexternalcomponent.cpp:129 kmlaunchexternalcomponent.cpp:137
+#: kmlaunchexternalcomponent.cpp:130 kmlaunchexternalcomponent.cpp:138
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4618,13 +4618,13 @@ msgstr ""
 "Das Programm „PIM-Daten-Export“ lässt sich nicht starten. Bitte überprüfen "
 "Sie die korrekte Installation."
 
-#: kmlaunchexternalcomponent.cpp:131 kmlaunchexternalcomponent.cpp:139
+#: kmlaunchexternalcomponent.cpp:132 kmlaunchexternalcomponent.cpp:140
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "„PIM-Daten-Export“ lässt sich nicht starten"
 
-#: kmlaunchexternalcomponent.cpp:168
+#: kmlaunchexternalcomponent.cpp:169
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4633,7 +4633,7 @@ msgstr ""
 "Der Import-Assistent lässt sich nicht starten. Stellen Sie bitte sicher, "
 "dass ImportWizard richtig installiert ist."
 
-#: kmlaunchexternalcomponent.cpp:170
+#: kmlaunchexternalcomponent.cpp:171
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
@@ -4772,7 +4772,7 @@ msgstr ""
 "dass Ihr System durch aktuelle oder künftige Sicherheitslücken geschädigt "
 "wird."
 
-#: kmmainwidget.cpp:1617 kmmainwidget.cpp:4902
+#: kmmainwidget.cpp:1617 kmmainwidget.cpp:4891
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5009,483 +5009,458 @@ msgstr "Offline arbeiten"
 msgid "Work Online"
 msgstr "Online arbeiten"
 
-#: kmmainwidget.cpp:2934
+#: kmmainwidget.cpp:2935
 #, kde-format
 msgid "Save &As…"
 msgstr "Speichern &unter …"
 
-#: kmmainwidget.cpp:2945
+#: kmmainwidget.cpp:2946
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Alte Nachrichten aus allen Ordnern löschen"
 
-#: kmmainwidget.cpp:2950
+#: kmmainwidget.cpp:2951
 #, kde-format
 msgid "Check &Mail"
 msgstr "Na&ch E-Mail sehen"
 
-#: kmmainwidget.cpp:2958
+#: kmmainwidget.cpp:2959
 #, kde-format
 msgid "Check Mail In"
 msgstr "Nach E-Mail sehen in"
 
-#: kmmainwidget.cpp:2963
+#: kmmainwidget.cpp:2964
 #, kde-format
 msgid "Check Mail"
 msgstr "Nach E-Mail sehen"
 
-#: kmmainwidget.cpp:2964
+#: kmmainwidget.cpp:2965
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Nach E-Mail sehen"
 
-#: kmmainwidget.cpp:2968
+#: kmmainwidget.cpp:2969
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "&Postausgang versenden"
 
-#: kmmainwidget.cpp:2976
+#: kmmainwidget.cpp:2977
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Online-Status (unbekannt)"
 
-#: kmmainwidget.cpp:2981
+#: kmmainwidget.cpp:2982
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Postausgang versenden über"
 
-#: kmmainwidget.cpp:3000
+#: kmmainwidget.cpp:3001
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Zertifikatsverwaltung"
 
-#: kmmainwidget.cpp:3010
+#: kmmainwidget.cpp:3011
 #, kde-format
 msgid "&Import Messages…"
 msgstr "Nachrichten &importieren …"
 
-#: kmmainwidget.cpp:3020
+#: kmmainwidget.cpp:3021
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "&Fehlersuche im Sieve-Filter …"
 
-#: kmmainwidget.cpp:3027
+#: kmmainwidget.cpp:3028
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Filter&protokoll anzeigen …"
 
-#: kmmainwidget.cpp:3032
+#: kmmainwidget.cpp:3033
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Benachrichtigungsverlauf …"
 
-#: kmmainwidget.cpp:3037
+#: kmmainwidget.cpp:3038
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "&Import aus einem anderen E-Mail-Programm …"
 
-#: kmmainwidget.cpp:3042
+#: kmmainwidget.cpp:3043
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Abwesenheitsbenachrichtigungen bearbeiten …"
 
-#: kmmainwidget.cpp:3048
-#, kde-format
-msgctxt "@action"
-msgid "&Configure Automatic Archiving…"
-msgstr "Automatische Archivierung &einrichten …"
-
-#: kmmainwidget.cpp:3054
-#, kde-format
-msgctxt "@action"
-msgid "Delayed Messages…"
-msgstr "Später zu sendende Nachrichten …"
-
 #: kmmainwidget.cpp:3060
-#, kde-format
-msgctxt "@action"
-msgid "Followup Reminder Messages…"
-msgstr "Nachrichten zur Erinnerung an Folgenachrichten …"
-
-#: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
-msgctxt "@action"
-msgid "&Configure Snooze…"
-msgstr "KMail ein&richten …"
-
-#: kmmainwidget.cpp:3072
 #, kde-format
 msgctxt "@action"
 msgid "Expand All"
 msgstr "Alle aufklappen"
 
-#: kmmainwidget.cpp:3077
+#: kmmainwidget.cpp:3065
 #, kde-format
 msgctxt "@action"
 msgid "Collapse All"
 msgstr "Alle einklappen"
 
-#: kmmainwidget.cpp:3088 util.cpp:186
+#: kmmainwidget.cpp:3076 util.cpp:189
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Löschen"
 
-#: kmmainwidget.cpp:3093
+#: kmmainwidget.cpp:3081
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Gru&ppe in den Papierkorb verschieben"
 
-#: kmmainwidget.cpp:3097
+#: kmmainwidget.cpp:3085
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Gruppe in den Papierkorb verschieben"
 
-#: kmmainwidget.cpp:3100 kmmainwidget.cpp:4160
+#: kmmainwidget.cpp:3088 kmmainwidget.cpp:4149
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Gr&uppe löschen"
 
-#: kmmainwidget.cpp:3109 kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:3097 kmmainwidget.cpp:4151
 #, kde-format
 msgid "&Find Messages…"
 msgstr "Nachrichten &suchen …"
 
-#: kmmainwidget.cpp:3115
+#: kmmainwidget.cpp:3103
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "All&e Nachrichten auswählen"
 
-#: kmmainwidget.cpp:3122
+#: kmmainwidget.cpp:3110
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "Ver&waltung von Mailinglisten …"
 
-#: kmmainwidget.cpp:3130
+#: kmmainwidget.cpp:3118
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Akonadi-&Zwischenspeicher leeren …"
 
-#: kmmainwidget.cpp:3135
+#: kmmainwidget.cpp:3123
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
 "Akonadi-&Zwischenspeicher in diesem Ordner und allen Unterordnern leeren"
 
-#: kmmainwidget.cpp:3140
+#: kmmainwidget.cpp:3128
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr "Kur&zbefehl festlegen …"
 
-#: kmmainwidget.cpp:3158
+#: kmmainwidget.cpp:3146
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "Einstellungen für Aufbewahrungs&frist"
 
-#: kmmainwidget.cpp:3183
+#: kmmainwidget.cpp:3171
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Ordner a&rchivieren …"
 
-#: kmmainwidget.cpp:3191
+#: kmmainwidget.cpp:3179
 #, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "E&xterne Referenzen laden"
 
-#: kmmainwidget.cpp:3214
+#: kmmainwidget.cpp:3202
 #, kde-format
 msgid "Copy Message To…"
 msgstr "Nachricht kopieren nach …"
 
-#: kmmainwidget.cpp:3216
+#: kmmainwidget.cpp:3204
 #, kde-format
 msgid "Move Message To…"
 msgstr "Nachricht verschieben nach …"
 
-#: kmmainwidget.cpp:3221
+#: kmmainwidget.cpp:3209
 #, kde-format
 msgid "&New Message…"
 msgstr "&Neue Nachricht …"
 
-#: kmmainwidget.cpp:3223
+#: kmmainwidget.cpp:3211
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Neu"
 
-#: kmmainwidget.cpp:3231
+#: kmmainwidget.cpp:3219
 #, kde-format
 msgid "Message From &Template"
 msgstr "Neue Nachricht aus &Vorlage"
 
-#: kmmainwidget.cpp:3237
+#: kmmainwidget.cpp:3225
 #, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "Ne&ue Nachricht an Mailingliste …"
 
-#: kmmainwidget.cpp:3243
+#: kmmainwidget.cpp:3231
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Filter anlegen"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3235
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Nach &Betreff filtern …"
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3242
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Nach &Absender filtern …"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3248
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Nach Em&pfänger filtern …"
 
-#: kmmainwidget.cpp:3266
+#: kmmainwidget.cpp:3254
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Nach &Kopieempfänger filtern …"
 
-#: kmmainwidget.cpp:3280
+#: kmmainwidget.cpp:3268
 #, kde-format
 msgid "Mark &Thread"
 msgstr "&Gruppe markieren"
 
-#: kmmainwidget.cpp:3283
+#: kmmainwidget.cpp:3271
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Gruppe als ge&lesen markieren"
 
-#: kmmainwidget.cpp:3286
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Alle Nachrichten in dieser Gruppe als gelesen markieren"
 
-#: kmmainwidget.cpp:3289
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Gruppe als &ungelesen markieren"
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3280
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Alle Nachrichten der ausgewählten Gruppe als ungelesen markieren"
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Gruppe als w&ichtig markieren"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3289
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Gruppen-Markierung „Wichtig“ entfernen"
 
-#: kmmainwidget.cpp:3304
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Gruppe als &Aufgabe markieren"
 
-#: kmmainwidget.cpp:3307
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Gruppen-Markierung „Aufgabe“ ent&fernen"
 
-#: kmmainwidget.cpp:3311
+#: kmmainwidget.cpp:3299
 #, kde-format
 msgid "&Watch Thread"
 msgstr "Gruppe über&wachen"
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3303
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "Gruppe &ignorieren"
 
-#: kmmainwidget.cpp:3323 kmreadermainwin.cpp:491
+#: kmmainwidget.cpp:3311 kmreadermainwin.cpp:491
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "A&nhänge speichern …"
 
-#: kmmainwidget.cpp:3327
+#: kmmainwidget.cpp:3315
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Alle Anhänge löschen"
 
-#: kmmainwidget.cpp:3335
+#: kmmainwidget.cpp:3323
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr "Entschlüsselt kopieren nach …"
 
-#: kmmainwidget.cpp:3339
+#: kmmainwidget.cpp:3327
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "A&lle Filter anwenden"
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3336
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "Gruppe &aufklappen"
 
-#: kmmainwidget.cpp:3351
+#: kmmainwidget.cpp:3339
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Aktuelle Gruppe aufklappen"
 
-#: kmmainwidget.cpp:3355
+#: kmmainwidget.cpp:3343
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Gruppe &einklappen"
 
-#: kmmainwidget.cpp:3358
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Aktuelle Gruppe einklappen"
 
-#: kmmainwidget.cpp:3362
+#: kmmainwidget.cpp:3350
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Alle Gruppen auf&klappen"
 
-#: kmmainwidget.cpp:3365
+#: kmmainwidget.cpp:3353
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Alle Gruppen des aktuellen Ordners aufklappen"
 
-#: kmmainwidget.cpp:3369
+#: kmmainwidget.cpp:3357
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "A&lle Gruppen einklappen"
 
-#: kmmainwidget.cpp:3372
+#: kmmainwidget.cpp:3360
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Alle Gruppen des aktuellen Ordners einklappen"
 
-#: kmmainwidget.cpp:3376
+#: kmmainwidget.cpp:3364
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "&Nachricht anzeigen"
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3371
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Nächste Nachricht"
 
-#: kmmainwidget.cpp:3386
+#: kmmainwidget.cpp:3374
 #, kde-format
 msgid "Go to the next message"
 msgstr "Zur nächsten Nachricht gehen"
 
-#: kmmainwidget.cpp:3390
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Nächste &ungelesene Nachricht"
 
-#: kmmainwidget.cpp:3398
+#: kmmainwidget.cpp:3386
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Nächste"
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3387
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Zur nächsten ungelesenen Nachricht gehen"
 
-#: kmmainwidget.cpp:3403
+#: kmmainwidget.cpp:3391
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Vorherige Nachricht"
 
-#: kmmainwidget.cpp:3405
+#: kmmainwidget.cpp:3393
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Zur vorherigen Nachricht gehen"
 
-#: kmmainwidget.cpp:3410
+#: kmmainwidget.cpp:3398
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Vorherige un&gelesene Nachricht"
 
-#: kmmainwidget.cpp:3418
+#: kmmainwidget.cpp:3406
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Vorherige"
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3407
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Zur vorherigen ungelesenen Nachricht gehen"
 
-#: kmmainwidget.cpp:3423
+#: kmmainwidget.cpp:3411
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Nächster ungelesener O&rdner"
 
-#: kmmainwidget.cpp:3429
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Zum nächsten Ordner mit ungelesenen Nachrichten gehen"
 
-#: kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3420
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Vorheriger ungelesener Or&dner"
 
-#: kmmainwidget.cpp:3438
+#: kmmainwidget.cpp:3426
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Zum vorherigen Ordner mit ungelesenen Nachrichten gehen"
 
-#: kmmainwidget.cpp:3442
+#: kmmainwidget.cpp:3430
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Nächster ungelesener &Text"
 
-#: kmmainwidget.cpp:3445
+#: kmmainwidget.cpp:3433
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Zum nächsten ungelesen Text springen"
 
-#: kmmainwidget.cpp:3447
+#: kmmainwidget.cpp:3435
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5494,273 +5469,273 @@ msgstr ""
 "In der aktuellen Nachricht nach unten blättern. Am Ende der aktuellen "
 "Nachricht zur nächsten ungelesenen Nachricht wechseln."
 
-#: kmmainwidget.cpp:3455
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "Configure &Filters…"
 msgstr "&Filter einrichten …"
 
-#: kmmainwidget.cpp:3461
+#: kmmainwidget.cpp:3449
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "„Sieve“-&Skripte verwalten …"
 
-#: kmmainwidget.cpp:3466
+#: kmmainwidget.cpp:3454
 #, kde-format
 msgid "&Add Account…"
 msgstr "Postf&ach hinzufügen …"
 
-#: kmmainwidget.cpp:3471
+#: kmmainwidget.cpp:3459
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr "Neuigkeiten"
 
-#: kmmainwidget.cpp:3478
+#: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Configure &Notifications…"
 msgstr "&Benachrichtigungen festlegen …"
 
-#: kmmainwidget.cpp:3485
+#: kmmainwidget.cpp:3473
 #, kde-format
 msgid "&Configure KMail…"
 msgstr "KMail ein&richten …"
 
-#: kmmainwidget.cpp:3492
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Aufbewahrungsfrist festlegen …"
 
-#: kmmainwidget.cpp:3498
+#: kmmainwidget.cpp:3486
 #, kde-format
 msgid "Add Favorite Folder…"
 msgstr "Bevorzugten Ordner hinzufügen …"
 
-#: kmmainwidget.cpp:3504 kmmainwidget.cpp:3512
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:3500
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Alle Filter anwenden"
 
-#: kmmainwidget.cpp:3525
+#: kmmainwidget.cpp:3513
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Filter auf Ordner und alle Unterordner anwenden"
 
-#: kmmainwidget.cpp:3530
+#: kmmainwidget.cpp:3518
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "KMail-Daten im-/exportieren …"
 
-#: kmmainwidget.cpp:3536
+#: kmmainwidget.cpp:3524
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr "Neuer Adressbuchkontakt …"
 
-#: kmmainwidget.cpp:3551 kmmainwidget.cpp:4195
+#: kmmainwidget.cpp:3539 kmmainwidget.cpp:4184
 #, kde-format
 msgid "Account &Settings"
 msgstr "Zugang&seinstellungen"
 
-#: kmmainwidget.cpp:3555
+#: kmmainwidget.cpp:3543
 #, kde-format
 msgid "Restart Account"
 msgstr "Postfach neu starten"
 
-#: kmmainwidget.cpp:3572
+#: kmmainwidget.cpp:3560
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Nachricht in Ordner kopieren"
 
-#: kmmainwidget.cpp:3578
+#: kmmainwidget.cpp:3566
 #, kde-format
 msgid "Jump to Folder…"
 msgstr "In Ordner wechseln …"
 
-#: kmmainwidget.cpp:3584
+#: kmmainwidget.cpp:3572
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Laufenden Vorgang abbrechen"
 
-#: kmmainwidget.cpp:3590
+#: kmmainwidget.cpp:3578
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Nächsten Ordner aktivieren"
 
-#: kmmainwidget.cpp:3596
+#: kmmainwidget.cpp:3584
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Vorherigen Ordner aktivieren"
 
-#: kmmainwidget.cpp:3602
+#: kmmainwidget.cpp:3590
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Aktivierten Ordner auswählen"
 
-#: kmmainwidget.cpp:3609
+#: kmmainwidget.cpp:3597
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Ersten Ordner aktivieren"
 
-#: kmmainwidget.cpp:3615
+#: kmmainwidget.cpp:3603
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Letzten Ordner aktivieren"
 
-#: kmmainwidget.cpp:3621
+#: kmmainwidget.cpp:3609
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Nächste Nachricht aktivieren"
 
-#: kmmainwidget.cpp:3627
+#: kmmainwidget.cpp:3615
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Vorherige Nachricht aktivieren"
 
-#: kmmainwidget.cpp:3633
+#: kmmainwidget.cpp:3621
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Erste Nachrichten auswählen"
 
-#: kmmainwidget.cpp:3639
+#: kmmainwidget.cpp:3627
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Letzte Nachrichten auswählen"
 
-#: kmmainwidget.cpp:3645
+#: kmmainwidget.cpp:3633
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Aktivierte Nachricht auswählen"
 
-#: kmmainwidget.cpp:3652
+#: kmmainwidget.cpp:3640
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Fokus auf die Schnellsuche einstellen"
 
-#: kmmainwidget.cpp:3660
+#: kmmainwidget.cpp:3648
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Auswahl auf vorherige Nachricht ausweiten"
 
-#: kmmainwidget.cpp:3666
+#: kmmainwidget.cpp:3654
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Auswahl auf nächste Nachricht ausweiten"
 
-#: kmmainwidget.cpp:3673
+#: kmmainwidget.cpp:3661
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Nachricht in Ordner verschieben"
 
-#: kmmainwidget.cpp:3683
+#: kmmainwidget.cpp:3671
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 "Alle Nachrichten in diesem und allen Unterordnern als gelesen markieren"
 
-#: kmmainwidget.cpp:3688
+#: kmmainwidget.cpp:3676
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Doppelte Nachrichten in diesem Ordner und allen Unterordnern entfernen"
 
-#: kmmainwidget.cpp:3694
+#: kmmainwidget.cpp:3682
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Vorheriger ausgewählter Ordner"
 
-#: kmmainwidget.cpp:3701
+#: kmmainwidget.cpp:3689
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Nächster ausgewählter Ordner"
 
-#: kmmainwidget.cpp:3730
+#: kmmainwidget.cpp:3718
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Bevorzugten Ordner hinzufügen"
 
-#: kmmainwidget.cpp:4148
+#: kmmainwidget.cpp:4137
 #, kde-format
 msgid "&Delete Search"
 msgstr "Suche e&ntfernen"
 
-#: kmmainwidget.cpp:4160
+#: kmmainwidget.cpp:4149
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Gru&ppe in den Papierkorb verschieben"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4151
 #, kde-format
 msgid "Edit Search…"
 msgstr "Suche bearbeiten …"
 
-#: kmmainwidget.cpp:4193
+#: kmmainwidget.cpp:4182
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Einheitliche Postfächer einrichten"
 
-#: kmmainwidget.cpp:4204
+#: kmmainwidget.cpp:4193
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Papierkorb lee&ren"
 
-#: kmmainwidget.cpp:4204
+#: kmmainwidget.cpp:4193
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Alle Nachrichten in den &Papierkorb verschieben"
 
-#: kmmainwidget.cpp:4252
+#: kmmainwidget.cpp:4241
 #, kde-format
 msgid "&Undo"
 msgstr "&Rückgängig"
 
-#: kmmainwidget.cpp:4254
+#: kmmainwidget.cpp:4243
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Rückgängig: „%1“"
 
-#: kmmainwidget.cpp:4264
+#: kmmainwidget.cpp:4253
 #, kde-format
 msgid "&Redo"
 msgstr "&Wiederherstellen"
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4255
 #, kde-format
 msgid "&Redo: \"%1\""
 msgstr "&Wiederherstellen: „%1“"
 
-#: kmmainwidget.cpp:4323
+#: kmmainwidget.cpp:4312
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter „%1“"
 
-#: kmmainwidget.cpp:4891
+#: kmmainwidget.cpp:4880
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Suchen … <%1>"
 
-#: kmmainwidget.cpp:4899
+#: kmmainwidget.cpp:4888
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5771,13 +5746,13 @@ msgstr ""
 "„Spam“) und erhöht die Wahrscheinlichkeit, dass Ihr System durch aktuelle "
 "oder künftige Sicherheitslücken geschädigt wird."
 
-#: kmmainwidget.cpp:4903
+#: kmmainwidget.cpp:4892
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML verwenden"
 
-#: kmmainwidget.cpp:5054
+#: kmmainwidget.cpp:5043
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5794,41 +5769,41 @@ msgstr ""
 "oder\n"
 "die Funktion vollständig in den Modul-Einstellungen von KMail deaktivieren."
 
-#: kmmainwidget.cpp:5057
+#: kmmainwidget.cpp:5046
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Einheitliche Postfächer aktivieren?"
 
-#: kmmainwidget.cpp:5058
+#: kmmainwidget.cpp:5047
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Einheitliche Postfächer aktivieren"
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5048
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: kmmainwidget.cpp:5093
+#: kmmainwidget.cpp:5082
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Möchten Sie Akonadi neu starten?"
 
-#: kmmainwidget.cpp:5094
+#: kmmainwidget.cpp:5083
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi neu starten"
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5084
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Neu starten"
 
-#: kmmainwidget.cpp:5102
+#: kmmainwidget.cpp:5091
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi neu gestartet."
@@ -5839,7 +5814,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Startvorgang …"
 
-#: kmreadermainwin.cpp:494 util.cpp:186
+#: kmreadermainwin.cpp:494 util.cpp:189
 #, kde-format
 msgid "&Move to Trash"
 msgstr "In den &Papierkorb verschieben"
@@ -6213,180 +6188,205 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Eigenschaften des Ordners %1"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Antworten"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:162
+#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:162
 #, kde-format
 msgid "&Reply…"
 msgstr "&Antworten …"
 
-#: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:166
+#: messageactions.cpp:69 searchdialog/searchwindowdialog.cpp:166
 #, kde-format
 msgid "Reply to &All…"
 msgstr "Allen ant&worten …"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "An&twort an Verfasser …"
 
-#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:170
+#: messageactions.cpp:71 searchdialog/searchwindowdialog.cpp:170
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "An die Mailing&liste antworten …"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "&Ohne Zitat antworten …"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Im Text …"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Al&s Anhang …"
 
-#: messageactions.cpp:72
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&Umleiten …"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Neue Nachricht an Nachrichtenempfänger …"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Nachricht &markieren"
 
-#: messageactions.cpp:75 searchdialog/searchwindowdialog.cpp:174
+#: messageactions.cpp:78 searchdialog/searchwindowdialog.cpp:174
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Weiterleiten"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Mailing&liste"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:80
 #, kde-format
 msgid "&Edit As New"
 msgstr "Als Neu bear&beiten"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Nach Mailing&liste filtern …"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Erinnerung an Folgenachricht hinzufügen …"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "E&rneut senden …"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Neue Nachricht von &Vorlage"
 
-#: messageactions.cpp:84
+#: messageactions.cpp:87
 #, kde-format
 msgid "Export to PDF…"
 msgstr "Als PDF exportieren …"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:88
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Nachricht archivieren"
 
-#: messageactions.cpp:447
+#: messageactions.cpp:89
+#, fuzzy, kde-format
+#| msgid "&Configure KMail…"
+msgctxt "@action"
+msgid "&Configure Snooze…"
+msgstr "KMail ein&richten …"
+
+#: messageactions.cpp:90
+#, kde-format
+msgctxt "@action"
+msgid "&Configure Automatic Archiving…"
+msgstr "Automatische Archivierung &einrichten …"
+
+#: messageactions.cpp:91
+#, kde-format
+msgctxt "@action"
+msgid "Delayed Messages…"
+msgstr "Später zu sendende Nachrichten …"
+
+#: messageactions.cpp:92
+#, kde-format
+msgctxt "@action"
+msgid "Followup Reminder Messages…"
+msgstr "Nachrichten zur Erinnerung an Folgenachrichten …"
+
+#: messageactions.cpp:499
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Nach Mailingliste filtern …"
 
-#: messageactions.cpp:486
+#: messageactions.cpp:538
 #, kde-format
 msgid "<unknown>"
 msgstr "<unbekannt>"
 
-#: messageactions.cpp:486
+#: messageactions.cpp:538
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Name der Mailingliste: %1"
 
-#: messageactions.cpp:489
+#: messageactions.cpp:541
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Nachricht im Mailinglisten-Archiv öffnen"
 
-#: messageactions.cpp:492
+#: messageactions.cpp:544
 #, kde-format
 msgid "Post New Message"
 msgstr "Neue Nachricht senden"
 
-#: messageactions.cpp:495
+#: messageactions.cpp:547
 #, kde-format
 msgid "Go to Archive"
 msgstr "Zum Archiv gehen"
 
-#: messageactions.cpp:498
+#: messageactions.cpp:550
 #, kde-format
 msgid "Request Help"
 msgstr "Hilfe anfordern"
 
-#: messageactions.cpp:501
+#: messageactions.cpp:553
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Inhaber kontaktieren"
 
-#: messageactions.cpp:507
+#: messageactions.cpp:559
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Abonnement kündigen"
 
-#: messageactions.cpp:519
+#: messageactions.cpp:571
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Nach Mailingliste %1 filtern …"
 
-#: messageactions.cpp:689
+#: messageactions.cpp:741
 #, kde-format
 msgid "email"
 msgstr "E-Mail"
 
-#: messageactions.cpp:692
+#: messageactions.cpp:744
 #, kde-format
 msgid "web"
 msgstr "Web"
 
-#: messageactions.cpp:697
+#: messageactions.cpp:749
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6394,13 +6394,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:802
+#: messageactions.cpp:854
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Als PDF exportieren"
 
-#: messageactions.cpp:802
+#: messageactions.cpp:854
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF-Dokument (*.pdf)"
@@ -8308,7 +8308,7 @@ msgstr "Modul-Information"
 msgid "Plugins used in KMail."
 msgstr "In KMail verwendete Module."
 
-#: util.cpp:37
+#: util.cpp:40
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -8316,37 +8316,37 @@ msgid ""
 "wish to reply to this email?"
 msgstr ""
 
-#: util.cpp:38
+#: util.cpp:41
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "E-Mail-Adresse"
 
-#: util.cpp:39
+#: util.cpp:42
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "Nicht senden"
 
-#: util.cpp:40
+#: util.cpp:43
 #, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "E-Mail senden"
 
-#: util.cpp:189
+#: util.cpp:192
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Löschen"
 
-#: util.cpp:189
+#: util.cpp:192
 #, kde-format
 msgid "Move to Trash"
 msgstr "In den Papierkorb verschieben"
 
-#: util.cpp:197
+#: util.cpp:200
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8355,7 +8355,7 @@ msgstr ""
 "Der Postfach-Assistent lässt sich nicht starten. Stellen Sie bitte sicher, "
 "dass AccountWizard richtig installiert ist."
 
-#: util.cpp:199
+#: util.cpp:202
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
