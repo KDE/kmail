@@ -6,9 +6,10 @@
 
 #pragma once
 
+#include "kmail_private_export.h"
 #include <QSortFilterProxyModel>
 
-class SnoozeFilterProxyModel : public QSortFilterProxyModel
+class KMAILTESTS_TESTS_EXPORT SnoozeFilterProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:

@@ -12,6 +12,8 @@
 SnoozeFilterProxyModel::SnoozeFilterProxyModel(QObject *parent)
     : QSortFilterProxyModel{parent}
 {
+    // dataChanged() only re-filters a row when the filter role changed.
+    setFilterRole(Akonadi::EntityTreeModel::ItemRole);
 }
 
 SnoozeFilterProxyModel::~SnoozeFilterProxyModel() = default;
