@@ -184,3 +184,18 @@ target_link_libraries(
     KF6::WidgetsAddons
     kmailprivate
 )
+
+add_executable(
+    snoozefilterproxymodeltest
+    snoozefilterproxymodeltest.cpp
+    snoozefilterproxymodeltest.h
+)
+add_test(NAME snoozefilterproxymodeltest COMMAND snoozefilterproxymodeltest)
+ecm_mark_as_test(snoozefilterproxymodeltest)
+target_link_libraries(
+    snoozefilterproxymodeltest
+    Qt::Test
+    KPim6::AkonadiCore
+    KPim6::MailCommon
+    kmailprivate
+)
