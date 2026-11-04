@@ -38,6 +38,7 @@ SnoozeMenu::SnoozeMenu(QObject *parent)
     actionGroup->addAction(act);
     subMenu->addAction(act);
 
+    subMenu->addSeparator();
     act = new QAction(i18nc("@action", "Custom…"), this);
     act->setData(QVariant::fromValue(SnoozeMenu::SnoozeType::Custom));
     actionGroup->addAction(act);
