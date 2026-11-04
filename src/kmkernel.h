@@ -337,6 +337,8 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE bool editMail(qint64 serialNumber);
 
+    Q_SCRIPTABLE bool forwardMail(qint64 serialNumber, bool asAttachment);
+
     /**
      * End of D-Bus callable stuff
      */

@@ -619,6 +619,23 @@ bool KMKernel::replyMailWithStrategy(qint64 serialNumber, int strategy)
     return false;
 }
 
+bool KMKernel::forwardMail(qint64 serialNumber, bool asAttachment)
+{
+    KMMainWidget *mainWidget = findMainWidget();
+    if (!mainWidget) {
+        return false;
+    }
+    const Akonadi::Item item(serialNumber);
+    KMCommand *command = nullptr;
+    if (asAttachment) {
+        command = new KMForwardAttachedCommand(mainWidget, item);
+    } else {
+        command = new KMForwardCommand(mainWidget, item);
+    }
+    command->start();
+    return true;
+}
+
 bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
 {
     KMMainWidget *mainWidget = findMainWidget();
