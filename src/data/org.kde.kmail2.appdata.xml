@@ -449,6 +449,7 @@
     <release version="6.9.0" type="snapshot">
       <description>
         <ul>
+          <li>Add Snooze Agent</li>
           <li>Implement Plasma Activities.</li>
           <li xml:lang="ar">التكامل مع أنشطة بلازما.</li>
           <li xml:lang="bg">Внедряване на Действия на Plasma</li>
