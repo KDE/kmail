@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-03 00:56+0000\n"
-"PO-Revision-Date: 2026-10-12 11:52+0300\n"
+"PO-Revision-Date: 2026-11-03 22:35+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4489,10 +4489,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "Takip Et Anımsatıcı Aracı kayıtlı değil."
 
 #: kmlaunchexternalcomponent.cpp:69
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "Daha Sonra Gönder Yardımcısı kayıtlı değil."
+msgstr "Erteleme aracısı kayıtlı değil."
 
 #: kmlaunchexternalcomponent.cpp:81 kmlaunchexternalcomponent.cpp:89
 #, kde-format
@@ -6191,11 +6190,10 @@ msgid "Archive Message"
 msgstr "İletiyi Arşivle"
 
 #: messageactions.cpp:89
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "&KMail Uygulamasını Yapılandır…"
+msgstr "&Ertelemeyi Yapılandır…"
 
 #: messageactions.cpp:90
 #, kde-format
@@ -6830,52 +6828,49 @@ msgstr "Politikayı görüntülemede kullanılan politikayı belirtir"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
-msgstr ""
+msgstr "Ertele"
 
 #: snooze/snoozemenu.cpp:21
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "Bir saat sonraya"
 
 #: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "Sekiz saat sonraya"
 
 #: snooze/snoozemenu.cpp:31
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "Yarına"
 
 #: snooze/snoozemenu.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "S&onraki İleti"
+msgstr "Önümüzdeki haftaya"
 
 #: snooze/snoozemenu.cpp:41
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Özel Hesap…"
+msgstr "Özel…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr ""
+msgstr "Şuna Değin Ertele"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "Uyanma:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
