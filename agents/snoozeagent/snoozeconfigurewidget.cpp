@@ -60,6 +60,7 @@ SnoozeWidget::SnoozeWidget(QWidget *parent)
     mTreeWidget->setObjectName("treewidget"_L1);
     mTreeWidget->setRootIsDecorated(false);
     mTreeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    mTreeWidget->setSortingEnabled(true);
     mTreeWidget->setHeaderLabels({i18nc("@title:column send mail from", "From"),
                                   i18nc("@title:column mail subject", "Subject"),
                                   i18nc("@title:column when the message comes back", "Wake Up")});
@@ -165,9 +166,8 @@ void SnoozeWidget::slotShowMessage()
     }
 }
 
-void SnoozeWidget::slotCustomContextMenuRequested(QPoint pos)
+void SnoozeWidget::slotCustomContextMenuRequested([[maybe_unused]] QPoint pos)
 {
-    Q_UNUSED(pos)
     const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
     if (listItems.isEmpty()) {
         return;
@@ -178,6 +178,7 @@ void SnoozeWidget::slotCustomContextMenuRequested(QPoint pos)
         menu.addSeparator();
     }
     menu.addAction(i18nc("@action", "Wake Up Now"), this, &SnoozeWidget::slotWakeUpNow);
+    menu.addSeparator();
     menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18nc("@action", "Unsnooze"), this, &SnoozeWidget::slotRemoveItem);
     menu.exec(QCursor::pos());
 }
