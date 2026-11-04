@@ -174,9 +174,8 @@ void SnoozeAgent::retrieveCollections()
     collectionsRetrieved({collection});
 }
 
-void SnoozeAgent::retrieveItems(const Akonadi::Collection &collection)
+void SnoozeAgent::retrieveItems([[maybe_unused]] const Akonadi::Collection &collection)
 {
-    Q_UNUSED(collection)
     // The content is made of links managed by SnoozeItemJob/SnoozeWakeUpJob: nothing to retrieve.
     itemsRetrievedIncremental({}, {});
 }
