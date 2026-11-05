@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-03 00:56+0000\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -4614,33 +4614,33 @@ msgstr "HTML ツールバー"
 msgid "Text Direction Toolbar"
 msgstr "テキスト方向ツールバー"
 
-#: kmkernel.cpp:712
+#: kmkernel.cpp:729
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail がオフラインモードになりました。すべてのネットワークジョブを中断しまし"
 "た。"
 
-#: kmkernel.cpp:729 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
+#: kmkernel.cpp:746 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "送信(&S)"
 
-#: kmkernel.cpp:729 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
+#: kmkernel.cpp:746 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "メールを送信します..."
 
-#: kmkernel.cpp:753
+#: kmkernel.cpp:770
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail がオンラインモードになりました。すべてのネットワークジョブを再開しまし"
 "た。"
 
-#: kmkernel.cpp:755
+#: kmkernel.cpp:772
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4650,33 +4650,33 @@ msgstr ""
 "KMail がオンラインモードになりました。すべてのネットワークジョブを再開しまし"
 "た。"
 
-#: kmkernel.cpp:834
+#: kmkernel.cpp:851
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail は現在オフラインモードです。どうしますか？"
 
-#: kmkernel.cpp:836
+#: kmkernel.cpp:853
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "オンライン/オフライン"
 
-#: kmkernel.cpp:837
+#: kmkernel.cpp:854
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "オンライン作業"
 
-#: kmkernel.cpp:838
+#: kmkernel.cpp:855
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "オフライン作業"
 
-#: kmkernel.cpp:862
+#: kmkernel.cpp:879
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
@@ -4684,7 +4684,7 @@ msgstr ""
 "KMail がオンラインモードになりました。すべてのネットワークジョブを再開しまし"
 "た。"
 
-#: kmkernel.cpp:865
+#: kmkernel.cpp:882
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
@@ -4692,7 +4692,7 @@ msgstr ""
 "KMail がオフラインモードになりました。すべてのネットワークジョブを中断しまし"
 "た。"
 
-#: kmkernel.cpp:959
+#: kmkernel.cpp:976
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4701,14 +4701,14 @@ msgstr ""
 "自動保存ファイル (%1) を開くのに失敗しました。\n"
 "理由: %2"
 
-#: kmkernel.cpp:960
+#: kmkernel.cpp:977
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "自動保存ファイルを開くのに失敗しました"
 
-#: kmkernel.cpp:1513
+#: kmkernel.cpp:1530
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4716,7 +4716,7 @@ msgid_plural ""
 msgstr[0] ""
 "これら %1 個の個人情報はデフォルトの送信手段を使うように変更されました:"
 
-#: kmkernel.cpp:1535
+#: kmkernel.cpp:1552
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4724,25 +4724,25 @@ msgid_plural ""
 msgstr[0] ""
 "これら %1 個の個人情報は指定された送信手段を使うように変更されました:"
 
-#: kmkernel.cpp:1550
+#: kmkernel.cpp:1567
 #, kde-format
 msgid "Sending messages"
 msgstr "メッセージ送信"
 
-#: kmkernel.cpp:1551
+#: kmkernel.cpp:1568
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "送信プロセスを初期化します..."
 
-#: kmkernel.cpp:1627
+#: kmkernel.cpp:1644
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1798 kmkernel.cpp:1804
+#: kmkernel.cpp:1815 kmkernel.cpp:1821
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7325,7 +7325,7 @@ msgctxt "@action"
 msgid "Next week"
 msgstr "次のメッセージ(&N)"
 
-#: snooze/snoozemenu.cpp:41
+#: snooze/snoozemenu.cpp:42
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgctxt "@action"

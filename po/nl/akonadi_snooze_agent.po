@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
 "PO-Revision-Date: 2026-10-27 16:07+0100\n"
 "Last-Translator: freek <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -39,25 +39,25 @@ msgctxt "@action:button"
 msgid "Wake Up Now"
 msgstr "Nu ontwaken"
 
-#: snoozeconfigurewidget.cpp:63
+#: snoozeconfigurewidget.cpp:64
 #, kde-format
 msgctxt "@title:column send mail from"
 msgid "From"
 msgstr "Van"
 
-#: snoozeconfigurewidget.cpp:64
+#: snoozeconfigurewidget.cpp:65
 #, kde-format
 msgctxt "@title:column mail subject"
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: snoozeconfigurewidget.cpp:65
+#: snoozeconfigurewidget.cpp:66
 #, kde-format
 msgctxt "@title:column when the message comes back"
 msgid "Wake Up"
 msgstr "Ontwaken"
 
-#: snoozeconfigurewidget.cpp:135
+#: snoozeconfigurewidget.cpp:136
 #, kde-format
 msgid ""
 "Do you want to unsnooze the selected message?\n"
@@ -72,13 +72,13 @@ msgstr[1] ""
 "Wilt u de %1 geselecteerde berichten uit de sluimerstand halen?\n"
 "Het zal terugkeren zonder melding."
 
-#: snoozeconfigurewidget.cpp:138
+#: snoozeconfigurewidget.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "Unsnooze Messages"
 msgstr "Berichten uit de sluimerstand halen"
 
-#: snoozeconfigurewidget.cpp:139
+#: snoozeconfigurewidget.cpp:140
 #, kde-format
 msgctxt "@action:button"
 msgid "Unsnooze"
@@ -96,7 +96,7 @@ msgctxt "@action"
 msgid "Wake Up Now"
 msgstr "Nu ontwaken"
 
-#: snoozeconfigurewidget.cpp:181
+#: snoozeconfigurewidget.cpp:182
 #, kde-format
 msgctxt "@action"
 msgid "Unsnooze"

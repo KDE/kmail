@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-03 00:56+0000\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -4679,27 +4679,27 @@ msgstr "HTML-værktøjslinje"
 msgid "Text Direction Toolbar"
 msgstr "Tekstretning-værktøjslinje"
 
-#: kmkernel.cpp:712
+#: kmkernel.cpp:729
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail er sat til at være offline. Alle netværksjob er hvilende."
 
-#: kmkernel.cpp:729 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
+#: kmkernel.cpp:746 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
 #, kde-format
 msgid "Send Email"
 msgstr "Send e-mail"
 
-#: kmkernel.cpp:729 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
+#: kmkernel.cpp:746 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Kan ikke sende e-mail"
 
-#: kmkernel.cpp:753
+#: kmkernel.cpp:770
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail er sat til at være online. Alle netværksjob genoptages."
 
-#: kmkernel.cpp:755
+#: kmkernel.cpp:772
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4708,43 +4708,43 @@ msgstr ""
 "KMail er sat til at være online. Alle netværksjob genoptages når en "
 "netværksforbindelse detekteres"
 
-#: kmkernel.cpp:834
+#: kmkernel.cpp:851
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail er i offline-tilstand. Hvordan vil du fortsætte?"
 
-#: kmkernel.cpp:836
+#: kmkernel.cpp:853
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Online/Offline"
 
-#: kmkernel.cpp:837
+#: kmkernel.cpp:854
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Arbejd online"
 
-#: kmkernel.cpp:838
+#: kmkernel.cpp:855
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Arbejd offline"
 
-#: kmkernel.cpp:862
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Netværksforbindelse detekteret. Alle netværksjob genoptaget"
 
-#: kmkernel.cpp:865
+#: kmkernel.cpp:882
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Ingen netværksforbindelse detekteret. Alle netværksjob suspenderes"
 
-#: kmkernel.cpp:959
+#: kmkernel.cpp:976
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4753,14 +4753,14 @@ msgstr ""
 "Kunne ikke åbne autogem-filen i %1.\n"
 "Årsag: %2"
 
-#: kmkernel.cpp:960
+#: kmkernel.cpp:977
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Åbning af autogem-fil mislykkedes"
 
-#: kmkernel.cpp:1513
+#: kmkernel.cpp:1530
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4768,7 +4768,7 @@ msgid_plural ""
 msgstr[0] "Denne identitet er ændret til at bruge standardoverførsel:"
 msgstr[1] "Disse %1 identiteter er ændret til at bruge standardoverførsel:"
 
-#: kmkernel.cpp:1535
+#: kmkernel.cpp:1552
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4777,18 +4777,18 @@ msgstr[0] "Denne identitet er ændret til at bruge den ændrede overførsel:"
 msgstr[1] ""
 "Disse %1 identiteter er ændrede til at bruge den ændrede overførsel:"
 
-#: kmkernel.cpp:1550
+#: kmkernel.cpp:1567
 #, kde-format
 msgid "Sending messages"
 msgstr "Sender breve"
 
-#: kmkernel.cpp:1551
+#: kmkernel.cpp:1568
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Initierer afsendelsesprocessen..."
 
-#: kmkernel.cpp:1627
+#: kmkernel.cpp:1644
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4797,7 +4797,7 @@ msgstr ""
 "Ressourcen %1 er defekt.\n"
 "%2"
 
-#: kmkernel.cpp:1798 kmkernel.cpp:1804
+#: kmkernel.cpp:1815 kmkernel.cpp:1821
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7373,7 +7373,7 @@ msgctxt "@action"
 msgid "Next week"
 msgstr "&Næste brev"
 
-#: snooze/snoozemenu.cpp:41
+#: snooze/snoozemenu.cpp:42
 #, fuzzy, kde-format
 #| msgid "Custom Account..."
 msgctxt "@action"

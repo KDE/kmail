@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-03 00:56+0000\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
 "PO-Revision-Date: 2026-10-31 01:41+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -4387,31 +4387,31 @@ msgstr "HTML įrankių juosta"
 msgid "Text Direction Toolbar"
 msgstr "Teksto krypties įrankių juosta"
 
-#: kmkernel.cpp:712
+#: kmkernel.cpp:729
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail nustatyta, kad veiktų neprisijungusi prie interneto; visi darbai "
 "tinkle pristabdyti"
 
-#: kmkernel.cpp:729 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
+#: kmkernel.cpp:746 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
 #, fuzzy, kde-format
 msgid "Send Email"
 msgstr "Siųsti el. laišką"
 
-#: kmkernel.cpp:729 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
+#: kmkernel.cpp:746 kmmainwidget.cpp:2497 kmmainwidget.cpp:2508
 #, fuzzy, kde-format
 msgid "Impossible to send email"
 msgstr "Neįmanoma išsiųsti el. laišką"
 
-#: kmkernel.cpp:753
+#: kmkernel.cpp:770
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail nustatyta, kad veiktų prisijungusi prie interneto; visi darbai tinkle "
 "pratęsiami"
 
-#: kmkernel.cpp:755
+#: kmkernel.cpp:772
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4420,55 +4420,55 @@ msgstr ""
 "KMail nustatyta, kad veiktų prisijungusi prie interneto; visi darbai bus "
 "pratęsti tada, kai bus aptiktas tinklo ryšys"
 
-#: kmkernel.cpp:834
+#: kmkernel.cpp:851
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 "Šiuo metu KMail neprisijungusi prie interneto. Kaip norite tęsti darbą?"
 
-#: kmkernel.cpp:836
+#: kmkernel.cpp:853
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Darbas prisijungus/atsijungus"
 
-#: kmkernel.cpp:837
+#: kmkernel.cpp:854
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Dirbti prisijungus prie interneto"
 
-#: kmkernel.cpp:838
+#: kmkernel.cpp:855
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Dirbti neprisijungus prie interneto"
 
-#: kmkernel.cpp:862
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Aptiktas tinklo ryšys, visos tinklo užduotys pratęstos"
 
-#: kmkernel.cpp:865
+#: kmkernel.cpp:882
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Neaptikta jokio tinklo ryšio, visos tinklo užduotys pristabdytos"
 
-#: kmkernel.cpp:959
+#: kmkernel.cpp:976
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:960
+#: kmkernel.cpp:977
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Nepavyko atidaryti automatinio saugojimo failo"
 
-#: kmkernel.cpp:1513
+#: kmkernel.cpp:1530
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4478,7 +4478,7 @@ msgstr[1] "Šios %1 tapatybės buvo pakeistos, kad naudotų numatytąjį perdavi
 msgstr[2] "Šios %1 tapatybių buvo pakeistos, kad naudotų numatytąjį perdavimą:"
 msgstr[3] "Ši %1 tapatybė buvo pakeista, kad naudotų numatytąjį perdavimą:"
 
-#: kmkernel.cpp:1535
+#: kmkernel.cpp:1552
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4490,17 +4490,17 @@ msgstr[2] ""
 "Šios %1 tapatybių buvo pakeistos, kad naudotų modifikuotą perdavimą:"
 msgstr[3] "Ši %1 tapatybė buvo pakeista, kad naudotų modifikuotą perdavimą:"
 
-#: kmkernel.cpp:1550
+#: kmkernel.cpp:1567
 #, fuzzy, kde-format
 msgid "Sending messages"
 msgstr "Siunčiami laiškai"
 
-#: kmkernel.cpp:1551
+#: kmkernel.cpp:1568
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Inicijuojamas siuntimo procesas…"
 
-#: kmkernel.cpp:1627
+#: kmkernel.cpp:1644
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4509,7 +4509,7 @@ msgstr ""
 "Išteklius %1 yra sugadintas.\n"
 "%2"
 
-#: kmkernel.cpp:1798 kmkernel.cpp:1804
+#: kmkernel.cpp:1815 kmkernel.cpp:1821
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6974,7 +6974,7 @@ msgctxt "@action"
 msgid "Next week"
 msgstr "&Kitas laiškas"
 
-#: snooze/snoozemenu.cpp:41
+#: snooze/snoozemenu.cpp:42
 #, fuzzy, kde-format
 #| msgid "Custom Account…"
 msgctxt "@action"

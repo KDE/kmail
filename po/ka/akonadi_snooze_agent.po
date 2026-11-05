@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
 "PO-Revision-Date: 2026-10-28 04:07+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -40,25 +40,25 @@ msgctxt "@action:button"
 msgid "Wake Up Now"
 msgstr "ახლა გაღვიძება"
 
-#: snoozeconfigurewidget.cpp:63
+#: snoozeconfigurewidget.cpp:64
 #, kde-format
 msgctxt "@title:column send mail from"
 msgid "From"
 msgstr "ვისგან"
 
-#: snoozeconfigurewidget.cpp:64
+#: snoozeconfigurewidget.cpp:65
 #, kde-format
 msgctxt "@title:column mail subject"
 msgid "Subject"
 msgstr "თემა"
 
-#: snoozeconfigurewidget.cpp:65
+#: snoozeconfigurewidget.cpp:66
 #, kde-format
 msgctxt "@title:column when the message comes back"
 msgid "Wake Up"
 msgstr "გაღვიძება"
 
-#: snoozeconfigurewidget.cpp:135
+#: snoozeconfigurewidget.cpp:136
 #, kde-format
 msgid ""
 "Do you want to unsnooze the selected message?\n"
@@ -73,13 +73,13 @@ msgstr[1] ""
 "გნებავთ %1 მონიშნული შეტყობინების ჩაჩუმების გაუქმება?\n"
 "ის გაფრთხილების გარეშე დაბრუნდება."
 
-#: snoozeconfigurewidget.cpp:138
+#: snoozeconfigurewidget.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "Unsnooze Messages"
 msgstr "შეტყობინებების ჩაჩუმების გაუქმება"
 
-#: snoozeconfigurewidget.cpp:139
+#: snoozeconfigurewidget.cpp:140
 #, kde-format
 msgctxt "@action:button"
 msgid "Unsnooze"
@@ -97,7 +97,7 @@ msgctxt "@action"
 msgid "Wake Up Now"
 msgstr "ახლა გაღვიძება"
 
-#: snoozeconfigurewidget.cpp:181
+#: snoozeconfigurewidget.cpp:182
 #, kde-format
 msgctxt "@action"
 msgid "Unsnooze"

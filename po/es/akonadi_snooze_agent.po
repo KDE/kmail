@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_snooze_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
 "PO-Revision-Date: 2026-10-27 23:06+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -41,25 +41,25 @@ msgctxt "@action:button"
 msgid "Wake Up Now"
 msgstr "Reactivar ahora"
 
-#: snoozeconfigurewidget.cpp:63
+#: snoozeconfigurewidget.cpp:64
 #, kde-format
 msgctxt "@title:column send mail from"
 msgid "From"
 msgstr "De"
 
-#: snoozeconfigurewidget.cpp:64
+#: snoozeconfigurewidget.cpp:65
 #, kde-format
 msgctxt "@title:column mail subject"
 msgid "Subject"
 msgstr "Asunto"
 
-#: snoozeconfigurewidget.cpp:65
+#: snoozeconfigurewidget.cpp:66
 #, kde-format
 msgctxt "@title:column when the message comes back"
 msgid "Wake Up"
 msgstr "Reactivar"
 
-#: snoozeconfigurewidget.cpp:135
+#: snoozeconfigurewidget.cpp:136
 #, kde-format
 msgid ""
 "Do you want to unsnooze the selected message?\n"
@@ -74,13 +74,13 @@ msgstr[1] ""
 "¿Desea reactivar los %1 mensajes seleccionados?\n"
 "Volverán a aparecer sin notificación."
 
-#: snoozeconfigurewidget.cpp:138
+#: snoozeconfigurewidget.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "Unsnooze Messages"
 msgstr "Reactivar mensajes"
 
-#: snoozeconfigurewidget.cpp:139
+#: snoozeconfigurewidget.cpp:140
 #, kde-format
 msgctxt "@action:button"
 msgid "Unsnooze"
@@ -98,7 +98,7 @@ msgctxt "@action"
 msgid "Wake Up Now"
 msgstr "Reactivar ahora"
 
-#: snoozeconfigurewidget.cpp:181
+#: snoozeconfigurewidget.cpp:182
 #, kde-format
 msgctxt "@action"
 msgid "Unsnooze"
