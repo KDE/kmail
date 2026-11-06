@@ -450,6 +450,14 @@
       <description>
         <ul>
           <li>Add Snooze Agent</li>
+          <li xml:lang="ca">Afegeix l'agent de posposició</li>
+          <li xml:lang="es">Añadir agente de aplazamiento.</li>
+          <li xml:lang="he">נוסף סוכן נודניק</li>
+          <li xml:lang="nl">Snooze-agent toevoegen</li>
+          <li xml:lang="pt-BR">Adicionar agente de adiamento</li>
+          <li xml:lang="ru">Добавлен агент отложенных писем</li>
+          <li xml:lang="sl">Dodaj agenta za dremež</li>
+          <li xml:lang="uk">Додано агент відкладання</li>
           <li>Implement Plasma Activities.</li>
           <li xml:lang="ar">التكامل مع أنشطة بلازما.</li>
           <li xml:lang="bg">Внедряване на Действия на Plasma</li>
@@ -458,6 +466,7 @@
           <li xml:lang="cs">Implementovány aktivity Plasma.</li>
           <li xml:lang="es">Implementar las actividades de Plasma.</li>
           <li xml:lang="fr">Mettre en œuvre les activités dans Plasma.</li>
+          <li xml:lang="he">מימוש פעילויות פלזמה.</li>
           <li xml:lang="ka">განხორციელდა Plasma-ის აქტივობები.</li>
           <li xml:lang="nl">Plasma activiteiten implementeren.</li>
           <li xml:lang="pt-BR">Atividades do Plasma implementadas.</li>
