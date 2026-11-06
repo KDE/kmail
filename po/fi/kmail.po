@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-05 00:56+0000\n"
-"PO-Revision-Date: 2026-08-25 19:33+0300\n"
+"PO-Revision-Date: 2026-10-09 11:12+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -2399,10 +2399,7 @@ msgid "Send &Later"
 msgstr "Lähetä &myöhemmin"
 
 #: editor/kmcomposerwin.cpp:3167
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2410,9 +2407,9 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"Yrität lähettää viestin yli %1 vastaanottajalle. Lähetetäänkö viesti silti?"
+"Yrität lähettää postia yli %1 vastaanottajalle. Lähetetäänkö viesti silti?"
 msgstr[1] ""
-"Yrität lähettää viestin yli %1 vastaanottajalle. Lähetetäänkö viesti silti?"
+"Yrität lähettää postia yli %1 vastaanottajalle. Lähetetäänkö viesti silti?"
 
 #: editor/kmcomposerwin.cpp:3170
 #, kde-format
@@ -6675,13 +6672,7 @@ msgstr "&Pyydä viestin vastaanottokuittaukset automaattisesti"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:213
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6693,7 +6684,7 @@ msgstr ""
 "vastaanottokuittauksen (MDN) jokaiselta lähtevältä viestiltä.</p><p>Tämä "
 "asetus vaikuttaa vain oletustoimintaan; voit yhä ottaa MDN:n käyttöön tai "
 "poistaa sen käytöstä viestikohtaisesti kirjoitusikkunassa, valikkokohdasta "
-"<em>Asetukset</em>-><em>Pyydä viestin toimituskuittaus</em>.</p></qt>"
+"<em>Asetukset</em>→<em>Pyydä viestin toimituskuittaus</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:234
@@ -7860,16 +7851,13 @@ msgstr "OCSP-vastaajan allekirjoitus:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Enter here the address of the server for online validation of "
-#| "certificates (OCSP responder). The URL is usually starting with http://."
+#, kde-format
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with https://."
 msgstr ""
 "Kirjoita tähän varmenteiden verkkovarmistuksesta vastaavan palvelimen (OCSP-"
-"vastaajan) osoite. Osoite alkaa yleensä http://."
+"vastaajan) osoite. Osoite alkaa yleensä https://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
@@ -8164,6 +8152,7 @@ msgstr "Liitännäisten tiedot"
 msgid "Plugins used in KMail."
 msgstr "KMailissa käytetyt liitännäiset."
 
+# Täysi arvoitus, mikä %1 on. Lähettäjä? Palvelin? Tili?
 #: util.cpp:40
 #, kde-format
 msgctxt "@info"
@@ -8171,13 +8160,14 @@ msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
+"Vaikuttaa siltä, että sähköpostiosoitetta ei valvota: %1. Haluatko vastata "
+"tähän viestiin?"
 
 #: util.cpp:41
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "Sähköpostiosoite"
+msgstr "Sähköpostiosoitetta ei valvota"
 
 #: util.cpp:42
 #, kde-format

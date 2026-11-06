@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-05 00:56+0000\n"
-"PO-Revision-Date: 2026-10-09 10:21+0300\n"
+"PO-Revision-Date: 2026-11-05 13:46+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4451,10 +4451,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "סוכן תזכורות לטיפול לא נרשם."
 
 #: kmlaunchexternalcomponent.cpp:69
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "סוכן שליחה בעיכוב לא נרשם."
+msgstr "סוכן נודניק לא נרשם."
 
 #: kmlaunchexternalcomponent.cpp:81 kmlaunchexternalcomponent.cpp:89
 #, kde-format
@@ -6152,11 +6151,10 @@ msgid "Archive Message"
 msgstr "העברת הודעה לארכיון"
 
 #: messageactions.cpp:89
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "ה&גדרת KMail…"
+msgstr "ה&גדרת נודניק…"
 
 #: messageactions.cpp:90
 #, kde-format
@@ -6789,52 +6787,49 @@ msgstr "לציין את המדיניות בשימוש בהצגת מדיניות"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
-msgstr ""
+msgstr "נודניק"
 
 #: snooze/snoozemenu.cpp:21
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "שעה לאחר מכן"
 
 #: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "שמונה שעות לאחר מכן"
 
 #: snooze/snoozemenu.cpp:31
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "מחר"
 
 #: snooze/snoozemenu.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "ההודעה הב&אה"
+msgstr "השבוע הבא"
 
 #: snooze/snoozemenu.cpp:42
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "חשבון בהתאמה אישית…"
+msgstr "התאמה אישית…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr ""
+msgstr "דחיית נודניק עד"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "להתעורר ב־:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
