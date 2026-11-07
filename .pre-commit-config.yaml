@@ -22,7 +22,7 @@ repos:
     - id: destroyed-symlinks
     #- id: check-executables-have-shebangs
  - repo: https://github.com/pre-commit/mirrors-clang-format
-   rev: v23.1.0
+   rev: v23.1.5
    hooks:
     - id: clang-format
     # force using this project's configuration rather
@@ -30,7 +30,7 @@ repos:
       args: ["--style=file:.clang-format-pre-commit"]
  - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version.
-   rev: v0.16.5
+   rev: v0.17.4
    hooks:
     # Run the linter.
     - id: ruff
@@ -46,13 +46,13 @@ repos:
    hooks:
     - id: gersemi
  - repo: https://github.com/DavidAnson/markdownlint-cli2
-   rev: v0.23.2
+   rev: v0.24.0
    hooks:
     - id: markdownlint-cli2
       files: \.(md|mdown|markdown)$
       language_version: lts
  - repo: https://github.com/scop/pre-commit-shfmt
-   rev: v3.13.1-1
+   rev: v3.14.1-1
    hooks:
     - id: shfmt
  - repo: https://github.com/efrecon/pre-commit-hook-lxml
