@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: none
 # SPDX-License-Identifier: BSD-3-Clause
 cmake_minimum_required(VERSION 3.29)
-set(PIM_VERSION "6.8.40")
+set(PIM_VERSION "6.9.40")
 
 project(kmail VERSION ${PIM_VERSION})
 
@@ -104,10 +104,10 @@ include(ECMFeatureSummary)
 
 # Do NOT add quote
 set(KDEPIM_DEV_VERSION alpha)
-set(RELEASE_SERVICE_VERSION "26.11.40")
+set(RELEASE_SERVICE_VERSION "27.03.40")
 
 # Update it for each release
-set(KMAIL_RELEASE_VERSION_DATE "26.07.10") # yy.MM.dd
+set(KMAIL_RELEASE_VERSION_DATE "27.03.10") # yy.MM.dd
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
