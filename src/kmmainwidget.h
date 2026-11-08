@@ -516,14 +516,14 @@ private Q_SLOTS:
 private:
     KMAIL_NO_EXPORT void slotSetFocusToViewer();
     KMAIL_NO_EXPORT void deleteSelectedMessages(bool confirmDelete); // completely delete message
-    [[nodiscard]] bool showSearchDialog();
+    [[nodiscard]] KMAIL_NO_EXPORT bool showSearchDialog();
     KMAIL_NO_EXPORT void clearCurrentFolder();
     KMAIL_NO_EXPORT void setCurrentCollection(const Akonadi::Collection &col);
     KMAIL_NO_EXPORT void showMessageActivities(const QString &str);
     KMAIL_NO_EXPORT void slotPageIsScrolledToBottom(bool isAtBottom);
     KMAIL_NO_EXPORT void setupUnifiedMailboxChecker();
-    QAction *filterToAction(MailCommon::MailFilter *filter);
-    [[nodiscard]] Akonadi::Collection::List applyFilterOnCollection(bool recursive);
+    KMAIL_NO_EXPORT QAction *filterToAction(MailCommon::MailFilter *filter);
+    [[nodiscard]] KMAIL_NO_EXPORT Akonadi::Collection::List applyFilterOnCollection(bool recursive);
     KMAIL_NO_EXPORT void setShowStatusBarMessage(const QString &msg);
     KMAIL_NO_EXPORT void slotRestartAccount();
     KMAIL_NO_EXPORT void slotAccountSettings();

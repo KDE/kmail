@@ -128,7 +128,7 @@ protected:
 
 private:
     // execute should be implemented by derived classes
-    virtual Result execute() = 0;
+    KMAIL_NO_EXPORT virtual Result execute() = 0;
 
     /** transfers the list of (imap)-messages
      *  this is a necessary preparation for e.g. forwarding */
@@ -230,7 +230,7 @@ public:
     KMUrlSaveCommand(const QUrl &url, QWidget *parent);
 
 private:
-    void slotUrlSaveResult(KJob *job);
+    KMAIL_NO_EXPORT void slotUrlSaveResult(KJob *job);
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     QUrl mUrl;
@@ -245,7 +245,7 @@ public:
     ~KMEditItemCommand() override;
 
 private:
-    void slotDeleteItem(KJob *job);
+    KMAIL_NO_EXPORT void slotDeleteItem(KJob *job);
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     bool mDeleteFromSource = false;
 };
@@ -292,7 +292,7 @@ public:
     explicit KMOpenMsgCommand(QWidget *parent, const QUrl &url = QUrl(), const QString &encoding = QString(), KMMainWidget *main = nullptr);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
 private:
     KMAIL_NO_EXPORT void slotDataArrived(KIO::Job *job, const QByteArray &data);
@@ -335,8 +335,8 @@ public:
     KMDeleteAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs);
 
 private Q_SLOTS:
-    void slotUpdateResult(KJob *job);
-    void slotCanceled();
+    KMAIL_NO_EXPORT void slotUpdateResult(KJob *job);
+    KMAIL_NO_EXPORT void slotCanceled();
 
 private:
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
@@ -693,7 +693,7 @@ public:
     KMReaderMainWin *readerMainWin() const;
 
 private:
-    Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items) override;
+    KMAIL_NO_EXPORT Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items) override;
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     Akonadi::Item mItem;
