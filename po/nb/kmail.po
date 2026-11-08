@@ -10,19 +10,20 @@
 # Nils Kristian Tomren <slx@nilsk.net>, 2005.
 # Lars Risan <lars.risan@tik.uio.no>, 2006.
 # Øyvind A. Holm <sunny@sunbase.org>, 2010.
+# Daniel Dybing <daniel.dybing@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: MAIL\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:14+0000\n"
-"PO-Revision-Date: 2015-02-07 22:15+0100\n"
-"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"PO-Revision-Date: 2026-11-08 01:41+0100\n"
+"Last-Translator: Daniel Dybing <daniel.dybing@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@nuug.no>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 26.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
@@ -33,7 +34,7 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Knut Yrvin,Bjørn Steensrud,Eskild Hustvedt,Håvard Korsvoll,Sven Harald Klein "
-"Bakke,Axel Bojer,Lars Risan"
+"Bakke,Axel Bojer,Lars Risan,Daniel Dybing"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -41,7 +42,7 @@ msgid "Your emails"
 msgstr ""
 "knut.yrvin@gmail.com,bjornst@skogkatt.homelinux.org,zerodogg@skolelinux.no,"
 "korsvoll@skulelinux.no,sirius@nonline.org,fri_programvare@bojer.no,lars."
-"risan@tik.uio.no"
+"risan@tik.uio.no,daniel.dybing@gmail.com"
 
 #: aboutdata.cpp:34
 msgid "Maintainer"
@@ -145,11 +146,11 @@ msgstr "Ny meldingsliste og nytt mappetre"
 
 #: aboutdata.cpp:83
 msgid "Many valuable contributions"
-msgstr ""
+msgstr "Mange verdifulle bidrag"
 
 #: aboutdata.cpp:88
 msgid "Killed lots of bugs"
-msgstr ""
+msgstr "Fikset mange programfeil"
 
 #: aboutdata.cpp:93
 msgid "Smiley-->emoticons processing"
@@ -4661,9 +4662,9 @@ msgid "Move Messages to Folder"
 msgstr ""
 
 #: kmmainwidget.cpp:1837
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copying messages…"
-msgstr "Kopierer meldinger …"
+msgstr "Kopierer meldinger …"
 
 #: kmmainwidget.cpp:1845
 #, kde-format
@@ -5575,7 +5576,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
-msgstr ""
+msgstr "Start Akonadi på nytt"
 
 #: kmmainwidget.cpp:5084
 #, kde-format
@@ -5589,10 +5590,10 @@ msgid "Akonadi restarted."
 msgstr ""
 
 #: kmmainwin.cpp:57
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
-msgstr "Starter …"
+msgstr "Starter …"
 
 #: kmreadermainwin.cpp:494 util.cpp:189
 #, kde-format
@@ -5714,7 +5715,7 @@ msgstr ""
 #: kmreaderwin.cpp:272
 #, kde-format
 msgid "Retrieving Folder Contents"
-msgstr ""
+msgstr "Henter mappeinnhold"
 
 #: kmreaderwin.cpp:272
 #, kde-format
@@ -5921,7 +5922,7 @@ msgstr "Visning av kontact-sammendrag"
 #: kontactplugin/summary/summaryview_plugin.cpp:105
 #, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr ""
+msgstr "© 2003–2025 Kontact-utviklerne"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:107
 #, fuzzy, kde-format
@@ -5965,9 +5966,9 @@ msgid "&Reply"
 msgstr "&Svar"
 
 #: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:162
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Reply…"
-msgstr "&Svar"
+msgstr "&Svar …"
 
 #: messageactions.cpp:69 searchdialog/searchwindowdialog.cpp:166
 #, fuzzy, kde-format
@@ -5997,10 +5998,10 @@ msgid "&Inline…"
 msgstr "I teksten"
 
 #: messageactions.cpp:74
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Som vedlegg"
+msgstr "Som &vedlegg …"
 
 #: messageactions.cpp:75
 #, fuzzy, kde-format
@@ -6062,7 +6063,7 @@ msgstr "Lag ny melding fra &mal"
 #: messageactions.cpp:87
 #, kde-format
 msgid "Export to PDF…"
-msgstr ""
+msgstr "Eksporter til PDF …"
 
 #: messageactions.cpp:88
 #, kde-format
@@ -6167,12 +6168,12 @@ msgstr "%1 (%2)"
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
-msgstr ""
+msgstr "Eksporter til PDF"
 
 #: messageactions.cpp:854
 #, kde-format
 msgid "PDF document (*.pdf)"
-msgstr ""
+msgstr "PDF-dokument (*.pdf)"
 
 #: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
@@ -6251,15 +6252,15 @@ msgid "&Inline…"
 msgstr "I teksten"
 
 #: searchdialog/searchwindowdialog.cpp:182
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Som vedlegg"
+msgstr "Som &vedlegg …"
 
 #: searchdialog/searchwindowdialog.cpp:196
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save Attachments…"
-msgstr "Lage vedlegg …"
+msgstr "Lagre vedlegg …"
 
 #: searchdialog/searchwindowdialog.cpp:202
 #, fuzzy, kde-format
@@ -7463,7 +7464,7 @@ msgstr ""
 #: ui/securitypagegeneraltab.ui:147
 #, kde-format
 msgid "Scan emails for tracking URLs"
-msgstr ""
+msgstr "Søk etter sporingsadresser i e-poster"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ui/securitypagegeneraltab.ui:163
@@ -7941,7 +7942,7 @@ msgstr ""
 #: undosend/undosendcreatejob.cpp:48
 #, kde-format
 msgid "Undo send"
-msgstr ""
+msgstr "Angre sending"
 
 #: undosend/undosendmanager.cpp:44
 #, kde-format
