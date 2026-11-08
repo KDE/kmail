@@ -450,13 +450,20 @@
       <description>
         <ul>
           <li>Add Snooze Agent</li>
+          <li xml:lang="ar">إضافة وكيل التأجيل</li>
+          <li xml:lang="bg">Добавяне на агент за отлагане</li>
           <li xml:lang="ca">Afegeix l'agent de posposició</li>
+          <li xml:lang="ca-valencia">Afig l'agent de posposició</li>
+          <li xml:lang="cs">Přidán agent pro odložení</li>
           <li xml:lang="es">Añadir agente de aplazamiento.</li>
+          <li xml:lang="fr">Ajouter un agent de mise en sommeil</li>
           <li xml:lang="he">נוסף סוכן נודניק</li>
+          <li xml:lang="ka">ჩაჩუმების აგენტის დამატება</li>
           <li xml:lang="nl">Snooze-agent toevoegen</li>
           <li xml:lang="pt-BR">Adicionar agente de adiamento</li>
           <li xml:lang="ru">Добавлен агент отложенных писем</li>
           <li xml:lang="sl">Dodaj agenta za dremež</li>
+          <li xml:lang="tr">Erteleme Aracısı eklendi.</li>
           <li xml:lang="uk">Додано агент відкладання</li>
           <li>Implement Plasma Activities.</li>
           <li xml:lang="ar">التكامل مع أنشطة بلازما.</li>
