@@ -19,7 +19,7 @@ void UndoSendCombobox::initialize()
 {
     for (int i = 1; i < 6; i++) {
         const int numberOfSeconds = i * 10;
-        addItem(i18n("%1 seconds", numberOfSeconds), numberOfSeconds);
+        addItem(i18np("1 second", "%1 seconds", numberOfSeconds), numberOfSeconds);
     }
     constexpr int fivemutes = 5 * 60;
     addItem(i18n("5 minutes"), fivemutes);
