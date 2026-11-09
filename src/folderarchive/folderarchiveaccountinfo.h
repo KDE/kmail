@@ -38,7 +38,7 @@ public:
     void setKeepExistingStructure(bool b);
     [[nodiscard]] bool keepExistingStructure() const;
 
-    void writeConfig(KConfigGroup &config);
+    void writeConfig(KConfigGroup &config) const;
     void readConfig(const KConfigGroup &config);
 
     [[nodiscard]] bool operator==(const FolderArchiveAccountInfo &other) const = default;

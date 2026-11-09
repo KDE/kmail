@@ -81,7 +81,7 @@ void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
     mUseDateFromMessage = config.readEntry("useDateFromMessage", false);
 }
 
-void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
+void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config) const
 {
     config.writeEntry(u"instanceName"_s, mInstanceName);
     if (mArchiveTopLevelCollectionId > -1) {
