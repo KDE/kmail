@@ -34,7 +34,7 @@ bool ValidateSendMailShortcut::validate()
                                      i18n("Ask Before Sending"),
                                      i18n("Sending Without Confirmation"));
     if (result == QDialogButtonBox::Yes) {
-        QAction *act = mActionCollection->action(u"send_mail"_s);
+        QAction *act = mActionCollection->action(u"send_default"_s);
         if (act) {
             act->setShortcut(QKeySequence());
             mActionCollection->writeSettings();
