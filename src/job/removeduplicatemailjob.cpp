@@ -14,8 +14,6 @@
 #include <Libkdepim/ProgressManager>
 
 #include <QItemSelectionModel>
-Q_DECLARE_METATYPE(KPIM::ProgressItem *)
-Q_DECLARE_METATYPE(Akonadi::Job *)
 
 RemoveDuplicateMailJob::RemoveDuplicateMailJob(QItemSelectionModel *selectionModel, QWidget *widget, QObject *parent)
     : QObject(parent)
