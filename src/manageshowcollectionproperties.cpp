@@ -181,14 +181,20 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
     const Akonadi::Collection collection = fetch->collections().constFirst();
 
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog(collection, mPages, mMainWidget);
+    const Akonadi::Collection::Id id = collection.id();
     dlg->setWindowTitle(i18nc("@title:window", "Properties of Folder %1", collection.name()));
     connect(dlg.data(), &Akonadi::CollectionPropertiesDialog::settingsSaved, mMainWidget, &KMMainWidget::slotUpdateConfig);
+    connect(dlg.data(), &Akonadi::CollectionPropertiesDialog::destroyed, this, [this, id]() {
+        if (!mHashDialogBox.value(id)) {
+            mHashDialogBox.remove(id);
+        }
+    });
 
     if (const QString pageToShow = fetch->property("pageToShow").toString(); !pageToShow.isEmpty()) { // show a specific page
         dlg->setCurrentPage(pageToShow);
     }
     dlg->show();
-    mHashDialogBox.insert(collection.id(), dlg);
+    mHashDialogBox.insert(id, dlg);
 }
 
 #include "moc_manageshowcollectionproperties.cpp"
