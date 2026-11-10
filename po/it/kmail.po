@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:58+0000\n"
-"PO-Revision-Date: 2026-10-07 15:46+0200\n"
+"POT-Creation-Date: 2026-11-10 00:58+0000\n"
+"PO-Revision-Date: 2026-11-04 16:04+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 26.04.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3880,7 +3880,7 @@ msgid "Clear Akonadi Cache"
 msgstr "Pulisci cache di Akonadi"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
-#: job/removeduplicatemailjob.cpp:56
+#: job/removeduplicatemailjob.cpp:54
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:89
 #: manageshowcollectionproperties.cpp:170
 #, kde-format
@@ -4009,19 +4009,19 @@ msgctxt "@action:button Delete folder"
 msgid "&Delete"
 msgstr "&Elimina"
 
-#: job/removeduplicatemailjob.cpp:31
+#: job/removeduplicatemailjob.cpp:29
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:72
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Rimozione dei duplicati"
 
-#: job/removeduplicatemailjob.cpp:61
+#: job/removeduplicatemailjob.cpp:59
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:95
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
 msgstr "Errore durante la rimozione di messaggi di posta duplicati: «%1»"
 
-#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemailjob.cpp:60
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgctxt "@title:window"
@@ -6139,7 +6139,7 @@ msgstr ""
 "La rete non è connessa. Non è stato possibile aggiornare le informazioni "
 "della cartella."
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:185
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
@@ -6917,36 +6917,31 @@ msgstr ""
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "un'ora dopo"
 
 #: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "otto ore dopo"
 
 #: snooze/snoozemenu.cpp:31
-#, fuzzy, kde-format
-#| msgid "Tomorrow"
-#| msgid_plural "%1 days"
+#, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr "Domani"
+msgstr "domani"
 
 #: snooze/snoozemenu.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "Messaggio &successivo"
+msgstr "la settimana successiva"
 
 #: snooze/snoozemenu.cpp:42
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Account personalizzato…"
+msgstr "personalizzato…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
 #, kde-format
@@ -6958,7 +6953,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "Sveglia alle:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
@@ -8208,9 +8203,12 @@ msgid "An informative text about the current mode!"
 msgstr "Un testo informativo sulla modalità corrente."
 
 #: undosend/undosendcombobox.cpp:22
-#, kde-format
-msgid "%1 seconds"
-msgstr "%1 secondi"
+#, fuzzy, kde-format
+#| msgid "%1 seconds"
+msgid "1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "%1 secondi"
+msgstr[1] "%1 secondi"
 
 #: undosend/undosendcombobox.cpp:25
 #, kde-format

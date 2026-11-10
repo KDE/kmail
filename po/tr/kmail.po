@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:58+0000\n"
+"POT-Creation-Date: 2026-11-10 00:58+0000\n"
 "PO-Revision-Date: 2026-11-03 22:35+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -3837,7 +3837,7 @@ msgid "Clear Akonadi Cache"
 msgstr "Akonadi Önbelleğini Temizle"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
-#: job/removeduplicatemailjob.cpp:56
+#: job/removeduplicatemailjob.cpp:54
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:89
 #: manageshowcollectionproperties.cpp:170
 #, kde-format
@@ -3966,19 +3966,19 @@ msgctxt "@action:button Delete folder"
 msgid "&Delete"
 msgstr "&Sil"
 
-#: job/removeduplicatemailjob.cpp:31
+#: job/removeduplicatemailjob.cpp:29
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:72
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Yinelenmişler kaldırılıyor"
 
-#: job/removeduplicatemailjob.cpp:61
+#: job/removeduplicatemailjob.cpp:59
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:95
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
 msgstr "Yinelenmiş e-postalar kaldırılırken bir hata oluştu: “%1”"
 
-#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemailjob.cpp:60
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgctxt "@title:window"
@@ -6071,7 +6071,7 @@ msgstr "Klasör özellikleri alınıyor"
 msgid "Network is unconnected. Folder information cannot be updated."
 msgstr "Ağ bağlı değil. Klasör bilgisi güncellenemiyor."
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:185
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
@@ -8107,9 +8107,12 @@ msgid "An informative text about the current mode!"
 msgstr "Geçerli kip için bilgilendirici bir metin!"
 
 #: undosend/undosendcombobox.cpp:22
-#, kde-format
-msgid "%1 seconds"
-msgstr "%1 saniye"
+#, fuzzy, kde-format
+#| msgid "%1 seconds"
+msgid "1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "%1 saniye"
+msgstr[1] "%1 saniye"
 
 #: undosend/undosendcombobox.cpp:25
 #, kde-format
