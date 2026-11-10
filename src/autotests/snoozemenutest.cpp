@@ -20,7 +20,7 @@ void SnoozeMenuTest::shouldHaveDefaultValue()
 {
     SnoozeMenu menu;
     QVERIFY(!menu.text().isEmpty());
-    QCOMPARE(menu.menu()->actions().count(), 5);
+    QCOMPARE(menu.menu()->actions().count(), 6);
 }
 
 void SnoozeMenuTest::shouldEmitSnoozeRequested()
