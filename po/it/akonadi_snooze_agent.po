@@ -1,0 +1,103 @@
+# Copyright (C) 2026 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# SPDX-FileCopyrightText: 2026 Vincenzo Reale <smart2128vr@gmail.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
+"PO-Revision-Date: 2026-10-30 09:42+0100\n"
+"Last-Translator: Vincenzo Reale <s>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 26.08.2\n"
+
+#: snoozeagent.cpp:38
+#, kde-format
+msgid "Snooze Agent"
+msgstr "Agente Snooze"
+
+#: snoozeagent.cpp:172
+#, kde-format
+msgid "Snoozed"
+msgstr "Disattivato"
+
+#: snoozeconfigurewidget.cpp:54
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: snoozeconfigurewidget.cpp:55
+#, kde-format
+msgctxt "@action:button"
+msgid "Wake Up Now"
+msgstr "Svegliati ora"
+
+#: snoozeconfigurewidget.cpp:64
+#, kde-format
+msgctxt "@title:column send mail from"
+msgid "From"
+msgstr "Da"
+
+#: snoozeconfigurewidget.cpp:65
+#, kde-format
+msgctxt "@title:column mail subject"
+msgid "Subject"
+msgstr "Oggetto "
+
+#: snoozeconfigurewidget.cpp:66
+#, kde-format
+msgctxt "@title:column when the message comes back"
+msgid "Wake Up"
+msgstr "Sveglia"
+
+#: snoozeconfigurewidget.cpp:136
+#, kde-format
+msgid ""
+"Do you want to unsnooze the selected message?\n"
+"It will come back without notification."
+msgid_plural ""
+"Do you want to unsnooze the %1 selected messages?\n"
+"They will come back without notification."
+msgstr[0] ""
+"Vuoi riattivare il messaggio selezionato?\n"
+"Tornerà a essere visibile, senza alcuna notifica."
+msgstr[1] ""
+"Vuoi riattivare i %1 messaggi selezionati?\n"
+"Torneranno a essere visibili senza alcuna notifica."
+
+#: snoozeconfigurewidget.cpp:139
+#, kde-format
+msgctxt "@title:window"
+msgid "Unsnooze Messages"
+msgstr "Riattiva i messaggi"
+
+#: snoozeconfigurewidget.cpp:140
+#, kde-format
+msgctxt "@action:button"
+msgid "Unsnooze"
+msgstr "Riattiva"
+
+#: snoozeconfigurewidget.cpp:177
+#, kde-format
+msgctxt "@action"
+msgid "Show Message"
+msgstr "Mostra il messaggio"
+
+#: snoozeconfigurewidget.cpp:180
+#, kde-format
+msgctxt "@action"
+msgid "Wake Up Now"
+msgstr "Svegliati ora"
+
+#: snoozeconfigurewidget.cpp:182
+#, kde-format
+msgctxt "@action"
+msgid "Unsnooze"
+msgstr "Riattiva"
