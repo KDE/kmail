@@ -155,10 +155,10 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         for (const QString &arg : lstPositionalArguments) {
             if (arg.startsWith("mailto:"_L1, Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
-                const QList<QPair<QString, QString>> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
+                const QList<std::pair<QString, QString>> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 QString previousKey;
                 for (int i = 0; i < values.count(); ++i) {
-                    const QPair<QString, QString> &element = values.at(i);
+                    const std::pair<QString, QString> &element = values.at(i);
                     if (const QString key = element.first.toLower(); key == "to"_L1) {
                         if (!element.second.isEmpty()) {
                             mTo += element.second + u", "_s;

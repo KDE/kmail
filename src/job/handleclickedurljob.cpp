@@ -30,9 +30,9 @@ void HandleClickedUrlJob::start()
     // Already defined in MessageHelper::initHeader
     mMsg->contentType(KMime::CreatePolicy::DontCreate)->setCharset("utf-8"_ba);
 
-    const QList<QPair<QString, QString>> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
+    const QList<std::pair<QString, QString>> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
     for (int i = 0; i < fields.count(); ++i) {
-        const QPair<QString, QString> element = fields.at(i);
+        const std::pair<QString, QString> element = fields.at(i);
         if (element.first == "to"_L1) {
             if (KMail::Util::checkNoReplyEmails(element.second, nullptr)) {
                 deleteLater();
