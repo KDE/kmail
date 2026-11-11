@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-10 00:58+0000\n"
-"PO-Revision-Date: 2026-11-07 22:45+0200\n"
+"PO-Revision-Date: 2026-11-10 22:40+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.08.3\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -8160,11 +8160,10 @@ msgid "An informative text about the current mode!"
 msgstr "Информационен текст за текущия режим!"
 
 #: undosend/undosendcombobox.cpp:22
-#, fuzzy, kde-format
-#| msgid "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1 секунди"
+msgstr[0] "1 секундa"
 msgstr[1] "%1 секунди"
 
 #: undosend/undosendcombobox.cpp:25

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-10 00:58+0000\n"
-"PO-Revision-Date: 2026-10-30 06:18+0100\n"
+"PO-Revision-Date: 2026-11-10 07:19+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -8166,14 +8166,13 @@ msgid "An informative text about the current mode!"
 msgstr "Informativno besedilo o trenutnem modelu!"
 
 #: undosend/undosendcombobox.cpp:22
-#, fuzzy, kde-format
-#| msgid "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
 msgstr[0] "%1 sekund"
-msgstr[1] "%1 sekund"
-msgstr[2] "%1 sekund"
-msgstr[3] "%1 sekund"
+msgstr[1] "%1 sekunda"
+msgstr[2] "%1 sekundi"
+msgstr[3] "%1 sekunde"
 
 #: undosend/undosendcombobox.cpp:25
 #, kde-format

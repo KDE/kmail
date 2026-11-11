@@ -8117,13 +8117,12 @@ msgid "An informative text about the current mode!"
 msgstr "Informační text o aktuálním režimu!"
 
 #: undosend/undosendcombobox.cpp:22
-#, fuzzy, kde-format
-#| msgid "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1 s"
-msgstr[1] "%1 s"
-msgstr[2] "%1 s"
+msgstr[0] "1 sekunda"
+msgstr[1] "%1 sekundy"
+msgstr[2] "%1 sekund"
 
 #: undosend/undosendcombobox.cpp:25
 #, kde-format
