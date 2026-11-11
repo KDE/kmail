@@ -458,6 +458,7 @@
           <li xml:lang="es">Añadir agente de aplazamiento.</li>
           <li xml:lang="fr">Ajouter un agent de mise en sommeil</li>
           <li xml:lang="he">נוסף סוכן נודניק</li>
+          <li xml:lang="it">Aggiunto agente di sospensione</li>
           <li xml:lang="ka">ჩაჩუმების აგენტის დამატება</li>
           <li xml:lang="nl">Snooze-agent toevoegen</li>
           <li xml:lang="pt-BR">Adicionar agente de adiamento</li>
@@ -474,6 +475,7 @@
           <li xml:lang="es">Implementar las actividades de Plasma.</li>
           <li xml:lang="fr">Mettre en œuvre les activités dans Plasma.</li>
           <li xml:lang="he">מימוש פעילויות פלזמה.</li>
+          <li xml:lang="it">Implementate le attività di Plasma.</li>
           <li xml:lang="ka">განხორციელდა Plasma-ის აქტივობები.</li>
           <li xml:lang="nl">Plasma activiteiten implementeren.</li>
           <li xml:lang="pt-BR">Atividades do Plasma implementadas.</li>
