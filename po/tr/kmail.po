@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-10 00:58+0000\n"
-"PO-Revision-Date: 2026-11-03 22:35+0300\n"
+"PO-Revision-Date: 2026-11-10 21:38+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -205,7 +205,7 @@ msgstr "Antivirüs desteği"
 
 #: aboutdata.cpp:124
 msgid "Fixed widget styles"
-msgstr "Araç takımı biçemleri düzeltildi"
+msgstr "Araç takımı stilleri düzeltildi"
 
 #: aboutdata.cpp:125 aboutdata.cpp:127 aboutdata.cpp:184
 msgid "Bug fixes"
@@ -1524,7 +1524,7 @@ msgstr "Web Motoru Eklentileri"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:270
 #, kde-format
 msgid "Header Style Plugins"
-msgstr "Üst Bilgi Biçem Eklentileri"
+msgstr "Üst Bilgi Stil Eklentileri"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:279
 #, kde-format
@@ -8107,11 +8107,10 @@ msgid "An informative text about the current mode!"
 msgstr "Geçerli kip için bilgilendirici bir metin!"
 
 #: undosend/undosendcombobox.cpp:22
-#, fuzzy, kde-format
-#| msgid "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1 saniye"
+msgstr[0] "1 saniye"
 msgstr[1] "%1 saniye"
 
 #: undosend/undosendcombobox.cpp:25
