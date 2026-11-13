@@ -1,0 +1,229 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>وكيل أرشفة البريد</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE">
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>دليل وكيل أرشفة البريد</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (تطبيقات 19.12)</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introduction</title>
+
+<para
+>&i18n-archivemailagent; هو وكيل Akonadi يتيح أرشفة مجلدات البريد آليًا. </para>
+
+<sect2 id="using-kapp">
+<title
+>استخدام &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>استخدم <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط الأرشفة الآلية...</guimenuitem
+> </menuchoice
+><action
+> في نافذة قارئ بريدك لفتح حوار يضبط الأرشفة الآلية لمجلدات البريد.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>هذه أداة قوية يمكن استخدامها للمساعدة في النسخ الاحتياطي لبريدك الإلكتروني. لاستخدامها، انقر على زر <guibutton
+>أضف...</guibutton
+>، وسينبثق حوار <guilabel
+>أضف أرشفة البريد</guilabel
+>.</para>
+
+<screenshot>
+<screeninfo
+>حوار أضف أرشفة البريد</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>حوار أضف أرشفة البريد</phrase>
+    </textobject>
+    <caption>
+      <para
+>حوار أضف أرشفة البريد</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>أولًا اختر المجلد الذي ترغب في أرشفته.</para
+></listitem>
+<listitem
+><para
+>اختر التنسيق الذي تود حفظه به. مثلًا <literal role="extension"
+>.tar.bz2</literal
+> من القائمة المنسدلة. سيتكون اسم ملف الأرشيف من البادئة <userinput
+>Archive_</userinput
+>، ومسار المجلد المختار في قائمة مجلدات بريدك، والتاريخ بتنسيق <userinput
+>السنة-الشهر-اليوم</userinput
+> وامتداد الملف المختار مثلًا <filename
+>Archive_Local Folder_inbox_2019-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>مبدئيًا يكون خيار <guilabel
+>أرشفة كل المجلدات الفرعية</guilabel
+> مفعلًا. ألغِ تفعيله إذا كنت تود أرشفة المجلد الأب فقط.</para
+></listitem>
+<listitem
+><para
+>يمكنك كتابة الموقع الذي تود حفظ أرشيفك فيه، أو انقر على زر <guibutton
+>افتح حوار الملف</guibutton
+> لاختيار المجلد.</para
+></listitem>
+<listitem
+><para
+>اختر تكرار النسخ الاحتياطي عبر القوائم المنسدلة بجانب <guilabel
+>نسخ احتياطي كل:</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>إذا كانت مساحة القرص محدودة فستحتاج إلى تعيين حد لـ <guilabel
+>أقصى عدد للأرشيفات:</guilabel
+></para
+></listitem>
+</itemizedlist>
+<para
+>إذا أضفت أو عدلت مهمة أرشفة فستُنفذ آليًا بعد إغلاق الحوار. </para>
+
+<para
+>إذا كنت قد أضفت مهام أرشفة بريد بالفعل، فسيسرد حوار <guilabel
+>اضبط وكيل أرشفة البريد</guilabel
+> هذه المهام ويسمح بتعديلها. </para>
+<screenshot>
+<screeninfo
+>اضبط وكيل أرشفة البريد</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>اضبط وكيل أرشفة البريد</phrase>
+    </textobject>
+    <caption>
+      <para
+>اضبط وكيل أرشفة البريد</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>يمكنك استخدام مربع التأشير الموجود على يسار كل مدخلة في القائمة لتفعيل أو تعطيل أرشفة هذه المهمة. </para>
+<para
+>من الممكن الوصول إلى حوار الضبط هذا في أي وقت لاحق باستخدام <menuchoice
+><guimenu
+>إعدادات</guimenu
+> <guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+> ثم اختيار صفحة <guilabel
+>ملحقات</guilabel
+> في نافذة بريدك الرئيسة والضغط على زر الضبط بجانب عنصر <guilabel
+>وكيل أرشفة البريد</guilabel
+>. </para>
+<para
+>باستخدام قائمة السياق التي تُطلق عبر النقر بزر الفأرة الأيمن على مهمة أرشفة، يمكنك فتح المجلد الذي يحتوي على الأرشيفات أو بدء مهمة الأرشفة فورًا. سيؤدي هذا إلى الكتابة فوق أرشيف موجود أُنشئ مسبقًا في اليوم نفسه دون إشعار. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>الحقوق والترخيص</title>
+
+<para
+>وكيل أرشفة البريد</para>
+<para
+>حقوق ملكية البرنامج محفوظة 2013-2019 لـ Laurent Montel montel@kde.org </para>
+<para
+>حقوق ملكية التوثيق محفوظة © 2013-2019 لـ Laurent Montel montel@kde.org </para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

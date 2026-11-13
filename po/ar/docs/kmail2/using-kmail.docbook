@@ -1,0 +1,4275 @@
+<chapter id="using-kmail">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2020-09-12</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>استخدام بريدك</title>
+
+<sect1 id="the-mail-reader-window">
+<title
+>النافذة الرئيسة</title>
+
+<para
+>النافذة الرئيسة هي النافذة التي تظهر عند بدء تشغيل بريدك. وهي مقسمة مبدئيًا إلى ثلاثة أجزاء:</para>
+
+<variablelist>
+<varlistentry>
+<term
+>قائمة المجلدات (على اليسار)</term>
+<listitem>
+  <screenshot>
+<screeninfo
+>جزء المجلدات</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>جزء المجلدات</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة المجلدات</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>يحتوي هذا الجزء على قائمة بمجلدات الرسائل الخاصة بك (قد تسميها برامج البريد الإلكتروني الأخرى صناديق بريد). لاختيار مجلد، ما عليك سوى النقر عليه. ستظهر حينها معلومات ترويسة الرسائل الموجودة في المجلد في جزء قائمة الرسائل. يمكن عرض قائمة المجلدات في عرض قصير، والذي يشغل جزءًا صغيرًا فقط من الجانب الأيسر من الشاشة، وعرض طويل، والذي يشغل الجانب الأيسر بالكامل من الشاشة (ويمكنه إظهار المزيد من المجلدات). يمكنك التبديل بين هذين العرضين باستخدام علامة تبويب <guilabel
+>المظهر</guilabel
+>/<guilabel
+>المخطط</guilabel
+> في مربع حوار <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+>. يوفر القسم العلوي من جزء المجلدات روابط سريعة لمجلداتك المفضلة. اسحب المجلدات وأفلتها هنا، أو أضفها عبر عنصر قائمة السياق بزر الفأرة الأيمن <guimenuitem
+>أضف مجلدًا مفضلًا</guimenuitem
+>. يرجى الاطلاع على <link linkend="folders"
+>قسم المجلدات</link
+> لمزيد من التفاصيل حول المجلدات.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>قائمة الرسائل (في أعلى اليمين مبدئيًا)</term>
+<listitem>
+<screenshot>
+<screeninfo
+>قائمة الرسائل</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="message.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة الرسائل</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة الرسائل (سمة ذكية)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>يسرد هذا الجزء معلومات الترويسة (الموضوع، والمرسل، والتاريخ) للرسائل الموجودة في المجلد المختار حاليًا. سيؤدي النقر فوق عنصر في قائمة الرسائل إلى اختيار تلك الرسالة وعرضها في جزء المعاينة؛ يمكنك أيضًا اختيار أكثر من رسالة واحدة بالضغط باستمرار على مفتاح &Ctrl; (أو مفتاح &Shift;) عند النقر فوق الرسائل.</para>
+
+<para
+>غيّر مظهر قائمة الرسائل الخاصة بك عن طريق اختيار <menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>قائمة الرسائل</guimenuitem
+> <guimenuitem
+>السمة</guimenuitem
+></menuchoice
+>. لديك عدة خيارات هنا. </para>
+<itemizedlist>
+  <listitem
+><para
+><guilabel
+>تقليدية</guilabel
+> صف واحد بسيط ومتوافق مع الإصدارات السابقة مع أعمدة فرز قابلة للنقر.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>ذكية</guilabel
+> قائمة ذكية متعددة الأسطر ومتعددة العناصر مع أيقونات الحالة، وبدون أعمدة فرز.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>ذكية مع حالة قابلة للنقر</guilabel
+> قائمة ذكية متعددة الأسطر ومتعددة العناصر مع أيقونات حالة قابلة للنقر.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>اضبط...</guilabel
+> يتيح لك تخصيص سمة قائمة الرسائل الخاصة بك (مثل إضافة أعمدة أو إزالتها من شريط الفرز القابل للنقر).</para
+></listitem>
+</itemizedlist>
+<para
+>إذا اخترت السمة التقليدية، فيمكنك فرز الرسائل بالنقر فوق العمود الذي ترغب في فرزه؛ إذا نقرت على العمود نفسه مرة أخرى، فسيتبدل ترتيب الفرز بين تصاعدي/تنازلي. يؤدي النقر بزر الفأرة الأيمن على ترويسة القائمة إلى إظهار قائمة منبثقة، والتي تتيح لك إظهار أو إخفاء عدة أعمدة في القائمة. يمكنك تخصيص الأعمدة المرئية على شريط الفرز؛ راجع <link linkend="customize-messagelist-theme"
+>اضبط مظهر قائمة الرسائل</link
+> للحصول على التفاصيل. </para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+<varlistentry id="using-message-preview-pane">
+<term
+>جزء المعاينة (في أسفل اليمين مبدئيًا)</term>
+<listitem>
+<screenshot>
+<screeninfo
+>جزء معاينة الرسائل</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="preview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>جزء معاينة الرسائل</phrase>
+    </textobject>
+    <caption>
+      <para
+>جزء المعاينة</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<anchor id="the-preview-pane-headers"/>
+<para
+>يعرض هذا الجزء الرسالة المختارة حاليًا. إليك بعض الطرق لضبط جزء المعاينة.</para>
+<para
+>يعرض الجزء العلوي من جزء المعاينة ترويسات الرسالة. تتوفر عدة خيارات للعرض. انتقل إلى <menuchoice
+><guimenu
+>عرض</guimenu
+><guisubmenu
+>الترويسات</guisubmenu
+></menuchoice
+> وجربها حتى تجد الخيار الذي يعجبك!</para>
+<itemizedlist id="using-header-options">
+  <listitem
+><para
+><guilabel
+>ترويسات مزخرفة</guilabel
+> ترويسة ملونة مع إشعار بحالة البريد المزعج / المرفقات.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>ترويسات موجزة</guilabel
+> العنوان، وبين قوسين: من، ونسخة إلى (إن وجدت)، والتاريخ.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>بريدك 5.2</guilabel
+> صورة رمزية (إذا توفرت) مع العنوان، ومن، وإلى، ونسخة إلى (إن وجدت)، وحالة البريد المزعج / المرفقات في أسطر منفصلة.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>نزل سمات جديدة...</guilabel
+> يتيح لك تنزيل سمات مخصصة أنشأها مستخدمو بريدك الآخرون.</para
+></listitem>
+</itemizedlist>
+<para
+>انقر على الشريط الموجود على الجانب الأيسر من الجزء للتبديل بين النص الصرف و &HTML; (إذا وفقط إذا كانت الرسالة مشفرة بكلتا الطريقتين). سيخبرك النص الموجود على الشريط بالعرض الذي تستخدمه. يتيح لك مربع حوار <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guimenuitem
+>اضبط بريدك...</guimenuitem
+><guisubmenu
+>الأمان</guisubmenu
+></menuchoice
+> اختيار HTML كخيار عرض الرسائل المبدئي، إذا كنت تفضل &HTML; على النص الصرف.</para>
+<para
+>إذا كنت ترغب في تغيير طريقة ظهور المرفقات في رسائلك، فانتقل إلى <menuchoice
+><guimenu
+>عرض</guimenu
+> <guisubmenu
+>المرفقات</guisubmenu
+></menuchoice
+>. هذه هي خياراتك.</para>
+<itemizedlist id="using-attachment-view-options">
+  <listitem
+><para
+><guimenuitem
+>كأيقونات</guimenuitem
+>، تظهر جميع المرفقات كأيقونات في أسفل الرسالة.</para
+></listitem>
+  <listitem
+><para
+>سيعرض خيار <guimenuitem
+>ذكية</guimenuitem
+> المرفقات كأيقونات، ما لم تقترح الرسالة وجوب عرضها ضمنيًا. يمكنك اقتراح عرض مرفقات معينة ضمنيًا في الرسائل التي تكتبها عن طريق اختيار <guilabel
+>اقترح العرض الآلي</guilabel
+> في <link linkend="the-composer-window"
+>نافذة المحرر</link
+> عبر مربع حوار خصائص المرفق.</para
+></listitem>
+  <listitem
+><para
+>يعرض خيار <guimenuitem
+>ضمنية</guimenuitem
+> محتويات المرفقات في أسفل الرسالة. ستظل المرفقات التي لا يمكن عرضها، مثل الملفات المضغوطة، تظهر كأيقونة.</para
+></listitem>
+  <listitem
+><para
+>سيؤدي خيار <guimenuitem
+>إخفاء</guimenuitem
+> إلى عدم إظهار المرفقات.</para
+></listitem>
+  <listitem
+><para
+>سيؤدي خيار <guimenuitem
+>في الترويسة فقط</guimenuitem
+> إلى منع العروض الضمنية، ولكن سيُدرج المرفقات مع ترويسات الرسالة.</para
+></listitem>
+</itemizedlist>
+<para
+>تعد التفاعلات بين سمات الترويسة، وعروض المرفقات، وتفضيلات النص الصرف مقابل &HTML; معقدة نوعًا ما. على سبيل المثال، إذا أرفقت ملف HTML برسالة نصية صرفة، فمن المحتمل أن يفسر بريدك رسالتك على أنها مشفرة بتنسيقين مختلفين، على الرغم من أن هذا ليس هو الحال بالفعل. وبالمثل، قد تعرض رسائل &HTML; الصور المضمنة حتى عندما تختار خيار "إخفاء" للمرفقات.</para>
+
+<para
+>يمكن عرض هيكل كل رسالة بالضغط على <keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+>. سيؤدي هذا إلى فتح عارض هيكل الرسالة أسفل جزء المعاينة. أوقف تشغيل عارض هيكل الرسالة بالضغط على نفس المفاتيح الثلاثة.</para>
+
+<para
+>يمكنك التمرير عبر الرسالة صفحة بصفحة باستخدام مفتاحي &PgUp; و &PgDn;، أو سطرًا بسطر باستخدام مفتاحي &Up; و &Down;؛ يمكنك أيضًا استخدام <link linkend="keyboard-shortcuts"
+>اختصارات لوحة المفاتيح</link
+> لتخطي رسائلك دون الحاجة إلى استخدام الفأرة.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect1>
+
+<sect1 id="keyboard-shortcuts">
+<title
+>اختصارات لوحة المفاتيح</title>
+
+<para
+>اختصارات لوحة المفاتيح التالية مدعومة مبدئيًا في النافذة الرئيسة. لاحظ أن العديد من الاختصارات "العالمية" (مثل <keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+> لنسخ النص المختار إلى الحافظة، أو <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> لفتح مربع حوار "بحث") يتعرف عليها بريدك، لكنها لم توثق هنا.</para>
+
+<informaltable>
+<tgroup cols="2">
+<thead>
+<row>
+<entry
+>اختصار لوحة المفاتيح</entry>
+<entry
+>الإجراء</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+>&Space;</entry>
+<entry
+>مرر لأسفل في الرسالة الحالية.</entry>
+</row>
+<row>
+<entry
+><keycap
+>→</keycap
+> أو <keycap
+>N</keycap
+></entry>
+<entry
+>انتقل إلى الرسالة التالية في المجلد الحالي واعرض معاينة الرسالة.</entry>
+</row>
+<row>
+<entry
+><keycap
+>←</keycap
+> أو <keycap
+>P</keycap
+></entry>
+<entry
+>انتقل إلى الرسالة السابقة في المجلد الحالي واعرض معاينة الرسالة.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></entry>
+<entry
+>انتقل إلى أول رسالة على الإطلاق في المجلد الحالي واعرض معاينة الرسالة.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></entry>
+<entry
+>انتقل إلى آخر رسالة على الإطلاق في المجلد الحالي واعرض معاينة الرسالة.</entry>
+</row>
+<row>
+<entry
+><keycap
+>+</keycap
+></entry>
+<entry
+>انتقل إلى الرسالة التالية غير المقروءة في المجلد الحالي.</entry>
+</row>
+<row>
+<entry
+><keycap
+>-</keycap
+></entry>
+<entry
+>انتقل إلى الرسالة السابقة غير المقروءة في المجلد الحالي.</entry>
+</row>
+<row>
+<entry
+><keycap
+>C</keycap
+></entry>
+<entry
+>انسخ هذه الرسالة إلى مجلد آخر.</entry>
+</row>
+<row>
+<entry
+><keycap
+>M</keycap
+></entry>
+<entry
+>انقل هذه الرسالة إلى مجلد آخر.</entry>
+</row>
+<row>
+<entry
+><keycap
+>A</keycap
+></entry>
+<entry
+>رد على جميع مستلمي هذه الرسالة (مع الاقتباس).</entry>
+</row>
+<row>
+<entry
+><keycap
+>R</keycap
+></entry>
+<entry
+>رد على المرسل مع الاقتباس.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+></entry>
+<entry
+>رد على المرسل دون اقتباس أي شيء.</entry>
+</row>
+<row>
+<entry
+><keycap
+>S</keycap
+></entry>
+<entry
+>أطلق مربع حوار البحث عن الرسائل.</entry>
+</row>
+<row>
+<entry
+><keycap
+>T</keycap
+></entry>
+<entry
+>افتح هذه الرسالة في نافذة التحرير.</entry>
+</row>
+<row>
+<entry
+>&Enter;</entry>
+<entry
+>اعرض الرسالة المختارة في عارض الرسائل بملء الشاشة.</entry>
+</row>
+<row>
+<entry
+><keycap
+>V</keycap
+></entry>
+<entry
+>اعرض الرسالة الخام، والترويسات وكل شيء، كملف نصي.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></entry>
+<entry
+>تحقق من وجود رسائل جديدة في الخادم (الخوادم).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></entry>
+<entry
+>افتح نافذة التحرير لكتابة رسالة جديدة.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></entry>
+<entry
+>كبر الرسالة الحالية، بزيادات قدرها 20%.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></entry>
+<entry
+>صغر الرسالة الحالية، بزيادات قدرها 20%.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>0</keycap
+></keycombo
+></entry>
+<entry
+>أعد ضبط معامل تكبير الرسالة إلى 100% (الحجم الكامل).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+></entry>
+<entry
+>بدل عرض هيكل الرسالة (أسفل جزء معاينة الرسائل).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></entry>
+<entry
+>أنشئ شريط أدوات التبويب (يظهر فوق قائمة الرسائل).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+></entry>
+<entry
+>أزل لسان التبويب النشط حاليًا من شريط أدوات التبويب.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>↑</keycap
+></keycombo
+></entry>
+<entry
+>انتقل إلى المجلد السابق في قائمة المجلدات (إذا كانت قائمة المجلدات تحت التركيز).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>↓</keycap
+></keycombo
+></entry>
+<entry
+>انتقل إلى المجلد التالي في قائمة المجلدات (إذا كانت قائمة المجلدات تحت التركيز).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></entry>
+<entry
+>ركز على المجلد الأول على الإطلاق. استخدم <keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+> للدخول فعليًا إلى المجلد.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></entry>
+<entry
+>ركز على المجلد الأخير على الإطلاق. استخدم <keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+> للدخول فعليًا إلى المجلد.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+></entry>
+<entry
+>ادخل إلى المجلد الذي تحت التركيز، أي المجلد الذي انتقلت إليه باستخدام <keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+> أو <keycombo action="simul"
+>&Ctrl;&End;</keycombo
+>.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Shift;<keycap
+>H</keycap
+></keycombo
+></entry>
+<entry
+>بدل بين النص الصرف و &HTML; (ما لم يتم تفضيل &HTML; عبر مربع حوار <guilabel
+>الإعدادات</guilabel
+>).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Shift;<keycap
+>←</keycap
+></keycombo
+> و <keycombo action="simul"
+>&Shift;<keycap
+>→</keycap
+></keycombo
+></entry>
+<entry
+>اختر الرسائل بالتسلسل في قائمة الرسائل، بدءًا من الرسالة الحالية.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>لمزيد من اختصارات لوحة المفاتيح، ألق نظرة على مربع حوار <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guimenuitem
+>اضبط الاختصارات...</guimenuitem
+></menuchoice
+>. إذا لم تكن راضيًا عن الإعدادات المبدئية، فيمكنك تغييرها!</para>
+
+<para
+>يستحق إجراءان بالفأرة الذكر هنا. أولًا، يمكنك اختيار رسائل متعددة غير متجاورة لتُعالج كلها دفعة واحدة (مثل نسخها، أو حذفها، أو نقلها) بالضغط على &Ctrl; واختيارها بزر الفأرة الأيسر. ثانيًا، يمكنك فتح رسالة في نافذة خارجية بالنقر المزدوج على عنصر في قائمة الرسائل. إذا كانت الرسالة في مجلد الصادر، أو المسودات، أو القوالب، فستُفتح في نافذة تحرير. خلاف ذلك، ستُفتح باستخدام عارض الرسائل الخارجي، وهو نسخة مختصرة من نافذة بريدك الرئيسة بدون قوائم المجلدات والرسائل، ومع قوائم أقصر.</para>
+
+</sect1>
+
+<sect1 id="the-composer-window">
+<title
+>نافذة المحرر</title>
+<screenshot>
+<screeninfo
+>نافذة المحرر</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composer-window.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>نافذة المحرر</phrase>
+    </textobject>
+    <caption>
+      <para
+>نافذة المحرر في وضع تحرير &HTML;.</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>تُستخدم نافذة المحرر لكتابة رسائل جديدة، وتحرير الردود، وتوجيه الرسائل. يمكن فتحها بعدة طرق. إليك الخيارات المتنوعة لتحرير الرسائل.</para>
+<sect2 id="composing-a-message">
+<title
+>تحرير رسالة</title>
+<variablelist>
+  <varlistentry id="compose-new-message"
+><term
+>رسالة جديدة...</term>
+  <listitem>
+  <para
+>يمكن استدعاء نافذة محرر الرسائل الجديدة بأربع طرق مختلفة:</para>
+      <itemizedlist>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>جديد</guisubmenu
+><guimenuitem
+>رسالة جديدة...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>رسالة جديدة...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+>عبر أيقونة <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> جديد</guiicon
+> في شريط الأدوات الرئيس.</para>
+        </listitem>
+        <listitem>
+          <para
+>عبر اختصار لوحة المفاتيح <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>.</para>
+        </listitem>
+      </itemizedlist>
+      <para
+>لكتابة رسالتك، املأ الحقول المناسبة في نافذة المحرر. استخدم قائمة <guimenu
+>عرض</guimenu
+> لاختيار حقول الترويسة التي تود عرضها. سيظل أي اختيار تقوم به هو المبدئي عند فتح نافذة محرر جديدة. هذه العناصر متاحة.</para>
+      <itemizedlist id="composer-headers">
+        <listitem>
+          <para
+>تتيح لك القائمة المنسدلة <guimenuitem
+>الهوية</guimenuitem
+> اختيار هوية لاستخدامها.</para>
+        </listitem>
+        <listitem>
+          <para
+>تتيح لك القائمة المنسدلة <guimenuitem
+>القاموس</guimenuitem
+> اختيار قاموس للتدقيق الإملائي.</para>
+        </listitem>
+        <listitem>
+          <para
+>يتيح لك <guimenuitem
+>مجلد البريد المرسل</guimenuitem
+> تحديد المكان الذي ستُحفظ فيه نسخة محلية من هذه الرسالة عند إرسالها.</para>
+        </listitem>
+        <listitem>
+          <para
+>يتيح لك <guimenuitem
+>نقل البريد</guimenuitem
+> اختيار خادم بريد صادر.</para>
+        </listitem>
+        <listitem>
+          <para
+>حقول "من:" و "إلى:" و "الموضوع:" التقليدية. (سيظهر حقل "الرد على:" فقط إذا حددت عنوان <guilabel
+>الرد على</guilabel
+> بديلًا في علامة تبويب <guilabel
+>متقدم</guilabel
+> في مربع حوار <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guisubmenu
+>اضبط بريدك...</guisubmenu
+> <guisubmenu
+>الحسابات</guisubmenu
+><guimenuitem
+>الهويات</guimenuitem
+></menuchoice
+>.)</para>
+        </listitem>
+        <listitem>
+          <para
+>يقوم خيار <guimenuitem
+>استخدم خطًا ثابتًا</guimenuitem
+> بتبديل الخطوط ثابتة العرض تشغيلًا وإيقافًا.</para>
+        </listitem>
+        <listitem>
+          <para
+>يعرض خيار <guimenuitem
+>قصاصات</guimenuitem
+> نافذة القصاصات، حيث يمكنك حفظ أجزاء من النصوص المستخدمة بكثرة.</para>
+        </listitem>
+      </itemizedlist>
+
+<para
+>هناك مجموعة متنوعة من الاختصارات لمساعدتك في اختيار المستلمين. يفتح زر <guibutton
+>اختر...</guibutton
+> بجوار حقول <guilabel
+>إلى:</guilabel
+>، و <guilabel
+>نسخة إلى:</guilabel
+>، و <guilabel
+>نسخة مخفية إلى:</guilabel
+> قائمة من دفتر عناوين كيدي حتى تتمكن من اختيار شخص واحد أو أكثر ممن يجب أن يتلقوا هذه الرسالة.</para>
+
+<para
+>بدلًا من ذلك، عندما تبدأ في كتابة عنوان في أحد حقول <guilabel
+>إلى:</guilabel
+>/<guilabel
+>نسخة إلى:</guilabel
+>/<guilabel
+>نسخة مخفية إلى:</guilabel
+>، ستظهر نافذة منبثقة تقترح عناوين مشابهة استخدمت مؤخرًا وعناوين مطابقة تمامًا من دفتر عناوين كيدي؛ إذا لم تعجبك هذه النافذة المنبثقة الآلية، فيمكنك تعطيلها بالنقر بزر الفأرة الأيمن في الحقل الذي تكتب فيه، ثم اختيار وضع <guilabel
+>إكمال النص &gt;</guilabel
+> مختلف. يمكنك أيضًا استخدام قائمة السياق هذه لضبط الترتيب الذي تظهر به عمليات الإكمال المقترحة (عبر <guilabel
+>اضبط الإكمال...</guilabel
+>).</para>
+
+<para
+>كلما أردت إضافة أكثر من مستلم واحد في أحد الحقول، استخدم فاصلة لفصل عنوان عن العنوان التالي. قد يتعين عليك تحديد عناوين مؤهلة بالكامل (أي <userinput
+>user@example.com</userinput
+>) حتى للمستخدمين المحليين، اعتمادًا على ضبط نظامك.</para>
+
+<para
+>عند الانتهاء من رسالتك، انقر فوق أيقونة <guiicon
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="mail-send.png" format="PNG"/></imageobject
+></inlinemediaobject
+> أرسل</guiicon
+> لإرسال الرسالة الآن، أو انقر فوق أيقونة <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-queue.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> صف في الطابور</guiicon
+> لوضع الرسالة في مجلد الصادر. إذا لم تنتهِ رسالتك بعد، فاختر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>احفظ كمسودة</guimenuitem
+></menuchoice
+> لحفظها لتحريرها لاحقًا. إذا كنت ترغب في طباعة رسالتك، فاختر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>معاينة الطباعة</guimenuitem
+></menuchoice
+> لمعاينة الرسالة، و <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>اطبع</guimenuitem
+></menuchoice
+> لطباعتها.</para>
+  <para id="send-later"
+>يتيح لك خيار <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل لاحقًا</guimenuitem
+></menuchoice
+> جدولة رسائل البريد الإلكتروني الخاصة بك ليتم إرسالها في تاريخ ووقت محددين. يرجى الاطلاع على <ulink url="help:/akonadi_sendlater_agent"
+>عميل الإرسال اللاحق</ulink
+> للحصول على التفاصيل.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+<varlistentry id="new-compose-from-templates">
+    <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>جديد</guisubmenu
+><guisubmenu
+>رسالة من قالب</guisubmenu
+> <guimenuitem
+><replaceable
+>قالبي الرائع</replaceable
+></guimenuitem
+></menuchoice
+></term>
+  <listitem>
+    <para
+>يعد تحرير رسالة جديدة من قالب أمرًا مفيدًا عندما تنشئ تحفة فنية ترغب في استخدامها كقالب للرسائل الجديدة المستقبلية. اختر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>احفظ كقالب</guimenuitem
+></menuchoice
+>؛ سيؤدي هذا إلى وضع قالبك الجديد في مجلد <guilabel
+>القوالب</guilabel
+>. يمكنك مراجعة القالب في أي وقت باختياره من هذا المجلد. انقر نقرًا مزدوجًا على اسم القالب (أو اضغط على مفتاح الاختصار <keycap
+>T</keycap
+>) لفتحه في نافذة تحرير. يمكنك أيضًا اختيار القالب عبر قائمة <guimenu
+>ملف</guimenu
+>، كما هو موضح أعلاه.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="encrypt-sign">
+<title
+>توقيع الرسائل وتعميتها</title>
+
+<para
+>إذا كنت ترغب في إرسال رسالة <link linkend="pgp-encrypt-your-messages"
+>معماة</link
+> أو <link linkend="pgp-sign-your-messages"
+>موقعة رقميًا</link
+>، فاختر أيقونة <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> وقع</guiicon
+> و/أو <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-decrypt.png" format="PNG"/></imageobject
+></inlinemediaobject
+> عمِّ</guiicon
+> في شريط الأدوات. استخدم القائمة المنسدلة <menuchoice
+><guimenuitem
+>خيارات</guimenuitem
+><guisubmenu
+>تنسيق تعمية الرسالة &gt;</guisubmenu
+></menuchoice
+> لاختيار التنسيق المستخدم لتعمية الرسالة. (تتيح لك قائمة <guilabel
+>خيارات</guilabel
+> أيضًا توقيع/تعمية الرسالة.) يمكنك اختيار واحد من خمسة خيارات للتنسيق. </para>
+
+<variablelist id="cryptographic-message-formats">
+<varlistentry>
+<term
+><guilabel
+>أي</guilabel
+></term>
+<listitem>
+<para
+>سيستخدم بريدك تنسيقًا يفهمه جميع مستلمي الرسالة. يمكن تحديد التنسيق المفضل لكل مستلم عبر <ulink url="help:/kaddressbook"
+>دفتر عناوين كيدي</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP ضمني (مهجور)</guilabel
+></term>
+<listitem>
+<para
+>هذا التنسيق مهجور، ولكن يُدعم للتوافق مع الإصدارات السابقة. إذا استخدمت هذا التنسيق، فسيُوقع و/أو يُعمى نص الرسالة فقط. <emphasis
+>لن يتم توقيع المرفقات ولا تعميتها.</emphasis
+> لا يمكن توقيع رسائل &HTML; بهذا التنسيق. يجب عليك استخدام هذا التنسيق فقط عند الضرورة، أي إذا كنت ترسل رسائل إلى أشخاص يستخدمون برامج بريد إلكتروني لا يمكنها التعامل مع التنسيقات الأكثر تقدمًا.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>هذا التنسيق هو خليفة تنسيق OpenPGP الضمني. إذا استخدمت هذا التنسيق، سيُوقع و/أو يُعمى نص الرسالة وجميع المرفقات (على الأقل مبدئيًا). هذا هو التنسيق الموصى به إذا كنت تستخدم تعمية OpenPGP.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>هذا التنسيق هو تنسيق بديل لـ OpenPGP/&MIME;. إذا استخدمت هذا التنسيق، سيُوقع و/أو يُعمى نص الرسالة وجميع المرفقات (على الأقل مبدئيًا). يستخدم هذا التنسيق في الغالب من قبل الشركات. يعتمد على شهادة x.509، وليس مفتاح PGP / GPG.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME; معتم</guilabel
+></term>
+<listitem>
+<para
+>هذا التنسيق هو نوع من تنسيق S/&MIME;. ولأنه يلف الرسالة وأي مرفقات والتوقيع الرقمي في كائن &MIME; واحد، فإنه يستهلك الكثير من المعالج ويجب استخدامه فقط عند الضرورة.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="html-mails">
+<title
+>إنشاء رسائل &HTML;</title>
+
+<para
+>لاحظ أن رسائل &HTML; غالبًا ما تُعتبر مصدر إزعاج؛ لذلك، يجب عليك استخدام رسائل &HTML; بحكمة. على وجه الخصوص، يجب عليك عدم إرسال رسائل &HTML; إلى مستلمي القوائم البريدية ما لم يكن مسموحًا برسائل &HTML; صراحة.</para>
+
+<para
+>لإنشاء رسائل &HTML;، يجب عليك أولًا تمكين أدوات التوصيف. للقيام بذلك، قم بتمكين <guimenuitem
+>تحرير النص الغني</guimenuitem
+> في قائمة <menuchoice
+><guimenu
+>خيارات</guimenu
+></menuchoice
+>، أو انقر فوق أيقونة <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="preferences-desktop-font.png" format="PNG"/></imageobject
+></inlinemediaobject
+> نص غني</guiicon
+> في شريط أدوات بريدك. سيظهر شريط أدوات إضافي مع عدة أدوات تنسيق. عبر شريط أدوات &HTML;، يمكنك اختيار نص قياسي أو قوائم نقطية/مرقمة. (استخدم القائمة المنسدلة <guilabel
+>بلا <inlinemediaobject
+><imageobject
+> <imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> عند الحافة اليسرى لشريط الأدوات للتحكم في نمط القوائم النقطية/المرقمة.) يمكنك أيضًا التحكم في عائلة الخط، وحجم الخط، ونمط الخط (عريض، أو مائل، أو مسطر، أو مشطوب) ولون النص/الخلفية. ويمكنك تحديد محاذاة النص (محاذاة لليسار، أو توسيط، أو محاذاة لليمين، أو مضبوط) وإدراج وسوم الإرساء (أي الروابط)، والخطوط الأفقية، والصور، والجداول، وكود &HTML; عشوائي (على الرغم من أن دعم بعض وسوم &HTML; الأكثر تقدمًا لا يزال غير مكتمل).</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="attachments">
+<title
+>إضافة مرفقات</title>
+
+<para
+>يمكنك إرفاق ملفات برسالتك باستخدام أي من هذه الطرق.</para>
+
+<itemizedlist>
+<listitem>
+<para
+>استخدم القائمة المنسدلة <menuchoice
+><guimenu
+>أرفق</guimenu
+><guisubmenu
+>أرفق &gt;</guisubmenu
+></menuchoice
+> ومربع الحوار التالي لاختيار ملف؛</para>
+</listitem>
+<listitem>
+<para
+>انقر فوق أيقونة <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-attachment.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> أرفق </guiicon
+> واختر الملف الذي ترغب في إرفاقه؛</para>
+</listitem>
+<listitem>
+<para
+>اسحب ملفًا من سطح المكتب أو مجلد آخر إلى نافذة المحرر؛</para>
+</listitem>
+<listitem>
+<para
+>اسحب رسالة من قائمة رسائل بريدك إلى نافذة المحرر – سيُرفق حينها تلك الرسالة؛</para>
+</listitem>
+<listitem>
+<para
+>اختر أحد الخيارات الإضافية في قائمة <menuchoice
+><guimenu
+>أرفق</guimenu
+></menuchoice
+>؛ أو</para>
+</listitem>
+<listitem>
+<para
+>اختر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-open.png" format="PNG"/></imageobject
+></inlinemediaobject
+> أدرج ملفًا نصيًا...</guimenuitem
+></menuchoice
+> أو <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-open.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> أدرج ملفًا نصيًا حديثًا &gt;</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</itemizedlist>
+
+<para
+>بمجرد إرفاق ملف برسالتك، يظهر في جزء المرفقات في أسفل نافذة المحرر. يمكنك استخدام زر الفأرة الأيمن على كل مرفق لـ <guimenuitem
+>عرض</guimenuitem
+>، أو <guimenuitem
+>فتح</guimenuitem
+>، أو <guimenuitem
+>تحرير</guimenuitem
+>، أو <guimenuitem
+>إعادة تحميل</guimenuitem
+>، أو <guimenuitem
+>حفظ باسم...</guimenuitem
+>، أو <guimenuitem
+>إزالة</guimenuitem
+> المرفق. (تختلف قائمة السياق هذه قليلًا، اعتمادًا على نوع ملف المرفق.) قد يتم تبديل عدة خيارات (ضغط / تعمية / توقيع / اقتراح العرض الآلي) تشغيلًا أو إيقافًا لكل ملف مرفق بالرسالة.</para>
+
+<para
+>استخدم عنصر <guimenuitem
+>الخصائص</guimenuitem
+> في قائمة السياق لفتح مربع حوار <guilabel
+>خصائص المرفق</guilabel
+>. يحتوي الحقل الأول على نوع &MIME; للمرفق. تمامًا مثل حقل <guilabel
+>الاسم</guilabel
+>، فإنه يُملأ آليًا بقيمة مناسبة. أحيانًا قد يكون نوع &MIME; خاطئًا. يمكنك حينها كتابة أي نوع &MIME; أو الاختيار من قائمة أنواع &MIME; الشائعة. يمكنك أيضًا اختيار طريقة ترميز لملفك من قائمة خيارات الترميز (عادةً، تعمل القيمة المبدئية بشكل جيد). حدد خيار <guilabel
+>اقترح العرض الآلي</guilabel
+> إذا كنت ترغب في اقتراح العرض الآلي (الضمني) لهذا المرفق على المستلم. يعتمد نجاح ذلك من عدمه على برنامج البريد الإلكتروني للمستلم، وعلى إعداداته.</para>
+
+<para
+>يمكنك أيضًا إرفاق مفاتيح تعمية عامة بالرسالة باختيار الخيارات المناسبة في قائمة <menuchoice
+><guimenu
+>أرفق</guimenu
+></menuchoice
+>. تُعامل مفاتيح <application
+>GnuPG</application
+> وشهادات x.509 (عادةً) كمرفقات ملفات.</para>
+
+</sect2>
+
+<sect2 id="checking-the-spelling-of-your-message">
+<title
+>التدقيق الإملائي لرسالتك</title>
+
+<para
+>يمكن لبريدك تدقيق إملاء رسالتك آليًا ووضع خط أحمر تحت الكلمات غير المعروفة. إذا كان هناك الكثير من الكلمات غير المعروفة، فسيعطل بريدك التدقيق. لاختيار اللغة المستخدمة عند التدقيق، اختر <menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>القاموس</guimenuitem
+></menuchoice
+>. يمكنك تعطيل التدقيق الإملائي الآلي في قائمة <menuchoice
+><guimenu
+>خيارات</guimenu
+></menuchoice
+>.</para>
+<para
+>إذا كنت بحاجة إلى كتابة رسائل بلغات مختلفة، فمكّن القائمة المنسدلة <guilabel
+>القاموس</guilabel
+> باستخدام <menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>القاموس</guimenuitem
+></menuchoice
+> من القائمة. يتيح لك استخدام هذه القائمة المنسدلة تغيير لغة المدقق الإملائي بنقرة واحدة بالفأرة. </para>
+<para
+>لتدقيق إملاء رسالتك عبر مربع حوار، اختر <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>الإملاء...</guimenuitem
+></menuchoice
+>. يستخدم بريدك &sonnet; لتدقيق الإملاء؛ &sonnet; هي واجهة كيدي لبرامج تدقيق الإملاء <application
+>Aspell</application
+>، و <application
+>Hspell</application
+>، و <application
+>Enchant</application
+>، و <application
+>HUNSPELL</application
+>. لاحظ أنك قد تحتاج إلى ضبط المدقق الإملائي باستخدام <menuchoice
+><guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+>مدقق الإملاء...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+
+<sect2 id="setup-text-snippets">
+<title
+>إعداد أداة قصاصات النصوص</title>
+<para
+>عند التحرير في نافذة المحرر، يمكنك إدراج أجزاء من النصوص المستخدمة بكثرة كقصاصات. لضبط قصاصات البريد، اختر <menuchoice
+> <guimenu
+>عرض</guimenu
+> <guimenuitem
+>قصاصات</guimenuitem
+> </menuchoice
+> من شريط القوائم. ستظهر لوحة جديدة على الجانب الأيمن من نافذة المحرر. </para>
+<para
+>لإضافة قصاصة جديدة إلى لوحة القصاصات، انقر بزر الفأرة الأيمن على اللوحة، ثم انقر فوق <menuchoice
+><guimenu
+>أضف قصاصة</guimenu
+></menuchoice
+> في قائمة السياق. سيظهر مربع حوار محرر القصاصات، حيث يمكن إضافة نص جديد وإعطاء القصاصة اسمًا. يمكن أيضًا ربط <guilabel
+>اختصار</guilabel
+> بالقصاصة. يمكن تجميع القصاصات معًا عن طريق إنشاء مجموعات وإضافة القصاصات إلى مجموعة معينة. استخدم قائمة السياق بزر الفأرة الأيمن لإضافة، أو تحرير، أو إزالة قصاصات النص من المجموعة المحفوظة. </para>
+<para
+>تتيح أداة <guilabel
+>القصاصات</guilabel
+> إدراج نص متغير في أماكن محددة مسبقًا في أي وقت تدرج فيه قصاصة في ملف. للقيام بذلك، توفر <guilabel
+>القصاصات</guilabel
+> آلية المتغيرات الخاصة بها. يمكنك إدراج متغيرات في نص القصاصة نفسه باستخدام الفواصل ( $ ) لإحاطة أسماء المتغيرات. على سبيل المثال: $variablename$، $invoicenumber$، $weekno$. </para>
+<para
+>يمكن تغيير فاصل المتغير إلى حرف آخر عن طريق تغيير <varname
+>snippetDelimiter</varname
+> في قسم [SnippetPart] في ملف ضبط قصاصات النصوص، والذي يمكن العثور عليه في ~./config/kmailsnippetrc. <programlisting
+>snippetDelimiter=$
+</programlisting>
+
+</para>
+
+</sect2>
+<sect2 id="using-the-translator">
+  <title
+>استخدام المترجم المدمج</title>
+  <para
+>يوفر محرر بريدك 2 مترجمًا مدمجًا يمكن الوصول إليه باختيار <menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>المترجم</guimenuitem
+></menuchoice
+> من شريط القوائم. ستظهر لوحة جديدة في أسفل نافذة المحرر.</para>
+    <para
+>لترجمة قسم من النص، أدخل أولًا النص الذي تود ترجمته في المربع المسمى <guilabel
+>اسحب النص الذي تريد ترجمته.</guilabel
+>. اختر اللغة التي كُتب بها في القائمة المنسدلة <guilabel
+>من:</guilabel
+>. اختر اللغة التي تود الترجمة إليها في القائمة المنسدلة <guilabel
+>إلى:</guilabel
+>، ثم انقر فوق زر <guibutton
+>ترجم</guibutton
+>. بعد ترجمته بواسطة ترجمة جوجل، وهي خدمة مجانية عبر الإنترنت، سيظهر نصك المترجم في المربع التالي. إذا كنت بحاجة إلى الترجمة في الاتجاه الآخر، يمكنك ببساطة النقر فوق زر <guibutton
+>اعكس</guibutton
+>. لمسح كل النص، انقر فوق زر <guibutton
+>امسح</guibutton
+>. </para>
+</sect2>
+</sect1>
+
+<sect1 id="folders">
+<title
+>مجلدات الرسائل</title>
+<screenshot>
+<screeninfo
+>مثال لإعداد المجلدات</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>مثال لإعداد المجلدات</phrase>
+    </textobject>
+    <caption>
+      <para
+>مجلدات بريدك المبدئية.</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>تُستخدم مجلدات الرسائل لتنظيم رسائل البريد الإلكتروني الخاصة بك. عند بدء تشغيل بريدك لأول مرة، تُنشأ <quote
+>المجلدات المحلية</quote
+> التي تحتوي على مجلدات <guilabel
+>الوارد</guilabel
+>، و <guilabel
+>الصادر</guilabel
+>، و <guilabel
+>البريد المرسل</guilabel
+>، و <guilabel
+>المهملات</guilabel
+>، و <guilabel
+>المسودات</guilabel
+>، و <guilabel
+>القوالب</guilabel
+>. كل من هذه المجلدات له وظيفة خاصة.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>الوارد:</guilabel
+></term>
+<listitem>
+<para
+>حيث يضع بريدك رسائلك الجديدة مبدئيًا عندما تخبره بالتحقق من بريدك. </para
+><note
+><para
+>لن تستخدم حسابات &IMAP; مجلد الوارد هذا. يقع مجلد وارد &IMAP; على خادم &IMAP;.</para
+></note>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>الصادر:</guilabel
+></term>
+<listitem>
+<para
+>حيث توضع الرسائل أثناء انتظار تسليمها. يجب عليك عدم سحب الرسائل وإفلاتها هنا لإرسالها؛ استخدم أيقونة <guiicon
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-send.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> أرسل</guiicon
+> في نافذة المحرر بدلًا من ذلك.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>البريد المرسل:</guilabel
+></term>
+<listitem>
+<para
+>مبدئيًا، تُحفظ نسخة من كل رسالة ترسلها في هذا المجلد.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>المهملات:</guilabel
+></term>
+<listitem>
+<para
+>مبدئيًا، تُنقل جميع الرسائل التي حددتها كمهملات إلى هذا المجلد.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>المسودات:</guilabel
+></term>
+<listitem>
+<para
+>يحتوي على الرسائل التي بدأت في كتابتها ولكنك حفظتها في هذا المجلد باستخدام <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>احفظ كمسودة</guimenuitem
+></menuchoice
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>القوالب:</guilabel
+></term>
+<listitem>
+<para
+>يحمل هذا المجلد قوالبك المنشأة عبر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>احفظ كقالب</guimenuitem
+></menuchoice
+> من نافذة المحرر. يرجى الاطلاع على <link linkend="new-compose-from-templates"
+>قوالب المحرر الجديدة</link
+> للحصول على التفاصيل.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<sect2 id="folder-details">
+<title
+>إنشاء المجلدات واستخدامها</title>
+
+<para
+>نظم رسائل بريدك الإلكتروني (مثل القوائم البريدية، والفواتير، والإيصالات، وما إلى ذلك) عن طريق إنشاء مجلدات جديدة. لإنشاء مجلد جديد، اختر <menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>أضف مجلدًا...</guimenuitem
+></menuchoice
+>، أو <guimenuitem
+>أضف مجلدًا...</guimenuitem
+> من قائمة السياق بزر الفأرة الأيمن. سيظهر لك مربع حوار؛ أدخل اسم المجلد الجديد في مربع النص. يمكنك تخصيص كل مجلد بالكامل (أي طرق العرض، والردود، وما إلى ذلك) عن طريق اختيار المجلد الذي ترغب في تعديله في جزء المجلدات ثم اختيار <guimenuitem
+>خصائص المجلد</guimenuitem
+> من قائمة السياق بزر الفأرة الأيمن. راجع <link linkend="folders-properties-window"
+>خصائص المجلدات</link
+> لمزيد من التفاصيل.</para>
+
+<para
+>لنقل الرسائل من مجلد إلى آخر، اختر الرسالة (الرسائل) التي تريد نقلها واضغط على مفتاح <keycap
+>M</keycap
+> أو اختر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>انقل الرسالة إلى... &gt;</guimenuitem
+></menuchoice
+>. ستظهر قائمة بالمجلدات؛ اختر المجلد الذي ترغب في نقل الرسالة إليه من تلك القائمة. يمكن أيضًا نقل الرسائل عن طريق سحبها من قائمة الرسائل إلى مجلد في قائمة المجلدات، أو باستخدام قائمة سياق تُستدعى بزر الفأرة الأيمن.</para>
+
+<para
+>إذا كان لديك مجلدات تصل إليها بشكل متكرر، يمكنك إضافتها إلى لوحة المجلدات المفضلة (فوق قائمة المجلدات). أضفها باستخدام خيار قائمة السياق بزر الفأرة الأيمن <guimenuitem
+>أضف إلى المجلدات المفضلة</guimenuitem
+>.</para>
+
+<para
+>يمكنك إنشاء مجلد افتراضي بمعايير بحث عبر الذهاب إلى <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>ابحث عن رسائل...</guimenuitem
+></menuchoice
+>، أو باستخدام اختصار لوحة المفاتيح <keycap
+>S</keycap
+>. أدخل معايير بحثك في الحوار. سمِّ بحثك في مربع النص <guilabel
+>اسم مجلد البحث:</guilabel
+>، مثلًا <replaceable
+>رسائل البريد التي تحتوي كلمة مدونة</replaceable
+>. انقر زر <guibutton
+>ابحث</guibutton
+>. الآن حدد زر <guibutton
+>افتح مجلد البحث</guibutton
+>. سُيفتح مجلد نتائج، يتموضّع في أسفل لوحة المجلدات. (بشكل مبدئي، يُسمى كل بحث جديد "آخر بحث". يمكنك حفظ معايير بحث محددة بتعيين اسم خاص كما وُصف أعلاه.)</para>
+
+<para
+>إن إنشاء مرشحات لنقل الرسائل آليًا إلى مجلدات محددة هو وسيلة رائعة لتنظيم الرسائل حسب القائمة البريدية، المرسل، الموضوع إلخ. يرجى مراجعة <link linkend="filters"
+>المرشحات</link
+> للتفاصيل.</para>
+
+<para
+>إذا كنت تتلقى رسائل بريد من مصدر موثوق (مثل مدونة اشتركت فيها) منسقة بصيغة &HTML; وترغب في تمكين عرض &HTML; لهذه الرسائل فقط، يمكنك إنشاء مجلد جديد، وضبط <link linkend="filters"
+>مرشح</link
+> لوضع كل البريد الوارد من المدونة في المجلد الجديد، ثم حدد المجلد واختر <menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>تنسيق الرسالة المبدئي &gt;</guimenuitem
+> <guimenuitem
+>فضل &HTML; على النص الصرف</guimenuitem
+></menuchoice
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>بعض إجراءات المجلدات الشائعة هي</para>
+<variablelist>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>انقل كل الرسائل إلى المهملات</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>نقل</action
+> كل الرسائل في المجلد المحدد إلى مجلد المهملات.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>أرشف المجلد</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>إنشاء أرشيف</action
+> للمجلد. انظر <link linkend="folder-archive"
+>أرشفة المجلد</link
+> للتفاصيل.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>احذف المجلد</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>إزالة مجلد</action
+> بكل ما فيه من رسائل ومجلدات فرعية.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>أزل الرسائل المكررة</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>البحث</action
+> في المجلد المحدد حاليًا عن المكررات و <action
+>حذفها</action
+>.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="folders-properties-window">
+<title
+>خصائص المجلد</title>
+<screenshot>
+<screeninfo
+>مثال على خصائص المجلد</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-properties.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>مثال على خصائص المجلد</phrase>
+    </textobject>
+    <caption>
+      <para
+>حوار خصائص المجلد</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>يتيح لك حوار <guilabel
+>خصائص المجلد</guilabel
+> تحديد خصائصه. لاحظ أن بعض الخصائص متاحة فقط للمجلدات التي تنشئها وليس للمجلدات المبدئية مثل <guilabel
+>البريد الوارد</guilabel
+> إلخ. لا يمكن إعادة تسمية المجلدات الستة المبدئية.</para>
+
+<sect3 id="folders-properties-general">
+<title
+>لسان عام</title>
+<para
+>إذا كنت ترغب في إعادة تسمية مجلد، فغيّر المدخلة في حقل <guilabel
+>الاسم:</guilabel
+>.</para>
+
+<para
+>خيار <guilabel
+>اتخذ إجراءً بشأن البريد الجديد/غير المقروء في هذا المجلد</guilabel
+> مُفعّل مبدئيًا في المجلدات الجديدة. وهو يُفعّل الإشعارات بشأن البريد الجديد الذي يصل إلى المجلد. ألغِ تحديد هذا الخيار في مجلدات مثل البريد المزعج والمهملات التي لا ترغب في تلقي إشعارات عنها.</para>
+<para
+>حدد <guilabel
+>احتفظ بالردود في هذا المجلد</guilabel
+> إذا كنت تريد تخزين الردود على هذه الرسائل في هذا المجلد بدلًا من مجلد البريد المرسل المبدئي المضبوط.</para>
+
+<para
+>حدد <guilabel
+>أخفِ هذا المجلد في حوار اختيار المجلد</guilabel
+> إذا كنت لا تريد ظهور هذا المجلد في حوارات اختيار المجلدات، مثل حواري <guimenuitem
+>اقفز إلى المجلد</guimenuitem
+> و <guimenuitem
+>انقل الرسالة إلى</guimenuitem
+>.</para>
+
+<para
+>تستخدم المجلدات الجديدة الهوية المبدئية. إذا كنت ترغب في ربط مجلد بهوية مختلفة، ألغِ تحديد <guilabel
+>استخدم الهوية المبدئية</guilabel
+> وحدد هوية مختلفة من القائمة المنسدلة <guilabel
+>هوية المرسل</guilabel
+>. انظر <link linkend="configure-identity"
+>ضبط الهويات</link
+> لمعلومات عن الهويات. ستظل الردود على الرسائل التي أُرسلت إليك مباشرة تستخدم عنوان <quote
+>إلى</quote
+> الخاص بالرسالة كعنوان مبدئي إذا عُثر على هوية مطابقة.</para>
+
+<!-- <para
+>If you have groupware, you can change the contents &eg; calendar, notes, &etc; of the folder in the
+<guilabel
+>Folder contents:</guilabel
+> drop down box.</para>
+
+<para
+>If you share the folder with other users, you can <guilabel
+>Share unread state with all users</guilabel
+> which will show the same unread state for all users.</para>
+<informalexample
+><para
+>For example, a ticket system that all emails must be read and multiple users are responsible for reading unread tickets.</para
+></informalexample
+> -->  <!-- I cannot find any "groupware" functionality in kmail. @dcb2020291 -->
+</sect3>
+
+<sect3 id="folders-properties-view">
+<title
+>لسان عرض</title>
+<para
+>يتيح لك خيار <guilabel
+>استخدم أيقونات مخصصة</guilabel
+> اختيار أيقونات مختلفة عن المبدئية في قائمة المجلدات.</para>
+<para
+>عبر القائمة المنسدلة <guilabel
+>أظهر العمود</guilabel
+> يمكنك ضبط الأعمدة المرئية في لوحة الترويسة إلى مبدئي، أو المرسل، أو المستلم. قد يكون هذا مفيدًا إذا كنت تستخدم مجلدًا مخصصًا لحفظ بعض رسائلك المرسلة.</para>
+<para
+>في قسم <guilabel
+>قائمة الرسائل</guilabel
+> يمكنك تحديد وضبط <guilabel
+>تجميع</guilabel
+> و <guilabel
+>سمة</guilabel
+> لهذا المجلد تختلف عما هو مضبوط مبدئيًا في إعدادات بريدك. لمزيد من التفاصيل انظر لسان <link linkend="configure-appearance-message-list"
+>قائمة الرسائل</link
+> في صفحة <guilabel
+>المظهر</guilabel
+>.</para>
+<para
+>يتيح لك قسم <guilabel
+>تنسيق الرسالة المبدئي</guilabel
+> الاختيار بين عرض الرسائل كنص صرف أو &HTML; في هذا المجلد.</para>
+</sect3>
+
+<sect3 id="folders-properties-retrieval">
+<title
+>لسان الجلب</title>
+<para
+>إذا كان لديك حساب لا يتلقى الكثير من البريد ولا تريد من بريدك الاستعلام من الخادم بشكل متكرر، يمكنك إلغاء تحديد <guilabel
+>استخدم الخيارات من المجلد الأب أو الحساب</guilabel
+> لضبط فاصل زمني أطول في صندوق <guilabel
+>زامن آليًا بعد:</guilabel
+>.</para>
+<para
+>في <guilabel
+>خيارات الجلب</guilabel
+> يمكنك تغيير خيار <guilabel
+>اجلب الرسائل الكاملة دائمًا</guilabel
+> إلى <guilabel
+>اجلب متون الرسائل عند الطلب</guilabel
+> إذا كان اتصالك بطيئًا. يمكنك أيضًا ضبط مدة الاحتفاظ بالرسالة محليًا عبر الصندوق الدوار. </para>
+</sect3>
+
+<sect3 id="folders-properties-templates">
+<title
+>لسان القوالب</title>
+<para
+>في هذا اللسان يمكنك تعريف قوالب خاصة بمجلداتك المخصصة. لمزيد من التفاصيل انظر لسان <link linkend="configure-composer-standard-templates"
+> القوالب القياسية</link
+> في صفحة <guilabel
+>المحرر</guilabel
+>. </para>
+</sect3>
+
+<sect3 id="folders-properties-expiry">
+<title
+>لسان الانتهاء</title>
+<para
+>يمكنك ضبط تنظيف أو حذف آلي للرسائل. حدد المربع إذا كنت ترغب في إنهاء صلاحية الرسائل المقروءة أو غير المقروءة آليًا على التوالي. اضبط عدد الأيام في الصندوق الدوار. إذا كنت لا تريد حذف الرسائل نهائيًا، يمكنك تعيين مجلد للاحتفاظ بها فيه عبر مربع نص / حوار اختيار مجلد <guilabel
+>انقل الرسائل منتهية الصلاحية إلى:</guilabel
+>. بمجرد مراجعة الرسائل والرغبة في حذفها نهائيًا، يمكنك الذهاب إلى خيارات انتهاء صلاحية المجلد الذي اخترت نقلها إليه وضبط خيار <guilabel
+>احذف الرسائل منتهية الصلاحية نهائيًا</guilabel
+>، ثم انقر زر <guibutton
+>احفظ الإعدادات وأنهِ الصلاحية الآن</guibutton
+>. </para>
+<warning
+><para
+>الرسائل التي تُحذف لا يمكن استعادتها، لذا كن حذرًا مع هذا الإعداد.</para
+></warning>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect3>
+
+<sect3 id="folders-properties-mailinglist">
+<title
+>لسان القائمة البريدية</title>
+
+<para
+>إذا كنت ستستخدم المجلد لقائمة بريدية، فافتح حوار <guilabel
+>خصائص مجلد القائمة البريدية</guilabel
+> عبر <menuchoice
+><guimenu
+>مجلد</guimenu
+> <guimenuitem
+>إدارة القائمة البريدية</guimenuitem
+> </menuchoice
+> من القائمة. بعدها يجب تحديد <guilabel
+>المجلد يحتوي قائمة بريدية</guilabel
+> لربط هذا المجلد بالقائمة البريدية. بعد ذلك يجب النقر على <guilabel
+>اكتشف آليًا</guilabel
+>. سيحاول بريدك حينها تخمين بعض المعلومات عن القائمة البريدية من الرسالة المحددة حاليًا. إذا لم يتمكن بريدك من تحديد بعض العناوين، فيمكنك إضافة المعلومات الناقصة يدويًا. للقيام بذلك، حدد أولًا <guilabel
+>نوع العنوان</guilabel
+> الذي تريد إضافة عنوان له. يمكنك الاختيار بين خمسة خيارات.</para>
+<variablelist>
+<varlistentry id="folders-properties-mailinglist-post">
+<term
+><guilabel
+>أرسل إلى القائمة</guilabel
+></term>
+<listitem>
+<para
+>يُستخدم هذا العنوان لإرسال الرسائل إلى القائمة البريدية. عادة ما يكون عنوان بريد إلكتروني.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-subscribe">
+<term
+><guilabel
+>اشترك في القائمة</guilabel
+></term>
+<listitem>
+<para
+>يُستخدم هذا العنوان للاشتراك في القائمة البريدية. يمكن أن يكون عنوان بريد إلكتروني أو عنوان صفحة ويب.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-unsubscribe">
+<term
+><guilabel
+>ألغِ الاشتراك من القائمة</guilabel
+></term>
+<listitem
+><para
+>يُستخدم هذا العنوان لإلغاء الاشتراك من القائمة البريدية. يمكن أن يكون عنوان بريد إلكتروني أو عنوان صفحة ويب.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-archive">
+<term
+><guilabel
+>أرشيف القائمة</guilabel
+></term>
+<listitem
+><para
+>هذا هو عنوان أرشيف القائمة البريدية. عادة ما يكون عنوان صفحة ويب.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-help">
+<term
+><guilabel
+>مساعدة القائمة</guilabel
+></term>
+<listitem>
+<para
+>يُستخدم هذا العنوان لطلب المساعدة لهذه القائمة البريدية. عادة ما يكون عنوان بريد إلكتروني.</para>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>بعد اختيار <guilabel
+>نوع العنوان</guilabel
+> المناسب، أدخل عنوان البريد أو عنوان صفحة الويب ثم انقر على <guilabel
+>أضف</guilabel
+>. يمكنك إزالة العناوين عبر <guilabel
+>أزل</guilabel
+>.</para>
+
+<para
+>عند إضافة كل العناوين، يمكنك تنفيذ إجراء، مثل الذهاب إلى أرشيف القائمة، عبر اختيار <guilabel
+>نوع العنوان</guilabel
+> المناسب ثم النقر على <guilabel
+>استدعِ المناول</guilabel
+>. إذا وُجد عنوان بريد وعنوان صفحة ويب للإجراء المطلوب، سيتعين عليك اختيار <guilabel
+>المناول المفضل</guilabel
+> قبل النقر على <guilabel
+>استدعِ المناول</guilabel
+>. اختر <guilabel
+>بريدك</guilabel
+> إذا كنت تريد إرسال رسالة إلى عنوان البريد واختر <guilabel
+>المتصفح</guilabel
+> إذا كنت تريد الذهاب إلى صفحة الويب.</para>
+
+<para
+>يمكنك أيضًا إرسال رسالة جديدة إلى القائمة البريدية عبر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>رسالة جديدة إلى قائمة بريدية...</guimenuitem
+></menuchoice
+> (بدلًا من <guilabel
+>استدعِ المناول</guilabel
+>).</para>
+</sect3>
+
+<sect3 id="folders-properties-shortcut">
+<title
+>لسان الاختصار</title>
+<para
+>يمكنك تعريف اختصار لوحة مفاتيح للوصول إلى المجلد.</para>
+</sect3>
+
+<sect3 id="folders-properties-maintainance">
+<title
+>لسان الصيانة</title>
+<para
+>يعرض هذا اللسان نظرة عامة عن نوع المجلد وحجمه، وعدد الرسائل المقروءة وغير المقروءة في المجلد ويتيح لك تمكين فهرسة النصوص.</para>
+</sect3>
+
+<sect3 id="folders-properties-quota">
+<title
+>لسان الحصة (IMAP فقط)</title>
+<para
+>سيعرض لك هذا اللسان مقدار المساحة التي خُصصت لحساب IMAP الخاص بك من قبل الخادم، وكذلك مقدار المساحة المستخدمة حاليًا من المساحة المخصصة. </para>
+</sect3>
+
+<sect3 id="folders-properties-acl">
+<title
+>لسان التحكم في الوصول (IMAP فقط)</title>
+<para
+>هنا يمكنك إدارة قوائم التحكم في الوصول (ACLs) لمجلدات IMAP.</para>
+<note
+><para
+>يجب أن يكون خادم IMAP قد ضُبط وفُعّل فيه مستوى مستخدم ACL ليكون هذا اللسان مرئيًا.</para
+></note>
+<para
+>تُعرض قائمة ACL النشطة حاليًا في القائمة. وهي تتكون من أزواج من <guilabel
+>معرف المستخدم</guilabel
+> و <guilabel
+>الأذون</guilabel
+> الممنوحة للمستخدمين المحددين بهذا <guilabel
+>معرف المستخدم</guilabel
+>. <footnote
+> <para
+>لاحظ أن <guilabel
+>معرف مستخدم</guilabel
+> واحدًا قد يشير إلى أكثر من مستخدم. اعتمادًا على خادم IMAP وضبطه، قد تكون هناك معرفات مستخدمين تتوافق مع مجموعات من المستخدمين، أو مستخدمين مجهولين، أو أي مستخدم. راجع دليل تنفيذ خادم IMAP الخاص بك لمزيد من المعلومات.</para
+> </footnote
+> قوائم ACL قابلة للضبط لكل مجلد.</para>
+ <note
+><para
+>كما هو الحال مع كل شيء آخر عند استخدام <emphasis
+>IMAP غير المتصل</emphasis
+>، تحتاج إلى المزامنة مع الخادم ليُنقل التغييرات إلى الخادم.</para
+></note>
+<para
+>تُعرف ACL الخاصة بـ IMAP الكثير من الأذون الدقيقة التي يمكنك منحها أو منعها عن المستخدمين الآخرين. ومن أجل الوضوح، سيقدمها بريدك في الفئات الخمس التالية التي يمكنك الاختيار منها (انظر <xref linkend="table-acl-summary"/> للتفاصيل إذا كنت تعرف ACL الخاصة بـ IMAP بالفعل).</para>
+<variablelist>
+<varlistentry id="folders-properties-acl-none">
+<term
+><guilabel
+>بلا</guilabel
+></term>
+<listitem>
+<para
+>لا يمنح المستخدمين المحددين بـ <guilabel
+>معرف المستخدم</guilabel
+> أي حقوق على الإطلاق. وهذا هو المبدئي أيضًا للمستخدمين غير المدرجين صراحة (أو ضمنًا، كمجموعة) في ACL. لن يرى هؤلاء المستخدمون هذا المجلد في قائمة مجلدات IMAP المعروضة لهم بواسطة عملاء البريد الخاصين بهم.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-read">
+<term
+><guilabel
+>قراءة</guilabel
+></term>
+<listitem>
+<para
+>يمنح المستخدمين المحددين بـ <guilabel
+>معرف المستخدم</guilabel
+> حقوق القراءة لهذا المجلد. وهذا يتضمن أيضًا قدرة عملاء البريد الخاصين بهم على وضع علامة مقروء على الرسائل وتخزين هذه المعلومات على الخادم. <footnote
+> <para
+>كل مستخدم لديه قائمته الخاصة بالبريد المقروء، لذا لن توضع علامة مقروء فجأة على أي من رسائلك غير المقروءة لمجرد أن شخصًا آخر قرأها بالفعل.</para>
+</footnote>
+</para>
+<para
+>سيرى هؤلاء المستخدمون هذا المجلد في قائمة مجلدات IMAP المعروضة لهم بواسطة عملاء البريد الخاصين بهم.</para>
+<para
+>استخدم هذا لإنشاء مجلد مشترك يمكن للآخرين قراءته، ولكن لا يمكنهم تعديله.</para>
+<informalexample>
+<para
+>إذا كنت محررًا للنشرة الإخبارية لشركة ما، فيمكنك إنشاء مجلد لغرض توزيع النشرة الإخبارية، ومنح الجميع حقوق القراءة، وحفظ النشرة في هذا المجلد بدلًا من إرسالها بالبريد الإلكتروني إلى عنوان جامع.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-append">
+<term
+><guilabel
+>إلحاق</guilabel
+></term>
+<listitem>
+<para
+>(تُعرف أيضًا بـ <guilabel
+>نشر</guilabel
+>)</para>
+<para
+>يمنح المستخدمين المحددين بـ <guilabel
+>معرف المستخدم</guilabel
+> حقوق القراءة (انظر أعلاه) والنشر في هذا المجلد.</para>
+<para
+>استخدم هذا لإنشاء مجلد مشترك يمكن للآخرين قراءته ونشر الرسائل فيه، ولكن لا يمكنهم تعديله بطريقة أخرى.</para>
+<informalexample>
+<para
+>إذا أردت إنشاء منتدى نقاش على مستوى الشركة، بدلًا من استخدام نموذج ويب أو خادم يوزنت خاص بالشركة، يمكنك إنشاء مجموعة من المجلدات (مجلد لكل موضوع)، ومنح الجميع حقوق القراءة والنشر. بدلًا من النشر في خادم NNTP أو كتابة رسائلهم في نموذج ويب، سيكتب الناس رسائل بريد إلكتروني ويخزنونها في المجلد المناسب لموضوع الرسالة.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-write">
+<term
+><guilabel
+>كتابة</guilabel
+></term>
+<listitem>
+<para
+>يمنح المستخدمين المحددين بـ <guilabel
+>معرف المستخدم</guilabel
+> حقوق القراءة، والنشر (انظر أعلاه)، والكتابة في هذا المجلد.</para>
+<para
+>حق الكتابة في المجلد يتضمن حذف الرسائل، وإنشاء مجلدات فرعية، وتخزين سمات أخرى غير مقروء/غير مقروء على الخادم (مثل: تمت الإجابة).</para>
+<para
+>استخدم هذا لإنشاء مجلد مشترك يتمتع فيه الجميع (تقريبًا، انظر <xref linkend="folders-properties-acl-all"/>) بنفس الحقوق.</para>
+<informalexample>
+<para
+>في مثال <xref linkend="folders-properties-acl-append"/>، يمكنك تعيين حقوق الكتابة لمجموعة من الأشخاص الذين يعملون كوسطاء، والذين سيتمكنون حينها من إزالة المنشورات الخارجة عن الموضوع، وإنشاء مجلدات لمواضيع فرعية للمجلدات ذات الزخم العالي.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-all">
+<term
+><guilabel
+>الكل</guilabel
+></term>
+<listitem>
+<para
+>يمنح المستخدمين المحددين بـ <guilabel
+>معرف المستخدم</guilabel
+> حقوق القراءة، والنشر، والكتابة (انظر أعلاه)، بالإضافة إلى حقوق الإدارة، أي الحق في تعديل ACL لهذا المجلد.</para>
+<para
+>هذه هي مجموعة الحقوق المبدئية لمالك المجلد.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+><xref linkend="table-acl-summary"/> يلخص حقوق ACL الخاصة بـ IMAP المرتبطة بكل مستوى إذن.</para>
+<table id="table-acl-summary">
+<title
+>ملخص حقوق ACL</title>
+          <tgroup cols="6">
+            <thead>
+              <row>
+                <entry
+>حق ACL</entry>
+                <entry
+><xref linkend="folders-properties-acl-none"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-read"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-append"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-write"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-all"/></entry>
+              </row>
+            </thead>
+            <!--tfoot/-->
+            <tbody>
+              <row>
+                <entry
+>بحث</entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>قراءة</entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>تخزين ما شوهد</entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>أدرج</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>نشر</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>أعلام الكتابة</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>أنشئ</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>احذف</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+                <entry
+>س</entry>
+              </row>
+              <row>
+                <entry
+>إدارة</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>س</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+</sect3>
+
+</sect2>
+</sect1>
+
+<sect1 id="filters">
+<title
+>مرشحات الرسائل</title>
+<anchor id="filters-id"/>
+<screenshot>
+<screeninfo
+>حوار المرشح</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="filter-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>حوار المرشح</phrase>
+    </textobject>
+    <caption>
+      <para
+>حوار إنشاء المرشح</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>بعد استخدام بريدك لفترة، قد تجد صعوبة في فرز الرسائل الجديدة في صندوق الوارد عند وصولها. تتيح لك المرشحات تنفيذ إجراءات معينة آليًا على الرسائل الواردة وتنفيذ إجراءات يدويًا على رسائل محددة في المجلد.</para>
+
+<para
+>تتكون المرشحات من معايير ترشيح، تُستخدم قواعدها لتحديد ما إذا كان يجب تطبيق هذا المرشح على رسالة معينة، وقائمة بإجراءات المرشح، تصف ما يجب فعله بالرسالة إذا تطابق نمط البحث.</para>
+
+<note
+><para
+>تُفحص المرشحات واحدًا تلو الآخر، بدءًا من المرشح الأول في القائمة. يُطبق أول مرشح يتطابق نمطه مع الرسالة المعطاة؛ يمكنك طلب معالجة بقية المرشحات أيضًا، لكن المبدئي هو التوقف عن المعالجة عند أول مرشح مطابق. </para
+></note>
+
+<para
+>عادة ما تُستخدم المرشحات على الرسائل الواردة، ولكن يمكن تطبيقها أيضًا على الرسائل المرسلة أو على رسالة عشوائية أو مجموعة من الرسائل. لترشيح رسائل بشكل انتقائي، حدد الرسائل التي تريد ترشيحها في قائمة الرسائل واكتب إما <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+> </keycombo
+> أو اختر <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guimenuitem
+>طبق المرشح</guimenuitem
+></menuchoice
+>. سيؤدي هذا إلى تطبيق المرشحات (تلك التي عُلمت للترشيح اليدوي في <link linkend="filter-dialog"
+>حوار المرشحات المتقدم</link
+>) على تلك الرسائل.</para>
+
+<sect2 id="filter-quick">
+<title
+>إنشاء مرشح سريع</title>
+
+<para
+>هناك طريقتان لإنشاء مرشح؛ الطريقة السريعة هي استخدام <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أنشئ مرشحًا</guimenuitem
+></menuchoice
+> واختيار معيار من القائمة الفرعية. سيفتح هذا حوار المرشحات ويقدم لك مرشحًا جديدًا يحتوي على القاعدة الأولى لنمط البحث والإجراء الأول (مضبوطًا كـ <guilabel
+>انقل إلى مجلد</guilabel
+>) مسبقًا. في معظم الحالات، كل ما عليك فعله هو اختيار المجلد الذي يجب نقل الرسالة إليه، ولكن يمكنك بالطبع تحرير المرشح كما تشاء.</para>
+
+<para
+>عند إنشاء مرشح على رسائل قائمة بريدية، ستحاول هذه الطريقة العثور على معيار يحدد رسائل القائمة بشكل فريد. إذا نجحت، يُعرض الاسم المخمن للقائمة في مدخلة قائمة <menuchoice
+><guimenu
+>رسالة</guimenu
+><guisubmenu
+>أنشئ مرشحًا</guisubmenu
+><guimenuitem
+>مرشح للقائمة البريدية...</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>الطريقة الثانية هي بناء مرشح يدويًا من الصفر عبر استدعاء حوار المرشحات من <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط المرشحات...</guimenuitem
+></menuchoice
+>. حوار المرشحات موصوف بالتفصيل في القسم الفرعي التالي.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-dialog">
+<title
+>حوار المرشح</title>
+<anchor id="filter-dialog-id"/>
+
+<para
+>يتيح لك هذا الحوار إدارة وتحرير قائمة المرشحات الخاصة بك.</para>
+
+<para
+>يمكنك الوصول إليه إما عبر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guisubmenu
+>أنشئ مرشحًا</guisubmenu
+></menuchoice
+> أو <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط المرشحات...</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>ينقسم الحوار إلى ثلاثة أقسام رئيسة في لساني <guilabel
+>عام</guilabel
+> و <guilabel
+>متقدم</guilabel
+>.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>المرشحات المتاحة</guilabel
+></term>
+<listitem
+><para
+>تحتوي هذه المجموعة على قائمة المرشحات وبعض أزرار الإجراءات لتعديل المرشحات، وهي: إنشاء مرشحات جديدة، تحريكها لأعلى أو لأسفل القائمة، نسخ أحدها، حذفها، أو إعادة تسميتها. إذا حددت مرشحًا من القائمة، تُعرض خصائصه في النصف الأيمن من الحوار.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>معايير المرشح</guilabel
+></term
+> <listitem
+><para
+>في هذه المجموعة يمكنك تحرير النمط الذي يجب أن تطابقه الرسائل قبل تطبيق المرشح عليها. يمكنك تحديد ما إذا كان يجب مطابقة جميع القواعد المعرفة، أو ما إذا كان تطابق واحد يكفي. انظر <link linkend="filter-criteria"
+>أنماط البحث</link
+> أدناه لوصف مفصل لكل نوع من قواعد البحث.</para>
+
+<para
+>يمكنك النقر على <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> للحصول على قاعدة إضافية (تكون فارغة في البداية) إذا كنت تريد تعريف أنماط أكثر تعقيدًا، وعلى <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> لإزالة القاعدة المحددة. يؤدي زر <guibutton
+>امسح</guibutton
+> إلى مسح النمط، أي أنه يزيل جميع القواعد باستثناء واحدة من الشاشة ويصفرها.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>إجراءات المرشح</guilabel
+></term
+> <listitem
+><para
+>في هذه المجموعة يمكنك تحرير قائمة الإجراءات التي تُطبق على جميع الرسائل التي تطابق معايير الترشيح المعرفة. انظر <link linkend="filter-action"
+>إجراءات المرشح</link
+> أدناه لوصف مفصل لكل نوع إجراء.</para>
+
+<para
+>يمكنك النقر على <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> للحصول على إجراء جديد فارغ (إذا كنت تريد تعريف أكثر من إجراء)، وعلى <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> لإزالة الإجراء المحدد. يؤدي زر <guibutton
+>امسح</guibutton
+> إلى مسح القائمة، أي أنه يزيل كل الإجراءات باستثناء واحد ويصفره.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>خيارات متقدمة</guilabel
+></term>
+
+<listitem>
+
+<para
+>في هذه المجموعة يمكنك تعريف بعض الخيارات المتقدمة التي تتيح لك ضبط ترشيحك بدقة.</para>
+
+<para
+>باستخدام الصف الأول من مربعات التحديد، يمكنك تبديل وقت تطبيق المرشح: خيار <guilabel
+>طبق هذا المرشح على الرسائل الواردة</guilabel
+> يعني أن المرشح يُطبق على الرسائل عند استلامك لها (أي عند <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/></imageobject
+></inlinemediaobject
+> جلب البريد</guiicon
+>). يمكن تطبيق المرشح على كل الرسائل، أو على الكل ما عدا حسابات IMAP المتصلة، أو على حسابات بريد وارد محددة.</para>
+<para
+>خيار <guilabel
+>طبق هذا المرشح على الرسائل المرسلة</guilabel
+> يعني أن المرشح يُطبق على الرسائل عند إرسالها، وخيار <guilabel
+>طبق هذا المرشح عند الترشيح اليدوي</guilabel
+> يتحكم فيما إذا كان يجب تطبيق هذا المرشح عند اختيار الترشيح تحديدًا (أي عبر <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guimenuitem
+>طبق المرشحات</guimenuitem
+></menuchoice
+>.)</para>
+<para
+>إذا حُدد خيار <guilabel
+>طبق هذا المرشح على الرسائل المرسلة</guilabel
+>، سيُطلق المرشح <emphasis
+>بعد</emphasis
+> إرسال الرسالة وسيوثر فقط على النسخة المحلية من الرسالة. إذا كانت نسخة المستلم تحتاج أيضًا إلى تعديل، يرجى استخدام <guilabel
+>طبق هذا المرشح قبل إرسال الرسائل</guilabel
+>. </para>
+<para
+>يتحكم مربع التحديد <guilabel
+>إذا تطابق هذا المرشح، أوقف المعالجة هنا</guilabel
+> فيما إذا كان ستُعالج المرشحات التي تلي المرشح الحالي عند تطابق المرشح الحالي.</para>
+
+<para
+>إذا حُدد مربع التحديد <guilabel
+>أضف هذا المرشح إلى قائمة طبق المرشح</guilabel
+>، سيُدرج هذا المرشح في القائمة الفرعية <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guimenuitem
+>طبق المرشح</guimenuitem
+></menuchoice
+>. يمكنك حينها تطبيق هذا المرشح الوحيد على رسالة أو مجموعة من الرسائل. إذا اخترت هذا الخيار، يمكنك اختياريًا تحديد اختصار لوحة مفاتيح وإدراج أيقونة خاصة لاستدعاء هذا المرشح من شريط الأدوات.</para>
+
+<para
+>طريقة أخرى لتطبيق المرشحات هي استخدام خيار قائمة <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guimenuitem
+>طبق المرشحات</guimenuitem
+></menuchoice
+>، والذي يطبق <emphasis
+>كل</emphasis
+> المرشحات – واحدًا تلو الآخر – حتى تُستخدم جميعًا أو يحدد أحد المرشحات المطابقة خيار <guilabel
+>إذا تطابق هذا المرشح، أوقف المعالجة هنا</guilabel
+>.</para>
+
+</listitem>
+</varlistentry>
+</variablelist>
+
+<note
+><para
+>تُسمى المرشحات آليًا ما لم تقم بإعادة تسميتها صراحة باستخدام زر <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> أعد التسمية...</guibutton
+>. يفترض الحوار أنه يجب الاستمرار في التسمية الآلية للمرشح طالما بدأ اسم المرشح بـ <quote
+>&lt;</quote
+>. </para>
+
+<para
+>إذا طبقت تغييرات المرشحات، عبر <guibutton
+>موافق</guibutton
+> أو <guibutton
+>طبق</guibutton
+>، تُنسخ فقط المرشحات الصالحة فعليًا إلى مدير المرشحات الداخلي.</para>
+
+<para
+>بالمثل، تُزال القواعد والإجراءات الفارغة من قوائم الأنماط والإجراءات على التوالي قبل حفظ المرشح.</para>
+</note>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-criteria">
+<title
+>أنماط البحث</title>
+
+<para
+>الاستخدام الأكثر شيوعًا للمرشحات هو الترشيح بناءً على مرسل الرسائل. يمكن فعل ذلك باختيار <guilabel
+>من</guilabel
+>. الخيار الجيد للقائمة البريدية سيكون <guilabel
+>كل المستلمين</guilabel
+>، ولكن هناك معايير أخرى يمكن للمرشح البحث عنها (لاحظ أن جميع الأنماط تُفسر دون تمييز لحالة الأحرف).</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>الرسالة كاملة</guilabel
+></term>
+<listitem>
+<para
+>يبحث في الرسالة بالكامل (أي الترويسات والمتن والمرفقات إن وجدت).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>متن الرسالة</guilabel
+></term>
+<listitem>
+<para
+>يبحث في متن الرسالة (أي الرسالة بالكامل باستثناء الترويسات).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>في أي مكان في الترويسات</guilabel
+></term>
+<listitem>
+<para
+>يبحث في كل الترويسات في الرسالة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>كل المستلمين</guilabel
+></term>
+<listitem>
+<para
+>يبحث في حقلي الترويسة <quote
+>إلى</quote
+> و <quote
+>نسخة كربونية</quote
+> من الرسالة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>الحجم بالبايت</guilabel
+></term>
+<listitem>
+<para
+>يضبط الحدود العليا أو الدنيا لحجم الرسالة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>العمر بالأيام</guilabel
+></term>
+<listitem>
+<para
+>يضبط الحدود العليا أو الدنيا لعمر الرسالة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>حالة الرسالة</guilabel
+></term>
+<listitem>
+<para
+>يضع قيودًا على حالة الرسالة (مهمة / مقروءة / غير مقروءة / إلخ، انظر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>علم الرسالة &gt;</guimenuitem
+></menuchoice
+>).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>وسم الرسالة</guilabel
+></term>
+<listitem>
+<para
+>يتحقق من الرسائل الموّسمة. انظر <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>علم الرسالة &gt;</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>معمّى</guilabel
+></term>
+<listitem>
+<para
+>يتحقق من الرسائل المعمّاة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+    <term
+>أي قيمة أخرى (<guilabel
+>من</guilabel
+>، <guilabel
+>إلى</guilabel
+>، <guilabel
+>التاريخ</guilabel
+>، إلخ)</term>
+<listitem>
+<para
+>يبحث في حقل الترويسة بهذا الاسم.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>تعتمد قائمة القواعد الممكنة على ما اخترته في المربع المنسدل الأول. القواعد المتاحة هي:</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry
+>قاعدة</entry>
+<entry
+>متاحة لـ</entry>
+<entry
+>وصف</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+><guilabel
+>يحتوي</guilabel
+>/<guilabel
+>لا يحتوي</guilabel
+></entry>
+<entry
+>كل عناصر البحث النصية</entry>
+<entry
+>يطابق إذا كان العنصر المبحوث عنه يحتوي (أو لا يحتوي) على النص المعطى.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>يساوي</guilabel
+>/<guilabel
+>لا يساوي</guilabel
+></entry>
+<entry
+>معظم عناصر البحث النصية</entry>
+<entry
+>يطابق إذا كان العنصر المبحوث عنه يساوي (أو لا يساوي) النص المعطى.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>يبدأ بـ</guilabel
+>/<guilabel
+>لا يبدأ بـ</guilabel
+></entry>
+<entry
+>معظم عناصر البحث النصية</entry>
+<entry
+>يطابق إذا كان العنصر المبحوث عنه يبدأ بـ (أو لا يبدأ بـ) النص المعطى.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>ينتهي بـ</guilabel
+>/<guilabel
+>لا ينتهي بـ</guilabel
+></entry>
+<entry
+>معظم عناصر البحث النصية</entry>
+<entry
+>يطابق إذا كان العنصر المبحوث عنه ينتهي بـ (أو لا ينتهي بـ) النص المعطى.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>يطابق تعبيرًا نمطيًا</guilabel
+>/<guilabel
+>لا يطابق تعبيرًا نمطيًا</guilabel
+></entry>
+<entry
+>كل عناصر البحث النصية</entry>
+<entry
+>يطابق إذا كان جزء من العنصر المبحوث عنه يطابق التعبير النمطي المعطى (أو لا يطابقه). إذا كان محرر التعبيرات النمطية مثبتًا، فيمكنك تحرير التعبير النمطي بالنقر على زر <guilabel
+>حرّر...</guilabel
+>.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>لديه مرفق</guilabel
+>/<guilabel
+>ليس لديه مرفق</guilabel
+></entry>
+<entry
+><guilabel
+>الرسالة كاملة</guilabel
+></entry>
+<entry
+>يطابق إذا كانت الرسالة تحتوي على مرفق (أو لا تحتوي على مرفق).</entry>
+</row>
+<!-- <row>
+<entry
+><guilabel
+>is in address book</guilabel
+>/<guilabel
+>is not in address book</guilabel
+></entry>
+<entry
+>most textual search items</entry>
+<entry
+>Matches if the searched item contains an address that is in your address
+book (or if the searched items contains only unknown addresses). Of course,
+this rule only makes sense for address fields like From or
+<guilabel
+>&lt;recipients&gt;</guilabel
+></entry>
+</row
+> --> <!-- Can't find this anywhere. @dcb2020292. -->
+<!-- <row>
+<entry
+><guilabel
+>is in category</guilabel
+>/<guilabel
+>is not in category</guilabel
+></entry>
+<entry
+>most textual search items</entry>
+<entry
+>Matches if the searched item contains an address that is in the
+specified category in your address book (or if the searched item contains
+no address that is in the specified category). Again, this rule only makes
+sense for address fields.</entry>
+</row
+> --> <!-- Can't find this anywhere. @dcb2020292. -->
+<row>
+<entry
+><guilabel
+>يساوي</guilabel
+>/<guilabel
+>لا يساوي</guilabel
+></entry>
+<entry
+>عناصر البحث الرقمية</entry>
+<entry
+>يطابق إذا كانت قيمة عنصر البحث تساوي (أو لا تساوي) القيمة المحددة.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>أقل من</guilabel
+></entry>
+<entry
+>عناصر البحث الرقمية</entry>
+<entry
+>يطابق إذا كانت قيمة عنصر البحث أقل من القيمة المحددة.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>أكبر من</guilabel
+></entry>
+<entry
+>عناصر البحث الرقمية</entry>
+<entry
+>يطابق إذا كانت قيمة عنصر البحث أكبر من القيمة المحددة.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>أقل من أو يساوي</guilabel
+></entry>
+<entry
+>عناصر البحث الرقمية</entry>
+<entry
+>يطابق إذا كانت قيمة عنصر البحث أقل من أو تساوي القيمة المحددة.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>أكبر من أو يساوي</guilabel
+></entry>
+<entry
+>عناصر البحث الرقمية</entry>
+<entry
+>يطابق إذا كانت قيمة عنصر البحث أكبر من أو تساوي القيمة المحددة.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>هو</guilabel
+>/<guilabel
+>ليس هو</guilabel
+></entry>
+<entry
+><guilabel
+>حالة الرسالة</guilabel
+></entry>
+<entry
+>يطابق إذا كانت الرسالة لديها (أو ليس لديها) الحالة المحددة.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>بعد</guilabel
+>/<guilabel
+>قبل أو في</guilabel
+></entry>
+<entry
+>ترويسة <guilabel
+>التاريخ</guilabel
+></entry>
+<entry
+>يطابق إذا أُرسلت الرسالة بعد (أو ليس بعد) التاريخ المحدد.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>قبل</guilabel
+>/<guilabel
+>بعد أو في</guilabel
+></entry>
+<entry
+>ترويسة <guilabel
+>التاريخ</guilabel
+></entry>
+<entry
+>يطابق إذا أُرسلت الرسالة قبل (أو ليس قبل) التاريخ المحدد.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-action">
+<title
+>إجراء المرشح</title>
+
+<para
+>الاستخدام الأكثر شيوعًا للمرشحات هو توجيه بعض الرسائل الواردة إلى مجلدات معينة؛ يمكن فعل ذلك باختيار <guilabel
+>انقل إلى مجلد</guilabel
+>. إليك قائمة بكل الإجراءات الممكنة.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>انقل إلى مجلد</guilabel
+></term>
+<listitem>
+<para
+>سيؤدي هذا إلى نقل الرسالة إلى مجلد آخر، وإزالتها من مجلدها الحالي.</para>
+<!-- fixme: still correct? --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>انسخ إلى مجلد</guilabel
+></term>
+<listitem>
+<para
+>سيؤدي هذا إلى نسخ الرسالة إلى مجلد آخر، وترك الرسالة في المجلد الحالي.</para>
+<!-- <note
+><para
+>You currently cannot use &IMAP;
+folders as a target.</para
+></note
+> --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>اضبط الهوية إلى</guilabel
+></term>
+<listitem>
+<para
+>سيؤدي هذا إلى ضبط الهوية التي ستُستخدم عند الرد على هذه الرسالة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>علم كـ</guilabel
+></term>
+<listitem>
+<para
+>يسمح لك هذا بتمييز الرسالة كرسالة مقروءة أو مهمة (معلمة)، وأيضًا كرسالة مُمررة، أو مُردود عليها، وإلى آخره؛</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أضف وسمًا</guilabel
+></term>
+<listitem>
+<para
+>سيضيف هذا وسمًا إلى الرسالة. يمكنك الاختيار من قائمة بجميع الأوسمة التي عُرّفت.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أرسل إشعار استلام (MDN) زائفًا</guilabel
+></term>
+<listitem>
+<para
+>سيرسل هذا إشعارًا زائفًا بحالة الرسالة (أي إيصال قراءة) إلى مرسل الرسالة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>اضبط وسيلة النقل إلى</guilabel
+></term>
+<listitem>
+<para
+>سيضبط هذا طريقة النقل (مثل SMTP) التي ستُستخدم عندما ترد على الرسالة. يمكنك الاختيار من قائمة بجميع حسابات البريد الإلكتروني الصادر الخاصة بك.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>اضبط "الرد إلى" إلى</guilabel
+></term>
+<listitem
+><para
+>سيعدل هذا حقل <guilabel
+>الرد إلى</guilabel
+> لهذه الرسالة. يمكن أن يكون هذا مفيدًا للقوائم البريدية التي تضبط آليًا عنوان "الرد إلى" لا ترغب في استخدامه.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>مرّر إلى</guilabel
+></term>
+<listitem
+><para
+>سيمرر هذا الرسالة بداخل النص (أي كما لو اخترت <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guimenuitem
+>مرّر</guimenuitem
+><guimenuitem
+>بداخل النص...</guimenuitem
+></menuchoice
+>) إلى عنوان بريد إلكتروني آخر. يمكنك اختيار قالب تمرير مخصص إذا كان مثل هذا القالب قد عُرّف. إذا كان دفتر عناوين كيدي مثبتًا، يمكنك اختيار عنوان <quote
+>مرّر إلى</quote
+> من نافذة منبثقة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أعد التوجيه إلى</guilabel
+></term>
+<listitem
+><para
+>سيعيد هذا توجيه الرسالة كما هي إلى عنوان بريد إلكتروني آخر. إذا كان دفتر عناوين كيدي مثبتًا، يمكنك اختيار عنوان <quote
+>أعد التوجيه إلى</quote
+> من نافذة منبثقة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أكّد التسليم</guilabel
+></term>
+<listitem
+><para
+>سيعيد رسالة إلى المرسل تؤكد نجاح تسليم رسالتهم، إذا طلب المرسل ذلك.</para>
+<para
+>يسمح لك هذا الإجراء باختيار من سيحصل على إيصالات التسليم منك. على الرغم من أنه يمكنك تمكين إرسال تأكيدات التسليم عالميًا في حوار <guilabel
+>اضبط بريدك...</guilabel
+> (صفحة <link linkend="configure-security"
+><guilabel
+>الأمان</guilabel
+></link
+>) إلا أننا لا ننصح بإرسالها إلى الجميع، لأن هذا يجعل تتبع رسائل البريد المزعج سهلًا جدًا للمرسلين المزعجين.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>نفّذ أمرًا</guilabel
+> (للمستخدمين المتقدمين فقط)</term>
+<listitem>
+<para
+>سينفذ هذا برنامجًا، ولكنه لن يعدل الرسالة. حدد المسار الكامل للبرنامج الذي تريد تنفيذه؛ سينتظر بريدك حينها حتى يعود البرنامج. إذا كنت لا تريد أن ينتظر بريدك، ألحق '&amp;'  بالأمر. يمكنك تلقيم أجزاء الرسالة إلى البرنامج واحدًا تلو الآخر: <symbol
+>&percnt;0</symbol
+>، <symbol
+>&percnt;1</symbol
+>، وإلى آخره ترمز لملفات تمثل أجزاء الرسالة. للرسائل العادية، <symbol
+>&percnt;0</symbol
+> هو نص الرسالة المجرد، <symbol
+>&percnt;1</symbol
+> هو المرفق الأول وهكذا. بالإضافة إلى ذلك، تُلقم الرسالة بأكملها إلى المدخل القياسي <acronym
+>stdin</acronym
+> للبرنامج؛ وكل تكرار لـ <symbol
+>&percnt;{foo}</symbol
+> يُستبدل بمحتوى ترويسة foo. إذا كنت بحاجة إلى تحديد الرسالة عبر موقع تخزينها في قاعدة بيانات Akonadi، يمكنك استخدام العناصر النائبة %{itemid} أو %{itemurl} لتحقيق ذلك.</para>
+
+<!-- fixme: still correct? --><!-- I think so. But not yet tested. @dcb2020293 -->
+<warning
+><para
+>يعمل هذا حاليًا فقط إذا كانت الرسالة تحتوي على <emphasis
+>مرفق واحد على الأقل</emphasis
+>. لا، حتى <symbol
+>&percnt;0</symbol
+> لن يعمل في الحالة العامة!</para
+></warning>
+
+<tip
+><para
+>يمكنك إدخال أوامر صدفة معقدة بشكل اختياري هنا، حيث يستخدم بريدك صدفة فرعية لتنفيذ سطر الأوامر؛ لذلك، حتى هذا الأمر سيعمل (ضمن حدوده): <userinput
+><command
+>uudecode</command
+> <option
+>-o</option
+> <parameter
+>$(mktemp kmail-uudecoded.XXXXXX)</parameter
+> &amp;&amp; <command
+>echo</command
+> <parameter
+>$'\a'</parameter
+></userinput
+></para
+></tip>
+<!-- fixme: is this uudecode tip useless now?? -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>مرّر عبر</guilabel
+></term>
+<listitem>
+<para
+>سيلقم هذا الرسالة إلى برنامج: إذا أعاد البرنامج مخرجًا، فستُستبدل الرسالة بأكملها (بما في ذلك الترويسات) بهذا المخرج؛ إذا لم يعد البرنامج مخرجًا أو خرج برمز عودة غير 0 (مما يشير إلى حدوث خطأ)، فلن تتغير الرسالة. حدد المسار الكامل للبرنامج. نفس الاستبدالات (<symbol
+>&percnt;n</symbol
+>، <symbol
+>&percnt;{foo}</symbol
+>) كما في <guilabel
+>نفّذ أمرًا</guilabel
+> يمكن إجراؤها في سطر الأوامر.</para>
+<para
+>يستخدم كل من معالج مكافحة البريد المزعج ومعالج مكافحة الفيروسات إجراء <quote
+>مرّر عبر</quote
+> للتحقق من البريد المزعج / البرمجيات الخبيثة. تعيد برامج مكافحة البريد المزعج ومكافحة الفيروسات المتاحة عادةً الرسالة، وتدرج سجلًا إضافيًا في الترويسة، إذا كُشف بريد مزعج (أو فيروس).</para>
+<warning
+><para
+>كن حذرًا مع هذا الإجراء، لأنه يمكن أن يتلف رسائلك إذا أعاد برنامج المرشح بيانات غير مفهومة أو أسطرًا إضافية.</para
+></warning>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أزل الترويسة</guilabel
+></term>
+<listitem>
+<para
+>سيزيل جميع حقول الترويسة بالاسم المحدد من الرسالة. هذا مفيد بشكل أساسي لإزالة ترويسات <quote
+>الرد إلى:</quote
+> الزائفة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أضف ترويسة</guilabel
+></term>
+<listitem>
+<para
+>إذا لم يكن مثل هذا الحقل موجودًا بالفعل، فسيضيف هذا حقل ترويسة جديدًا بالاسم والقيمة المحددين إلى الرسالة؛ إذا كان هناك بالفعل حقل ترويسة بهذا الاسم، فسيُكتب فوقه بالقيمة المعطاة؛ إذا كان هناك بالفعل ترويسات متعددة بنفس الاسم (مثل ترويسات <quote
+>المستلم:</quote
+>)، فسيُكتب فوق واحدة عشوائية منها وتُترك الأخرى دون تغيير -- وهذا قصور معروف. قد ترغب في دمج هذا المرشح مع مرشح <guilabel
+>أزل الترويسة</guilabel
+> أعلاه للتأكد من عدم وجود ترويسات أخرى بهذا الاسم في الرسالة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أعد كتابة الترويسة</guilabel
+></term>
+<listitem>
+<para
+>سيفحص حقل الترويسة المحدد، ويعدل محتوياته ويعيد كتابته. سلسلة البحث تُفسر دائمًا كتعبير نمطي حساس لحالة الأحرف. تُدرج سلسلة الاستبدال حرفيًا باستثناء حالات ظهور <userinput
+>\n</userinput
+>، و <userinput
+>$n</userinput
+> و <userinput
+>${nn}</userinput
+>، حيث <userinput
+>n</userinput
+> هو رقم موجب (من خانة واحدة، باستثناء الصيغة الثالثة) أو <userinput
+>0</userinput
+>. تُفسر هذه التراكيب كإشارات خلفية لسلاسل فرعية التُقطت باستخدام الأقواس في سلسلة البحث.</para
+><para
+>تنطبق قيود مماثلة لتلك الموجودة في إجراء <guilabel
+>أضف ترويسة</guilabel
+> هنا أيضًا.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>شغّل صوتًا</guilabel
+></term>
+<listitem>
+<para
+>سيشغل الصوت المحدد. يتيح لك زر التصفح اختيار ملف صوت مسجل مسبقًا (مثل .wav).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>أضف إلى دفتر العناوين</guilabel
+></term>
+<listitem>
+<para
+>إذا كان دفتر عناوين كيدي مثبتًا، فسيسمح لك هذا الإجراء بتحديد أي ترويسة سيُجرى فحصها (من، إلى، نسخة، أو نسخة مخفية)، وما هو الوسم الذي سيُعين، إن وجد، وفي أي دفتر عناوين مسمى ستُخزن العناوين.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>احذف الرسالة</guilabel
+></term>
+<listitem>
+<para
+>يحذف الرسالة (الرسائل) المحددة. استخدم هذا الخيار بحذر. الرسائل المحذوفة لا يمكن استعادتها.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>ألغِ تعيين الحالة</guilabel
+></term>
+<listitem>
+<para
+>هذا عكس <guilabel
+>ميّز كـ</guilabel
+>، أعلاه. بدلًا من تمييز الرسالة المحددة كمهمة، مقروءة، إلخ، سيقوم هذا الإجراء بمسح العلامة المحددة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>عمِّ</guilabel
+></term>
+<listitem>
+<para
+>سيعمي الرسالة (الرسائل) المحددة باستخدام المفتاح العام المحدد. يمكنك الاختيار من بين أي أزواج مفاتيح عامة / خاصة محفوظة في حلقة مفاتيحك.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>فك التعمية</guilabel
+></term>
+<listitem>
+<para
+>سيفك تعمية الرسالة (الرسائل) المحددة. استخدم هذا الإجراء بحذر. سيفك بريدك تعمية الرسائل آليًا عندما تفتحها لعرضها، لذا فمن المحتمل أنك لا تحتاج حقًا لاستخدام هذا الإجراء.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-examples">
+<title
+>أمثلة المرشحات</title>
+
+<para
+>حتى الآن لا يبرز بريدك أو يميز الرسائل التي تحتوي على ترويسة <replaceable
+>الأولوية:</replaceable
+> إضافية. إذا كنت تريد تعليم جميع الرسائل <quote
+>العاجلة</quote
+> على أنها <emphasis
+>مهمة</emphasis
+>، يمكنك استخدام مرشح:</para>
+
+<procedure>
+<title
+>وسم الرسائل العاجلة كـ <emphasis
+>مهمة</emphasis
+></title>
+<step>
+<para
+>افتح حوار <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guimenuitem
+>اضبط المرشحات...</guimenuitem
+></menuchoice
+> وانقر فوق أيقونة <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-new.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> جديد</guiicon
+> أسفل قائمة <guilabel
+>المرشحات المتاحة</guilabel
+>.</para>
+</step>
+<step>
+<para
+>في منطقة <guilabel
+>معايير المرشح</guilabel
+>، اختر <guilabel
+>في أي مكان في الترويسات</guilabel
+> و <guilabel
+>يحتوي</guilabel
+> من مربعات القائمة المنسدلة واكتب <userinput
+>Priority</userinput
+> في حقل النص. اختر نفس المعيار في السطر التالي واكتب <userinput
+>urgent</userinput
+> في حقل النص الخاص بمربع المنسدلة الثاني.</para>
+<para
+>لذا سيطابق مرشحك جميع الرسائل التي تحتوي على حقل ترويسة <quote
+>Priority: urgent</quote
+>.</para>
+</step>
+<step>
+<para
+>انتقل لأسفل إلى منطقة <guilabel
+>إجراءات المرشح</guilabel
+>. اختر <guilabel
+>ميّز كـ</guilabel
+> من مربع المنسدلة الأول. سيظهر مربع منسدلة جديد يحتوي على قائمة من علامات التمييز إلى اليمين. اختر <guilabel
+>مهم</guilabel
+> من مربع المنسدلة.</para>
+</step>
+<step>
+<para
+>بما أنك تريد أن <emphasis
+>لا</emphasis
+> يمنع هذا المرشح تطبيق قواعد الرسائل للمرشحات الأخرى، فقم بـ<emphasis
+>إلغاء تحديد</emphasis
+> خيار <guilabel
+>إذا طابق هذا المرشح، أوقف المعالجة هنا</guilabel
+> بعناية في تبويب <quote
+>متقدم</quote
+>.</para>
+</step>
+<step>
+<para
+>انقر فوق <guibutton
+>موافق</guibutton
+>، وبذلك تكون قد انتهيت.</para>
+<para
+>تذكر فقط نقل مدخلة مرشح <quote
+>Priority: urgent</quote
+> إلى رأس قائمة <guilabel
+>المرشحات المتاحة</guilabel
+> في كل مرة تضيف فيها مرشحًا جديدًا، بحيث يُطبق مرشح التدفق الخاص بك دائمًا أولًا.</para>
+</step>
+</procedure>
+
+<para
+>إذا كنت مشتركًا في قائمة كيدي (العامة)، فيمكنك إنشاء مجلد للقائمة (لنسمه <replaceable
+>KDE-General</replaceable
+>) واستخدام مرشح لنقل الرسائل الجديدة آليًا من صندوق الوارد إلى مجلد <replaceable
+>KDE-General</replaceable
+> إذا كانت قادمة من قائمة كيدي. إليك كيفية إنشاء هذا المرشح:</para>
+
+<procedure>
+<title
+>ترشيح قائمة بريدية</title>
+<step>
+<para
+>تحقق مما إذا كان <menuchoice
+><guimenu
+>رسالة</guimenu
+><guisubmenu
+>أنشئ مرشحًا</guisubmenu
+><guimenuitem
+>رشّح بناءً على القائمة البريدية...</guimenuitem
+></menuchoice
+> يمكنه التعرف على القائمة البريدية (يجب أن يظهر اسم القائمة في عنصر القائمة حينها)؛ في هذه الحالة، سيعمل هذا وستظهر لك مرشحًا يحتوي على <quote
+>معرف القائمة <guilabel
+>يحتوي</guilabel
+> &lt;kde.kde.org&gt;</quote
+> مسبق الضبط. ثم اختر مجلد الوجهة المطلوب من قائمة المجلدات المنسدلة في مجموعة <guilabel
+>إجراء المرشح</guilabel
+> وهذا كل شيء.</para>
+
+<para
+>إذا لم ينجح ذلك، ففكر في طريقة فريدة لتحديد الرسائل التي تريد ترشيحها. الخاصية الفريدة (تقريبًا) لرسائل قائمة كيدي هي أنها تحتوي دائمًا على <quote
+>kde@kde.org</quote
+> في حقل <guilabel
+>إلى:</guilabel
+> أو <guilabel
+>نسخة:</guilabel
+>. إنها ليست مثالية تمامًا، لأن هذا يفشل مع الرسائل المنشورة في عدة قوائم.</para>
+</step>
+<step>
+<para
+>اختر <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guimenuitem
+>اضبط المرشحات...</guimenuitem
+></menuchoice
+>.</para>
+</step>
+<step>
+<para
+>اضغط على زر <guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guibutton
+> لإنشاء مرشح فارغ. سيظهر كـ <guilabel
+>&lt;غير معروف&gt;</guilabel
+>.</para>
+</step>
+<step>
+<para
+>في منطقة <guilabel
+>معايير المرشح</guilabel
+>، اختر <guilabel
+>جميع المستلمين</guilabel
+> من مربع المنسدلة الأول، و <guilabel
+>يحتوي</guilabel
+> من مربع المنسدلة الثاني، واكتب <userinput
+>kde@kde.org</userinput
+> في حقل النص.</para>
+</step>
+<step>
+<para
+>انتقل لأسفل إلى قسم <guilabel
+>إجراءات المرشح</guilabel
+>. اختر <guilabel
+>انقل إلى مجلد</guilabel
+> من مربع المنسدلة الأول. انقر فوق أيقونة المجلد وستظهر نافذة تحتوي على قائمة بالمجلدات. اختر المجلد الذي تريد نقل الرسائل المرشحة إليه. في هذا المثال، ستختار <guilabel
+>KDE-General</guilabel
+>.</para>
+</step>
+</procedure>
+
+<para
+>قد تجد أنك بحاجة إلى استخدام معايير أقوى لترشيح رسائلك بشكل صحيح؛ على سبيل المثال، قد ترغب فقط في ترشيح رسائل قائمة كيدي التي كتبها صديقك <replaceable
+>فريد جونسون &lt;fj@anywhere.com&gt;</replaceable
+>. هذا هو المكان الذي يأتي فيه دور بقية قسم معايير المطابقة:</para>
+
+<procedure>
+<title
+>توسيع المرشح</title>
+<step>
+<para
+>افتح نافذة <guilabel
+>اضبط المرشحات...</guilabel
+> واختر المرشح الذي أنشأته للتو.</para>
+</step>
+<step>
+<para
+>بما أنك تريد ترشيح جميع الرسائل التي تحتوي على <replaceable
+>kde@kde.org</replaceable
+> في حقل <guilabel
+>إلى:</guilabel
+> أو <guilabel
+>نسخة:</guilabel
+> <emphasis
+>و</emphasis
+> التي هي من فريد، فحدد زر الخيار <guibutton
+>طابق كل مما يلي</guibutton
+>.</para>
+</step>
+<step>
+<para
+>الآن، اذهب إلى قاعدة البحث الثانية واختر ما يلي من القوائم المنسدلة: <guilabel
+>من</guilabel
+>، و <guilabel
+>يحتوي</guilabel
+>. الآن، اكتب <userinput
+>fj@anywhere.com</userinput
+> في حقل النص.</para>
+</step>
+</procedure>
+
+<para
+>لديك الآن مرشح يحدد جميع رسائل قائمة كيدي التي هي من <userinput
+>fj@anywhere.com</userinput
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<!-- fixme: trigger with ctrl-j or whenever new mail arrives (unless
+<guilabel
+>Advanced Options</guilabel
+> are changed. -->
+</sect2>
+
+<sect2 id="filter-optimization">
+<title
+>تحسين المرشحات</title>
+
+<para
+>من المهم أن تدرك أن ترتيب المرشحات له تأثير على سرعة عملية الترشيح. إليك بعض الأفكار التي يمكن أن تساعدك في تحسين أداء المرشح. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>أوقف معالجة المرشح في أقرب وقت ممكن:</term>
+<listitem>
+<para
+>إذا كنت تعلم أن مرشحًا ما سيعالج في النهاية فئة معينة من الرسائل، يرجى التأكد من تحديد خيار <guilabel
+>إذا طابق هذا المرشح، أوقف المعالجة هنا</guilabel
+> لهذا المرشح. سيؤدي هذا إلى تجنب تقييم قواعد المرشح لجميع المرشحات اللاحقة. (راجع الخيارات المتقدمة في <link linkend="filter-dialog-id"
+>حوار المرشح</link
+>).</para>
+<para
+>مثال على ذلك هو ترشيح الرسائل من القوائم البريدية عبر ترويسة List-Id إلى مجلدات منفصلة. اكتشاف أن الرسالة جاءت من القائمة أ يعني أنه يمكنك تجنب فحص المرشح التالي للرسائل من القائمة ب. </para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>ضع في اعتبارك تكاليف تقييم قواعد المرشح:</term>
+<listitem>
+<para
+>يعتمد الوقت المطلوب لتقييم قاعدة مرشح على الطريقة التي بُنيت بها القاعدة. على وجه الخصوص، الفحص عن سلسلة فرعية باستخدام عملية <guilabel
+>يحتوي</guilabel
+> أسرع من مطابقة الأنماط باستخدام عملية <guilabel
+>يطابق التعبير النمطي</guilabel
+>. </para>
+<para
+>هناك اعتماد آخر على كمية البيانات المستخدمة لتقييم قاعدة المرشح. إذا كانت القاعدة تعتمد على ترويسة الرسالة، فإن تقييمها يجب أن يكون في العادة أسرع بكثير من تقييم قاعدة تعتمد على الرسالة الكاملة. </para>
+<para
+>حاول إبقاء قواعد المرشح بسيطة قدر الإمكان. </para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>تحقق من ترتيب مرشحاتك:</term>
+<listitem>
+<para
+>إجراءات المرشح المختلفة لها درجات متفاوتة من التعقيد. إجراءات المرشح الأكثر تكلفة هي <guilabel
+>مرّر عبر</guilabel
+> و <guilabel
+>نفّذ أمرًا</guilabel
+>، لأن كليهما يحتاجان إلى تشغيل برامج خارجية. وضع المرشحات التي تحتوي على هذه الإجراءات خلف المرشحات الأخرى التي يمكنها تقليل عدد المرات التي تكون فيها هذه الإجراءات المعقدة مطلوبة يعد أمرًا مفيدًا، إذا كان منطق المرشح يسمح بذلك.</para>
+<para
+>مثال على ذلك هو ترشيح الرسائل من قائمة بريدية واكتشاف رسائل البريد المزعج. للكشف عن البريد المزعج ستستخدم عادةً أداة خارجية عبر إجراء <guilabel
+>مرّر عبر</guilabel
+>. ترشيح الرسائل للقائمة البريدية يتم عبر ترويسة List-Id. إذا كنت لا تريد التحقق من رسائل القائمة البريدية للبحث عن البريد المزعج أيضًا، فمن الأفضل استخدام مرشح رسائل القائمة البريدية قبل مرشح الكشف عن البريد المزعج. بهذه الطريقة تتجنب فحص البريد المزعج المكلف والبطيء لجميع الرسائل التي حُددت كرسائل قائمة بريدية. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="filter-logging">
+<title
+>سجل المرشح</title>
+<para
+>إذا كنت تريد التحقق من أن مرشحاتك تعمل كما هو مقصود، يمكنك فتح عارض لسجل المرشح عبر <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>عارض سجل المرشحات...</guimenuitem
+></menuchoice
+>. </para>
+<para
+>في العارض يمكنك ضبط تسجيل عملية الترشيح. يمكنك التحكم في مستوى التفاصيل المسجلة، ومسح السجل، وتحديد حجم السجل، وحفظ السجل كملف. يمكن أن يوفر السجل معلومات قيمة عندما تريد تحسين قواعد المرشح الخاصة بك. </para>
+</sect2>
+</sect1>
+
+<sect1 id="backups">
+<title
+>نسخ بريدك احتياطيًا</title>
+<para
+>يصف هذا القسم حلول النسخ الاحتياطي المختلفة داخل بريدك.</para>
+<sect2 id="archiving">
+<title
+>الأرشفة</title>
+<variablelist>
+<varlistentry id="folder-archive">
+<term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>أرشف المجلد...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>تتوفر هذه الميزة أيضًا من خلال القائمة السياقية التي تُفتح بزر الفأرة الأيمن، ثم اختيار <guimenuitem
+>أرشف المجلد...</guimenuitem
+>. سيؤدي هذا إلى <action
+>فتح حوار</action
+> يسمح لك بإنشاء أرشيف واحد للمجلد المحدد حاليًا.</para>
+<para
+>يُظهر <guilabel
+>المجلد:</guilabel
+> المجلد المحدد حاليًا، إذا كنت ترغب في تغيير المجلد المراد أرشفته فانقر فوق أيقونة المجلد. تتيح لك قائمة <guilabel
+>التنسيق:</guilabel
+> المنسدلة اختيار تنسيق(الخيارات هي: zip و tar و tar.bz2 و tar.gz). إذا كنت ترغب في تغيير الاسم أو الموقع المبدئي، فانقر فوق زر المجلد الموجود على يمين <guilabel
+>ملف الأرشيف</guilabel
+>.</para>
+ <para
+>حدد زر <guilabel
+>احذف المجلد والمجلدات الفرعية بعد الانتهاء</guilabel
+> إذا كنت تريد حذف كل ما أرشفته من قاعدة بيانات بريدك بعد حفظ الأرشيف الخارجي. تؤرشف جميع المجلدات الفرعية مبدئيًا. ألغِ تحديد <guilabel
+>أرشف جميع المجلدات الفرعية</guilabel
+> إذا كنت تريد فقط أرشفة المجلد الأب.</para>
+</listitem
+></varlistentry>
+<varlistentry id="auto-archive">
+<term
+><menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guimenuitem
+>اضبط الأرشفة الآلية...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>هذه أداة قوية يمكن استخدامها للمساعدة في النسخ الاحتياطي لبريدك الإلكتروني. يرجى مراجعة <ulink url="help:/akonadi_archivemail_agent"
+>الأرشفة الآلية</ulink
+> للحصول على التفاصيل.</para>
+</listitem>
+</varlistentry>
+<!-- <varlistentry id="archive-folder">
+<term
+><menuchoice
+><guimenu
+>Settings</guimenu
+><guimenuitem
+>Configure Folder Archive Agent...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>This feature allows you to archive single emails to a specified folder.</para>
+<para
+>Folder Archive can be enabled on a per account basis to allow you to archive individual emails through the right click menu.</para>
+<screenshot>
+<screeninfo
+>Screenshot of Folder Archive</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folderarchiveagent.png" format="PNG"/>
+    </imageobject>
+  </mediaobject>
+</screenshot>
+<para
+>Folder Archive is used to archive single emails to a specified folder. For instance, you need to archive all of
+those pesky bill receipts in one place. Folder Archive can easily accommodate those needs. <action
+>Start by
+using <menuchoice
+><guimenu
+>Settings</guimenu
+><guimenuitem
+>Configure Folder Archive Agent...</guimenuitem
+></menuchoice>
+in &kmail;'s reader window to open a dialog to set up the folder archive agent.</action>
+</para>
+
+<para
+>This dialog will have a tab for each of your configured accounts including Local Folders and you will need to configure all accounts that you wish to
+use this feature with. The first option allows you to enable/disable the folder archive agent. It is disabled by default, to enable check the <guilabel
+>Enable</guilabel>
+checkbox. You can set the location of your Archive folder by clicking the folder icon next to
+<guilabel
+>Folder:</guilabel
+> and selecting the folder you wish to use. For example, you could create
+a folder called <quote
+>bill receipts</quote
+> by clicking the <guibutton
+>New Subfolder...</guibutton
+> and typing <userinput
+>bill receipts</userinput
+> in
+the dialog. You may choose a folder location anywhere, &eg;.. a folder in your <quote
+>Local Folders</quote
+> or on your &IMAP; server.</para>
+<para>
+You have several choices on how the emails will be archived:
+</para>
+<variablelist id="archivefolder-options">
+  <varlistentry>
+  <term
+><guilabel
+>Unique folder</guilabel
+></term>
+  <listitem
+><para
+>Uses the selected folder sorted by date.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Folder by months</guilabel
+></term>
+  <listitem
+><para
+>Creates new folders inside the selected folder by months.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Folder by years</guilabel
+></term>
+  <listitem
+><para
+>Creates new folders inside the selected folder by years.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+<para>
+Now when you receive a bill receipt, &RMB; the email and select <guimenuitem
+>Archive</guimenuitem
+> from the menu. The email will be archived
+into your configured archive folder for easy viewing later on.
+</para>
+</listitem>
+</varlistentry
+> --><!-- This feature is no longer available. @dcb2020295 -->
+</variablelist>
+</sect2>
+<sect2 id="exporting">
+<title
+>التصدير</title>
+<variablelist>
+<varlistentry id="settingsexport">
+<term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>استورد/صدّر بيانات بريدك...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>تصدر هذه الميزة الإعدادات والبريد المحلي إلى ملف مضغوط. يرجى مراجعة <ulink url="help:/pimdataexporter"
+>مصدر بيانات pim</ulink
+> للحصول على التفاصيل.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+<sect1 id="import-restore">
+<title
+>الاستعادة والاستيراد في بريدك</title>
+<para
+>يصف هذا القسم استعادة النسخ الاحتياطية واستيراد البيانات إلى بريدك.</para>
+
+<sect2 id="restore">
+<title
+>استعادة البريد الإلكتروني والإعدادات المنسوخة احتياطيًا</title>
+<variablelist>
+<varlistentry id="settingsimport">
+<term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>صدّر بيانات بريدك...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>إذا استخدمت مصدر بيانات PIM لنسخ البريد المحلي و/أو الإعدادات احتياطيًا، فيرجى استخدامه مرة أخرى لاستعادة البيانات إلى بريدك. راجع <ulink url="help:/pimdataexporter"
+>مصدر بيانات PIM</ulink
+> للحصول على التفاصيل.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="importing-options">
+<title
+>خيارات الاستيراد في بريدك</title>
+
+<para
+>يحتوي بريدك على معالج استيراد لتسهيل الانتقال من تطبيق بريد إلكتروني آخر. </para>
+
+<variablelist>
+<varlistentry id="importing-import-wizard">
+<term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>استورد من عميل بريد إلكتروني آخر...</guimenuitem
+> </menuchoice
+></term>
+<listitem>
+<para
+>يبدأ هذا معالج الاستيراد ويحاول آليًا اكتشاف البيانات من تطبيق بريد إلكتروني آخر. في حالة عدم العثور على بيانات البريد التي تريد استيرادها، استخدم خيار <guilabel
+>الاختيار اليدوي</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="importing-import-manual">
+<term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="document-import.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> استورد رسائل...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>يبدأ معالج الاستيراد ويتيح لك اختيار البيانات المطلوبة يدويًا.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>يرجى قراءة وثائق <ulink url="help:/importwizard"
+>معالج الاستيراد</ulink
+> للحصول على التفاصيل. </para>
+
+</sect2>
+
+</sect1>
+<sect1 id="multiple-accounts">
+<title
+>استخدام حسابات متعددة</title>
+
+<para
+>تُستخدم الحسابات المتعددة للتحقق من وجود رسائل من أكثر من عنوان بريد إلكتروني و/أو خادم بريد. اختر <menuchoice
+><guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> اضبط بريدك...</guimenuitem
+></menuchoice
+> وانقر على صفحة <guilabel
+>الحسابات</guilabel
+> لإضافة أو تغيير إعدادات حسابك. راجع قسم <link linkend="getting-started"
+>البدء</link
+> لمزيد من المعلومات حول الإعدادات في صفحة <guilabel
+>الحسابات</guilabel
+>.</para>
+
+<para
+>للتحقق من وجود رسائل من حساب معين، استخدم القائمة الفرعية <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> تحقق من البريد في</guimenuitem
+></menuchoice
+> لاختيار الحساب المراد التحقق من بريده. يمكنك أيضًا الضغط مع الاستمرار على زر الفأرة الأيسر على أيقونة <guiicon
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> تحقق من البريد</guiicon
+> (في شريط الأدوات) لبضع ثوانٍ للحصول على قائمة بالحسابات.</para>
+
+</sect1>
+
+<sect1 id="pgp">
+<!-- This section is from Andreas Gungl, 2000-05-21, updated 2002-10-06 by Ingo Kloecker -->
+<!-- Edited and modified by D. Bryant 2020-10-22. -->
+<title
+>توقيع وتعزية الرسائل باستخدام <application
+>GnuPG</application
+></title>
+
+<!--
+<note
+><para
+>There have been major changes in the way &kmail; handles
+signing/encryption. The following introduction applies to the previous
+version of &kmail;. You can still read the introduction to get an overview
+about how to sign/encrypt messages, but the details, especially those of
+the configuration, will differ.</para
+></note>
+-->
+<para
+>هذه مقدمة قصيرة حول كيفية إعداد دعم <application
+>GnuPG</application
+> (<application
+>&GNU; Privacy Guard</application
+>) في بريدك؛ وهي تقدم بعض التلميحات حول استخدام <application
+>GnuPG</application
+> أيضًا. لقد كُتبت للأشخاص المبتدئين في هذا المجال؛ إذا كنت على دراية باستخدام <application
+>GnuPG</application
+>، يمكنك تخطي معظم الخطوات.</para>
+
+<para
+>يرجى أيضًا التحقق من <link linkend="pgp-faq"
+>عنصر الأسئلة الشائعة حول <application
+>GnuPG</application
+></link
+>.</para>
+
+<warning
+><para
+>لن يتم توقيع/تعمية المرفقات إذا كنت تستخدم OpenPGP بداخل النص. لـ توقيع/تعمية المرفقات، يجب عليك تثبيت GnuPG وبعض المكتبات الضرورية. بعد ذلك، يمكنك تحديد لكل مرفق ما إذا كان ينبغي توقيعه/تعميته أم لا. </para
+></warning>
+
+<!-- <warning
+><para
+>&kmail; has to rely on <application
+>GnuPG</application
+>'s
+output; this output is often different between different versions of
+<application
+>GnuPG</application
+>, so it is important that you test if encryption
+really works with your setup before you start using it seriously. &kmail; might
+<emphasis
+>not</emphasis
+> warn you if something fails - enable
+<guilabel
+>Show signed/encrypted text
+after composing</guilabel
+>.  </para
+></warning
+> --><!-- Removing this warning ... GnuPG is stable now. @dcb2020295 -->
+
+<para
+>لإعداد واستخدام دعم <application
+>GnuPG</application
+> في بريدك، من الضروري أن يكون <application
+>GnuPG</application
+> مثبتًا ومضبوطًا بشكل صحيح. بالطبع، لا يمكننا أن نقدم لك مقدمة كاملة عن <application
+>GnuPG</application
+> هنا. سنذكر فقط الخطوات التي يجب عليك القيام بها لتشغيل <application
+>GnuPG</application
+>. للحصول على التفاصيل يجب عليك النظر في <ulink url="https://www.gnupg.org/docs.html#guides"
+>دليل خصوصية جنو</ulink
+>.</para>
+
+<para
+>من المؤكد أنها فكرة جيدة دراسة وثائق GnuPG بالإضافة إلى مقدمة في تعمية المفتاح العام. بهذه الطريقة يمكنك تعلم الكثير عن المفاهيم الأساسية، مما سيساعدك على فهم ما يجري. أيضًا، تُناقش هناك العديد من القضايا المتعلقة بالأمن التي يجب أن تعرفها.</para>
+
+<sect2 id="pgp-preconditions">
+<title
+>الشروط المسبقة</title>
+
+<para
+>يتوقع بريدك أن يكون اسم ملف <application
+>GnuPG</application
+> الثنائي الخاص بك هو <command
+>gpg</command
+>. إذا لم يكن الأمر كذلك بالنسبة لك، فما عليك سوى إنشاء وصلة رمزية.</para>
+
+<para
+>إذا لم تكن قد فعلت ذلك بعد، فيجب عليك إنشاء زوج مفاتيح (مفاتيح سرية وعامة) لهويتك. يمكنك القيام بذلك باستخدام KGpg أو كليوباترا أو عبر سطر الأوامر: <userinput
+><command
+>gpg</command
+> <option
+>--gen-key</option
+></userinput
+>. أو يمكنك أن تطلب من بريدك إنشاء زوج مفاتيح جديد عند إنشاء حساب بريد إلكتروني جديد. الهوية (عادةً اسمك متبوعًا بعنوان بريدك الإلكتروني بين قوسين، مثل <userinput
+>John Doe &lt;john@example.com&gt;</userinput
+>) وكلمة مرورك مهمة للتعاون بين بريدك و <application
+>GnuPG</application
+>.</para>
+
+</sect2>
+
+<sect2 id="pgp-settings">
+<title
+>الإعدادات المتعلقة بـ <application
+>GnuPG</application
+> في بريدك</title>
+
+<para
+>اختر تبويب <guilabel
+>الإنشاء</guilabel
+> في صفحة إعدادات <guilabel
+>الأمان</guilabel
+>. ستجد هناك الخيارات التالية:</para>
+
+<variablelist>
+<!-- not in 2.0.96?
+<varlistentry>
+<term
+><guilabel
+>Encryption tool</guilabel
+></term>
+<listitem>
+<para
+>Here you can choose if you want to use <application
+>PGP</application
+>,
+<application
+>GnuPG</application
+> or no encryption
+software at all; of course, the program you select has to be
+installed on your system (it is also important to select the correct
+version.)</para>
+</listitem>
+</varlistentry>
+    --><!-- Gpg is used by default. @dcb2020296. -->
+
+<varlistentry>
+<term
+><guilabel
+>عند تعمية رسائل البريد الإلكتروني، قم دائمًا بالتعمية أيضًا لشهادة هويتي الخاصة</guilabel
+></term>
+<listitem>
+<para
+>إذا كان هذا الخيار معطلًا وكنت تريد إرسال رسالة معمية إلى شخص ما، فلن تتمكن من قراءة هذه الرسالة بعد الآن بعد أن قمت بإنشائها وتعميتها. قم بتفعيل هذا الخيار لإبقاء الرسائل المعمية التي ترسلها قابلة للقراءة بالنسبة لك أيضًا.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>خزّن الرسائل المرسلة معمية</guilabel
+></term>
+<listitem>
+<para
+>عند تحديد هذا المربع، تُخزن الرسائل المرسلة معمية، كما تم إرسالها. لا ينصح بهذا، لأنك لن تتمكن من قراءة الرسائل بعد الآن إذا انتهت صلاحية شهادة ضرورية. (لاحظ أن مفاتيح GPG لا تنتهي صلاحيتها كقاعدة عامة؛ هذا التحذير ذو صلة في المقام الأول لمستخدمي شهادات x.509.)</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>أظهر دائمًا مفاتيح التعمية للموافقة</guilabel
+></term>
+<listitem>
+<para
+>سيؤدي هذا دائمًا إلى فتح حوار يتيح لك اختيار المفاتيح المستخدمة لكل مستلم عند إرسال رسالة معمية. إذا كان هذا الخيار معطلًا، فسيُظهر بريدك الحوار فقط عندما لا يتمكن من العثور على مفتاح للمستلم أو عندما يكون هناك تفضيلات تعمية متضاربة أو غير محددة.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>عند الحفظ كمسودة، قم دائمًا بالتوقيع/التعمية كما هو محدد</guilabel
+></term>
+<listitem
+><para
+>إذا كان هذا الخيار مفعلًا، فسيقوم بريدك آليًا بتعمية (و / أو توقيع) الرسائل التي تحفظها في مجلد <guilabel
+>المسودات</guilabel
+> (عندما تحدد التوقيع / التعمية).</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>أظهر مؤشر التوقيع/التعمية في المحرر</guilabel
+></term>
+<listitem
+><para
+>إذا كان هذا الخيار مفعلًا، فسيعرض بريدك مؤشرًا في نافذة الإنشاء لإعلامك بأن هذه الرسالة ستُوقع / تُعمى عندما يكون الأمر كذلك.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>الآن بعد أن قمت بإعداد أداة التعمية، يجب أن تخبر بريدك بمفتاح OpenPGP الذي تريد استخدامه لتوقيع وتعمية الرسائل. للقيام بذلك اذهب إلى <link linkend="configure-identity"
+>ضبط الهويات</link
+> واضبط المفتاح الذي يجب استخدامه عبر تبويب <guilabel
+>التعمية</guilabel
+> في حوار ضبط الهوية.</para>
+
+<para
+>الآن يمكنك توقيع الرسائل الصادرة. للسماح للأشخاص بإرسال رسائل معمية إليك، وللسماح لهم بالتحقق من توقيعك، يجب عليك إرسال مفتاحك العام إليهم، أو رفع مفتاحك العام إلى خادم مفاتيح <application
+>GnuPG</application
+> عام (حتى يتمكن الأشخاص من جلب مفتاحك من الخادم). لـ إرسال رسائل معمية إلى أشخاص آخرين، أو للتحقق من رسائلهم الموقعة، ستحتاج إلى مفاتيحهم العامة. يمكنك البحث عن مفاتيح عامة على خادم مفاتيح <application
+>GnuPG</application
+> عام. أو يمكنك أن تطلب من أصدقائك إرسال واحد أو أكثر من مفاتيحهم العامة إليك.</para>
+
+</sect2>
+
+<sect2 id="pgp-sign-your-messages">
+<title
+>وقّع رسائلك</title>
+
+<para
+>أنشئ رسالتك كالمعتاد في نافذة المنشئ. قبل إرسال الرسالة، حدد أيقونة <guibutton
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> وقّع</guibutton
+> في شريط أدوات نافذة المنشئ، أو اختر <menuchoice
+> <guimenu
+>خيارات</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-edit.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> وقّع الرسالة</guimenuitem
+></menuchoice
+>. بعد ذلك، يمكنك إرسال الرسالة. الهوية التي تستخدمها لكتابة الرسالة الحالية يجب أن تكون متصلة بـ <guilabel
+>مفتاح OpenPGP</guilabel
+> في قسم <guilabel
+>الهوية</guilabel
+> في حوار <guilabel
+>اضبط</guilabel
+>. لتوقيع الرسالة، يحتاج بريدك إلى معرفة كلمة مرور <application
+>GnuPG</application
+> الخاصة بك. قد يُطلب منك تقديمها، أو إذا كنت قد أعطيت العبارة مسبقًا لبريدك، فستُوقع الرسالة آليًا.</para>
+
+</sect2>
+
+<sect2 id="pgp-encrypt-your-messages">
+<title
+>عمِّ رسائلك</title>
+
+<para
+>لإرسال رسالة معمية إلى شخص ما يوجد مفتاحه العام في حلقة مفاتيح gpg الخاصة بك، ما عليك سوى إنشاء الرسالة في نافذة المنشئ. قبل إرسال الرسالة، حدد زر <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> عمِّ</guibutton
+> في شريط أدوات نافذة المنشئ (أو اختر <menuchoice
+> <guimenu
+>خيارات</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> عمِّ الرسالة</guimenuitem
+></menuchoice
+>). ثم أرسل الرسالة.</para>
+
+<para
+>إذا حددت زر <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> عمِّ</guibutton
+> ولم يتمكن بريدك من العثور على مفتاح مطابق لمستلم ما، فسيسمح لك بتعديل حلقة مفاتيحك قبل المحاولة مرة أخرى. إذا وجد بريدك أكثر من مفتاح موثوق به لـ مستلم ما، فسيعرض قائمة تحتوي على جميع المفاتيح المطابقة لهذا المستلم. في كلتا الحالتين يمكنك اختيار المفتاح (المفاتيح) التي ينبغي استخدامها لـ تعمية هذه الرسالة للمستلم المعني.</para>
+
+<para
+>إذا كنت تستخدم مفتاحًا لأول مرة، أو إذا كانت هناك تفضيلات تعمية متضاربة، أو إذا كان خيار <guilabel
+>أظهر دائمًا مفاتيح التعمية للموافقة</guilabel
+> محددًا في قسم <guilabel
+>الأمان</guilabel
+> في حوار ضبط بريدك، فسيظهر حوار <guilabel
+>الموافقة على مفتاح التعمية</guilabel
+>. يمكنك اختيار مفاتيح مختلفة للمستلمين ويمكنك ضبط <guilabel
+>تفضيل التعمية</guilabel
+> لـ كل مستلم. الخيار <guilabel
+>عمِّ كلما كانت التعمية ممكنة</guilabel
+> (في تبويب <guilabel
+>التعمية</guilabel
+> في حوار <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guimenuitem
+>اضبط بريدك...</guimenuitem
+> </menuchoice
+>)، سيقوم آليًا بتعمية رسالتك إذا كان هناك مفتاح موثوق به لكل مستلم.</para>
+
+<para
+>كما ذكر أعلاه، لن تتمكن من قراءة رسائلك المرسلة المعمية الخاصة بك إذا لم تحدد <guilabel
+>عند تعمية رسائل البريد الإلكتروني، قم دائمًا بالتعمية أيضًا لشهادة هويتي الخاصة</guilabel
+> في صفحة <guilabel
+>الأمان</guilabel
+> في الإعدادات.</para>
+
+</sect2>
+
+<sect2 id="pgp-send-your-public-key">
+<title
+>أرسل مفتاحك العام</title>
+
+<para
+>قم بإعداد رسالة إلى الشخص الذي تريد إرسال مفتاحك العام إليه. ثم اختر، من قائمة نافذة المنشئ، <menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>أرفق المفتاح العام</guimenuitem
+></menuchoice
+>. سيؤدي هذا إلى إرفاق مفتاحك العام – المفتاح الذي تستخدمه حاليًا – بالرسالة.</para>
+
+<para
+>تذكر أنه ليس من الآمن تمامًا مجرد توقيع الرسالة لضمان حصول المستلم على المفتاح الصحيح. يمكن (ربما) أن يحدث هجوم "رجل في المنتصف": حيث يمكن لشخص ما اعتراض رسالتك، وتغيير المفتاح المرفق، ثم توقيع الرسالة بهذا المفتاح الآخر. يجب على المستلم التحقق من المفتاح المرفق من خلال فحص بصمة المفتاح ومقارنتها بتلك التي تلقاها منك بطريقة آمنة. بدلًا من ذلك، ما عليك سوى الطلب منه استخدام المفتاح الذي تلقاه لإنشاء وإرسال رسالة معمية إليك مرة أخرى. إذا قام مفتاحك السري بفك تعمية تلك الرسالة، فهذا يعني أن لديه نسخة من مفتاحك العام. راجع وثائق <application
+>GnuPG</application
+> لـ مزيد من التفاصيل.</para>
+
+</sect2>
+
+<sect2 id="pgp-you-received-an-encrypted-message">
+<title
+>لقد تلقيت رسالة معمية</title>
+
+<para
+>كل ما عليك فعله هو اختيار الرسالة في بريدك. قد يُطلب منك إدخال عبارة المرور الخاصة بك. بعد ذلك، سيفك بريدك تعمية الرسالة ويعرض لك النص المجرد إذا كانت الرسالة قد عُميت بمفتاحك العام. إذا لم تكن كذلك، فلن تتمكن من قراءتها. يقوم بريدك مبدئيًا بتخزين الرسائل معمية، لذا لا يمكن لأحد قراءة هذه الرسائل دون معرفة عبارة مرورك، أو على الأقل، كلمة مرور تسجيل دخولك.</para>
+
+</sect2>
+
+<sect2 id="pgp-receiving-a-public-key">
+<title
+>استلام مفتاح عام</title>
+
+<para
+>يمكنك استلام مفتاح عام كمرفق، أو عبر http أو ftp أو قرص مرن. قبل استخدام هذا المفتاح لتعمية رسالة لمالك المفتاح، يجب عليك التحقق من المفتاح (افحص بصمته أو ابحث عن تواقيع موثوقة)؛ بعد ذلك، يمكنك إضافة هذا المفتاح إلى حلقة مفاتيحك العامة عن طريق كتابة <userinput
+><command
+>gpg</command
+> <option
+>--import</option
+> <replaceable
+>اسم_الملف</replaceable
+></userinput
+> في سطر الأوامر. إذا لم يكن المفتاح مصدقًا بتوقيع آخر تثق به بالفعل، فلا يمكنك استخدامه لتعمية الرسائل ما لم توقع (تصدق) على المفتاح بمفتاحك الخاص. </para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-spam-wizard">
+<title
+>معالج مكافحة البريد المزعج</title>
+
+<sect2 id="spam-wizard-basics">
+<title
+>الأساسيات</title>
+
+<para
+>لا يحتوي بريدك على حل مدمج للكشف عن البريد المزعج: يعتقد المطورون أن استخدام أدوات خارجية ومتخصصة هو النهج الأفضل. يستخدم بريدك هذه الأدوات من خلال بنية المرشحات المرنة الخاصة به. يساعدك معالج مكافحة البريد المزعج في الإعداد الأولي للمرشحات. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>ماذا يمكن أن يفعل المعالج لمساعدتك؟</term>
+<listitem>
+<para
+>سيعطيك بعض الخيارات حول كيفية إعداد ترشيح البريد المزعج. بعد ذلك سيقوم آليًا بإنشاء قواعد المرشح المناسبة. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>ما هي قيود المعالج؟</term>
+<listitem>
+<para
+>كل ما يمكنه فعله هو إعداد المرشحات لك؛ سيوفر إعدادًا قياسيًا. التعديلات اليدوية التي طبقت على مرشحات مكافحة البريد المزعج الموجودة لا يتم التعرف عليها. بدلًا من ذلك، تُستبدل مثل هذه المرشحات بواسطة المعالج. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>يمكنك تفعيل المعالج عبر <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guisubmenu
+>معالج مكافحة البريد المزعج...</guisubmenu
+></menuchoice
+>. إذا لم يكن هذا الخيار متاحًا، فانقر فوق <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guisubmenu
+>اضبط بريدك...</guisubmenu
+><guimenuitem
+>الملحقات</guimenuitem
+></menuchoice
+> وحدد المربع بجوار <guilabel
+>مكافحة البريد المزعج</guilabel
+>. سيُطلب منك إعادة تشغيل بريدك؛ وعندما تفعل ذلك، سيظهر المعالج في قائمة <guilabel
+>أدوات</guilabel
+>.</para>
+
+<para
+>يقوم المعالج بالبحث عن أدوات مكافحة البريد المزعج المعروفة على حاسوبك. من الممكن أيضًا استخدام نتائج فحص البريد المزعج التي أجراها مزود الخدمة الخاص بك، من خلال تقييم معلومات الترويسة التي أضيفت إلى الرسائل. يمكنك جعل المعالج يجهز بريدك لاستخدام واحد أو أكثر من هذه الأدوات بالتوازي. ومع ذلك، لاحظ أن عمليات أدوات مكافحة البريد المزعج تستهلك وقتًا طويلًا بشكل غير عادي. قد يظهر بريدك وكأنه متجمد أثناء فحص الرسائل بحثًا عن البريد المزعج، لذا فقد تواجه مشكلات في استجابة بريدك. يرجى النظر في حذف قواعد المرشح التي أنشأها المعالج إذا أصبح الترشيح بطيئًا جدًا بالنسبة لك. (كانت هذه مشكلة مع الأجهزة القديمة. من المحتمل أنها لن تصيب الآلات الأكثر حداثة.)</para>
+<para
+>إليك بعض الملاحظات حول عدد قليل من أدوات مكافحة البريد المزعج.</para>
+
+<variablelist>
+<varlistentry>
+  <term
+>بوجوفلتر (Bogofilter)</term>
+<listitem>
+<para
+>بوجوفلتر هو مرشح بايزي (Bayesian). تعتمد قدرته على كشف البريد المزعج على مرحلة تدريب أولية. من ناحية أخرى، هي أداة سريعة جدًا. لهذا السبب يوصى بها للأشخاص الذين يريدون كشفًا سريعًا للبريد المزعج، والذين لا يقلقون بشأن بذل بعض الجهد في التدريب الأولي، قبل أن يزيد معدل الكشف بشكل كبير. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>سبام أسيسين (SpamAssassin)</term>
+<listitem>
+<para
+>سبام أسيسين أداة معقدة إلى حد ما لاستخدامها ضد البريد المزعج. على الرغم من أن سلوكها يعتمد بشكل كبير على ضبطها، إلا أنها تستطيع كشف البريد المزعج بشكل جيد جدًا دون أي تدريب. ومع ذلك، فإن فحص الرسالة يستغرق وقتًا أطول قليلًا مقارنة بالمرشحات البايزية الصرفة. دعنا نقول إنها ليست الأداة المفضلة لـ الأشخاص الذين ليس لديهم بعض المعلومات الخلفية حول قدرات سبام أسيسين. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>مرشح الإزعاج (Annoyance Filter)</term>
+<listitem>
+<para
+>ربما لا تُستخدم كثيرًا حتى تعتمدها المزيد من التوزيعات. إنها بوضوح أداة للمتخصصين. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>مرشح GMX للبريد المزعج</term>
+<listitem>
+<para
+>إذا كنت تحصل على بريدك عبر مزود البريد المجاني GMX، فإن رسائلك قد فُحصت بالفعل للبحث عن البريد المزعج. نُوثقت نتيجة تلك العملية في حقل ترويسة خاص في كل رسالة. من الممكن استخدام محتوى حقل الترويسة هذا لترشيح البريد المزعج. هناك تباطؤ طفيف جدًا في الترشيح عند استخدام هذه الأداة، حيث أن الرسائل قد عولجت بالفعل بواسطة خادم البريد الإلكتروني الخارجي. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+
+</sect2>
+
+<sect2 id="spam-wizard-advanced">
+<title
+>متقدم</title>
+
+<para
+>يمكن لبريدك استخدام العديد من الأدوات الخارجية للكشف عن رسائل البريد المزعج؛ وسيحاول آليًا معرفة الأدوات المثبتة على نظامك، وسيعرض كل هذه الأدوات في قائمة. القائمة مرتبة حسب متوسط سرعة عملية الترشيح للأدوات. يمكنك تحديد الأدوات التي تريد من بريدك استخدامها للكشف عن البريد المزعج. إذا كنت تريد المزيد من الخيارات، يمكنك ببساطة إغلاق المعالج، وتثبيت أداة جديدة، ثم إعادة تشغيل المعالج. </para>
+
+<para
+>إذا حددت أداة واحدة على الأقل، فسيتمكن بريدك من توفير مرشحات تسمح بتصنيف الرسائل كبريد مزعج أو غير مزعج. كما سيوفر إجراءات للسماح لك بتصنيف الرسائل يدويًا. ستكون هذه الإجراءات متاحة في عنصر القائمة <menuchoice
+><guimenu
+>رسالة</guimenu
+><guisubmenu
+>طبق مرشحًا &gt;</guisubmenu
+></menuchoice
+>، وأيضًا عبر زوج من الأيقونات في شريط الأدوات. إذا كانت أي من الأدوات التي اخترتها تدعم التصفية البايزية (أي طريقة للكشف عن الرسائل غير المرغوب فيها استنادًا إلى التحليل الإحصائي للرسائل)، فإن هذه الرسائل لا تُعلم فحسب، بل تُمرر أيضًا عبر هذه الأدوات لمساعدتها على التعلم، مما يؤدي إلى تحسين معدل الكشف لديها. </para>
+
+<para
+>في الصفحة الثانية، ستتمكن من اختيار بعض الإجراءات الإضافية التي ستُنفذ في بريدك فيما يتعلق برسائل البريد المزعج: إذا كنت تريد نقل الرسائل المكتشفة كبريد مزعج إلى مجلد معين، فاختر المجلد المناسب وحدد خيار <guilabel
+>انقل البريد المزعج المعروف إلى:</guilabel
+>؛ إذا كان ينبغي تمييز الرسائل المكتشفة كبريد مزعج كرسائل مقروءة أيضًا، فحدد خيار <guilabel
+>ميّز رسائل البريد المزعج المكتشفة كمقروءة</guilabel
+>. </para>
+
+<para
+>سيسمح اختيار أداة واحدة على الأقل من الأدوات المتاحة للمعالج بإنهاء إعداد المرشحات. لن يأخذ المعالج أي تعديلات في المرشحات الموجودة، والتي أنشأها سابقًا، في الاعتبار، ولكنه سيقوم إما بإلحاق مرشحات جديدة أو استبدال المرشحات الموجودة. في أي حال، قد ترغب في فحص نتيجة هذه العملية في <link linkend="filter-dialog"
+>حوار المرشحات</link
+>. سيقوم المعالج أيضًا بإنشاء أزرار لشريط الأدوات لتمييز الرسائل كبريد مزعج (Spam) أو بريد مرغوب (Ham). ضع في اعتبارك أن تصنيف الرسائل كبريد مزعج سينقل أيضًا تلك الرسائل إلى المجلد الذي حددته لرسائل البريد المزعج، عندما تختار خيار <quote
+>بريد مزعج</quote
+>. </para>
+
+</sect2>
+
+<sect2 id="spam-wizard-details">
+<title
+>بعض التفاصيل الإضافية للخبراء</title>
+
+<para
+>يستخدم المعالج معلومات مخزنة في ملف ضبط خاص يسمى <filename
+>kmail.antispamrc</filename
+> (مخزن في دليل ضبط كيدي العالمي أو المحلي). سيتحقق أولًا من ملف الضبط العالمي ثم ملف الضبط المحلي. إذا كان ملف الضبط المحلي يحتوي على مدخلة برقم إصدار أعلى (أحدث)، فستُستخدم بيانات الضبط من الملف المحلي (لهذه الأداة)، بحيث يمكن لكل من المسؤولين والمستخدمين تحديث ضبط المعالج. </para>
+
+<para
+>يتحقق الكشف المحلي لرسائل البريد المزعج من خلال إنشاء إجراءات <guilabel
+>مرّر عبر</guilabel
+> لكل أداة داخل مرشح خاص. يحتوي مرشح آخر على قواعد للتحقق من رسائل البريد المزعج المكتشفة وإجراءات لتمييزها و (اختياريًا، اعتمادًا على الخيار في المعالج) لنقلها إلى مجلد. ضُبط كلا المرشحين ليُطبقا على الرسائل الواردة و للترشيح اليدوي. </para>
+
+<para
+>هناك حاجة لمرشحين لتصنيف البريد المرغوب والمزعج. يحتويان على إجراءات لتمييز الرسائل بشكل مناسب. كما ذكر أعلاه، يمكن لمرشح التصنيف كبريد مزعج أن يحتوي على إجراء تكميلي آخر لنقل الرسائل إلى مجلد محدد مسبقًا. إذا كانت الأدوات المختارة تدعم الترشيح البايزي، فسيقوم المعالج بإنشاء إجراءات مرشح إضافية لتمرير الرسائل إلى الأدوات (عبر إجراءات <guilabel
+>نفّذ أمرًا</guilabel
+>) في وضع التعلم المناسب. </para>
+
+<para
+>إذا كنت تريد ضبط عملية الترشيح بدقة، فقد تكون مهتمًا بـ الفصل الخاص بـ <link linkend="filter-optimization"
+>تحسين المرشحات</link
+>.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-virus-wizard">
+<title
+>معالج مكافحة الفيروسات</title>
+
+<sect2 id="virus-wizard-basics">
+<title
+>الأساسيات</title>
+
+<para
+>لا يحتوي بريدك على حل مدمج للكشف عن الفيروسات: يعتقد المطورون أن استخدام أدوات خارجية ومتخصصة هو النهج الأفضل. يستخدم بريدك هذه الأدوات من خلال بنية المرشحات المرنة الخاصة به. يساعدك معالج مكافحة الفيروسات في الإعداد الأولي للمرشحات. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>ماذا يمكن أن يفعل المعالج لمساعدتك؟</term>
+<listitem>
+<para
+>سيعطيك بعض الخيارات حول كيفية إعداد ترشيح الفيروسات. بعد ذلك سيقوم آليًا بإنشاء قواعد المرشح المناسبة. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>ما هي قيود المعالج؟</term>
+<listitem>
+<para
+>كل ما يمكنه فعله هو إعداد المرشحات لك؛ سيوفر إعدادًا قياسيًا. التعديلات اليدوية التي طبقت على مرشحات مكافحة الفيروسات الموجودة لا يتم التعرف عليها. بدلًا من ذلك، تُستبدل مثل هذه المرشحات بواسطة المعالج. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>يمكنك تفعيل المعالج عبر <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guisubmenu
+>معالج مكافحة الفيروسات...</guisubmenu
+></menuchoice
+>. إذا لم يكن هذا الخيار متاحًا، فانقر فوق <menuchoice
+><guimenu
+>الإعدادات</guimenu
+><guisubmenu
+>اضبط بريدك...</guisubmenu
+><guimenuitem
+>الملحقات</guimenuitem
+></menuchoice
+> وحدد المربع بجوار <guilabel
+>مكافحة الفيروسات</guilabel
+>. سيُطلب منك إعادة تشغيل بريدك؛ وعندما تفعل ذلك، سيظهر المعالج في قائمة <guilabel
+>أدوات</guilabel
+>.</para>
+
+</sect2>
+
+<sect2 id="virus-wizard-advanced">
+<title
+>متقدم</title>
+
+<para
+>يعمل معالج مكافحة الفيروسات أساسًا بنفس الطريقة التي يعمل بها <link linkend="the-anti-spam-wizard"
+>معالج مكافحة البريد المزعج</link
+>. يمكن لبريدك استخدام العديد من الأدوات الخارجية للكشف عن الرسائل التي تحتوي على فيروسات. وسيقوم بتحديد أي من هذه الأدوات مثبتة على نظامك، وسيعرض لك نتائج البحث. يمكنك تحديد الأدوات التي تريد من بريدك استخدامها للكشف عن الفيروسات. إذا كنت تريد المزيد من الخيارات، يمكنك ببساطة إغلاق المعالج، وتثبيت أداة جديدة، ثم إعادة تشغيل المعالج. </para>
+
+<para
+>إذا كنت قد اخترت أداة واحدة على الأقل فستتمكن من اختيار الإجراءات التي سيقوم بريدك بتنفيذها على الرسائل التي تحتوي على فيروسات. لتمكين بريدك من كشف الرسائل التي تحتوي على فيروسات، يجب عليك تحديد خيار <guilabel
+>افحص الرسائل باستخدام أدوات مكافحة الفيروسات</guilabel
+>. إذا كنت تريد نقل الرسائل المصابة بفيروس إلى مجلد معين، فاختر المجلد المناسب وحدد خيار <guilabel
+>انقل الرسائل الفيروسية المكتشفة إلى المجلد المحدد</guilabel
+>. إذا كان ينبغي أيضًا تمييز مثل هذه الرسائل كرسائل مقروءة، فاختر خيار <guilabel
+>بالإضافة إلى ذلك، ميّز الرسائل الفيروسية المكتشفة كمقروءة</guilabel
+>. </para>
+
+<para
+>سيسمح اختيار واحد على الأقل من هذه الخيارات للمعالج بإنهاء إعداد المرشحات. لن يأخذ المعالج أي قواعد مرشح موجودة في الاعتبار، ولكنه سيلحق قواعد جديدة. في أي حال قد ترغب في فحص نتيجة هذه العملية في <link linkend="filter-dialog"
+>حوار المرشحات</link
+>. </para>
+
+</sect2>
+
+<sect2 id="virus-wizard-details">
+<title
+>التفاصيل</title>
+
+<para
+>يستخدم المعالج معلومات مخزنة في ملف ضبط خاص يسمى <filename
+>kmail.antivirusrc</filename
+> (مخزن في دليل ضبط كيدي العالمي أو المحلي). إذا كان ملف الضبط المحلي يحتوي على مدخلة برقم إصدار أعلى (أحدث)، فستُستخدم بيانات الضبط من الملف المحلي (لهذه الأداة)، بحيث يمكن لكل من المسؤولين والمستخدمين تحديث ضبط المعالج. </para>
+
+<para
+>يتحقق الكشف عن الرسائل التي تحتوي على فيروسات من خلال إنشاء إجراءات <guilabel
+>مرّر عبر</guilabel
+> لكل أداة داخل مرشح خاص. يحتوي مرشح آخر على قواعد للتحقق من الرسائل المصابة، وإجراءات لتمييزها و (اختياريًا، اعتمادًا على الخيار في المعالج) لنقلها إلى مجلد. ضُبط كلا المرشحين ليُطبقا على الرسائل الواردة وللترشيح اليدوي. </para>
+
+</sect2>
+
+</sect1>
+
+</chapter>

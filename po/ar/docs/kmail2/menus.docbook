@@ -1,0 +1,4726 @@
+<chapter id="menus">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Michel.Boyer; <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-03-31</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>مرجع الأوامر و القوائم</title>
+<para
+>يُناقش كل عنصر قائمة خاص بـ بريدك أدناه. عند وجود اختصار لوحة مفاتيح يؤدي وظيفة عنصر القائمة، يُسرد الاختصار المبدئي مع عنصر القائمة.</para>
+
+<sect1 id="reader-menu-items">
+<title
+>نافذة قارئ بريدك</title>
+
+<sect2 id="reader-file-menu">
+<title
+>قائمة ملف</title>
+<screenshot>
+<screeninfo
+>قائمة ملف</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfile.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة ملف</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة ملف</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="file-new">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>جديد &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يمكنك هنا اختيار إنشاء عنصر واحد من أربعة عناصر جديدة، كما يلي:</para>
+
+    <variablelist>
+    <varlistentry id="reader-file-new-newmessage">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+><guisubmenu
+>جديد</guisubmenu
+> <guimenuitem
+>رسالة جديدة...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>صُفّ رسالة جديدة. سيؤدي هذا إلى فتح نافذة محرر، حيث يمكنك كتابة رسالة جديدة.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-file-new-message-from-template">
+      <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>جديد</guisubmenu
+> <guisubmenu
+>رسالة جديدة من قالب &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يُنشئ رسالة جديدة من قالب محدد. يرجى مراجعة <link linkend="new-compose-from-templates"
+>الصف من القوالب</link
+> لـ معلومات إضافية عن إنشاء القوالب. إذا لم يكن لديك أي قوالب محفوظة، فسترى <menuchoice
+> <guimenu
+>رسالة</guimenu
+><guisubmenu
+>رسالة من قالب &gt;</guisubmenu
+> <guimenuitem
+>(لا توجد قوالب)</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-add-folder">
+      <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>جديد</guisubmenu
+><guimenuitem
+>أضف مجلدًا...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>يُنشئ مجلدًا جديدًا. سيطلب منك الحوار التالي إعطاء المجلد الجديد اسمًا. سيُنشأ المجلد الجديد كمجلد فرعي من المجلد المحدد حاليًا.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-new-addressbook-contact">
+      <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>جديد</guisubmenu
+> <guimenuitem
+>مراسل جديد في دفتر العناوين...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>يُطلق حوار <ulink url="help:/kaddressbook/how-to-add-a-new-contact.html"
+>مراسل جديد</ulink
+>، مما يسمح لك بإضافة مدخل جديد في دفتر عناوين كيدي.</para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-open">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+><guimenuitem
+>افتح...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح رسائل البريد الإلكتروني المحفوظة (ملفات .mbox).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-open-recent">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>افتح الأخير</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُعرض قائمة بالرسائل المفتوحة حديثًا. فقط تلك الرسائل التي حُفظت كملفات .mbox وفُتحت لاحقًا ستظهر في هذه القائمة. إذا لم تكن هذه الملفات موجودة، فسيكون عنصر القائمة هذا غير مفعّل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-save-as">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+><guimenuitem
+>احفظ باسم...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُحفظ الرسالة المعروضة حاليًا في ملف <filename role="extension"
+>.mbox</filename
+>. يتضمن هذا الملف جميع الترويسات والمرفقات، بتنسيق MIME. إذا كنت تريد حفظها بتنسيق مختلف (على سبيل المثال، كملف <filename role="extension"
+>.txt</filename
+>)، فألغِ تحديد المربع <guilabel
+>اختر امتداد اسم الملف آليًا (.mbox)</guilabel
+>، وأضف امتداد اسم الملف قبل حفظ الملف.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-export-pdf">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>صدر إلى PDF...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُصدر الرسالة المعروضة حاليًا كملف .pdf.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-import-messages">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+> استورد رسائل...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدأ تشغيل برنامج <application
+>أداة استيراد PIM</application
+>. يتيح لك هذا التطبيق استيراد الرسائل من عدة عملاء بريد إلكتروني إلى بريدك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print-preview">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>معاينة الطباعة…</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+><action
+>يُظهر كيف سيظهر بريدك الإلكتروني عند طباعته.</action
+></para>
+  <note
+><para
+>سيُفعل هذا فقط إذا ضُبطت طابعة، وكانت متصلة، ومتاحة للاستخدام.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+><guimenuitem
+>اطبع...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُعرض حوارًا يتيح لك طباعة الرسالة المعروضة حاليًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-expire-all-folders">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>أنهِ صلاحية جميع المجلدات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحذف الرسائل القديمة من جميع المجلدات. سيحدث الحذف وفقًا لـ القواعد في <link linkend="folders-properties-window"
+>حوار الخصائص</link
+> لكل مجلد (المبدئي هو عدم حذف الرسائل القديمة على الإطلاق).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="reader-empty-all-trash-folders">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>أفرغ جميع مجلدات المهملات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>استخدم هذا العنصر لإفراغ جميع مجلدات المهملات، أي مجلد المهملات المحلي وجميع مجلدات المهملات التي قد توجد على خوادم IMAP. الرسائل في المهملات ستُحذف نهائيًا، ولا يمكن استعادتها.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-work-offline">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>اعمل دون اتصال</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يضبط بريدك على وضع عدم الاتصال. هذا يوقف جميع مهام الشبكة. هذا مفيد عند العمل بدون اتصال بالشبكة. عند اختياره، سيصبح هذا العنصر <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>اعمل متصلًا</guimenuitem
+></menuchoice
+>، والذي يجب اختياره للعودة للاتصال (مطلوب لإرسال واستقبال البريد الإلكتروني).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-check-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+><guimenuitem
+>افحص البريد</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفحص الرسائل الجديدة في جميع حساباتك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-check-mail-in">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>افحص البريد في &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يفحص الرسائل الجديدة من حساب معين؛ ستُسرد حساباتك في قائمة فرعية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>أرسل الرسائل المصطفة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يرسل الرسائل الموجودة في صندوق الصادر الخاص بك. يمكن أن تنتهي الرسائل في صندوق الصادر بسبب أخطاء الإرسال، أو لأنك صففت وحاولت إرسال رسالة أثناء عدم الاتصال. إذا لم تكن هناك رسائل في صندوق الصادر، فسيكون عنصر القائمة هذا غير مفعّل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages-via">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>أرسل الرسائل المصطفة عبر &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يرسل الرسائل الموجودة في صندوق الصادر عبر حساب صادر محدد. يتيح لك هذا اختيار الخادم الذي ستستخدمه لإرسال رسائلك المصطفة. يجب ضبط الخوادم في حوار اضبط بريدك، تحت علامة تبويب <menuchoice
+><guiicon
+>الحسابات</guiicon
+><guilabel
+>الإرسال</guilabel
+> </menuchoice
+>، ليتم سردها هنا. إذا لم تكن هناك رسائل في مجلد الصادر، فسيكون عنصر القائمة هذا غير مفعّل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-delayed">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>رسائل مؤجلة...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدأ حوار <ulink url="help:/akonadi_sendlater_agent"
+>عميل Akonadi للإرسال لاحقًا</ulink
+>. ستظهر أي رسائل مصطفة للتسليم اللاحق بواسطة خيار  <menuchoice
+> <guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل لاحقًا</guimenuitem
+></menuchoice
+> في المحرر في مربع الحوار هذا. يمكنك تعديلها و / أو حذفها. لاحظ أن الرسائل المؤجلة تُخزن في مجلد المسودات، وليس في مجلد الصادر.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-followup">
+  <term
+><menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>رسائل تذكير بالمتابعة...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدأ حوار <ulink url="help:/akonadi_followupreminder_agent"
+>عميل Akonadi للتذكير بالمتابعة</ulink
+>. ستظهر أي رسائل تذكير بالمتابعة ("مهام") أُنشئت عبر وظيفة  <menuchoice
+> <guimenu
+>خيارات</guimenu
+><guimenuitem
+>أنشئ تذكيرًا بالمتابعة...</guimenuitem
+></menuchoice
+> في المحرر في مربع الحوار هذا. يمكنك حذف تلك الرسائل بـ قائمة السياق لزر الفأرة الأيمن.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-quit">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+><guimenuitem
+>أنهِ</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يخرج من بريدك.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-edit-menu">
+<title
+>قائمة حرر</title>
+<screenshot>
+<screeninfo
+>قائمة حرر</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة حرر</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة حرر</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>إذا كان عنصر القائمة الذي تبحث عنه مفقودًا، فيرجى مراجعة <ulink url="help:/fundamentals/menus.html#menus-edit"
+>قائمة تحرير</ulink
+> في أساسيات كيدي. العناصر المدرجة هنا خاصة ببريدك.</para>
+
+<variablelist>
+
+<varlistentry id="reader-edit-copy-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>انسخ المجلد</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُنشئ مؤشر "Akonadi" إلى كامل محتويات المجلد المحدد حاليًا، ونسخ ذلك المؤشر إلى الحافظة. ستؤدي عملية لصق لاحقة في محرر نصوص ببساطة إلى لصق نص المؤشر. ستؤدي عملية لصق لاحقة في مجلد بريدك (أو في مدير الملفات دلفين) إلى إنشاء نسخة ثانية من المجلد ومحتوياته.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>قص المجلد</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُنشئ مؤشر "Akonadi" للمجلد المحدد حاليًا، وينسخ ذلك المؤشر إلى الحافظة. ستتصرف عملية "لصق" لاحقة في محرر نصوص أو في دلفين تمامًا مثل عملية <guimenuitem
+>انسخ المجلد</guimenuitem
+> السابقة. ستؤدي عملية لصق لاحقة في بريدك إلى نقل المجلد ومحتوياته إلى موقع مختلف (إذا أُلصق في مجلد آخر غير المجلد الأصلي).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-copy-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>انسخ الرسالة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُنشئ مؤشر "Akonadi" للرسالة (الرسائل) المحددة حاليًا، و ينسخ ذلك المؤشر إلى الحافظة. ستؤدي عملية لصق لاحقة في محرر نصوص ببساطة إلى لصق نص المؤشر. ستؤدي عملية لصق لاحقة في مجلد بريدك (أو في مدير الملفات دلفين) إلى إنشاء نسخة من الرسالة (الرسائل)، مع الترويسات وكل شيء.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>قص الرسالة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُنشئ مؤشر "Akonadi" للرسالة (الرسائل) المحددة حاليًا، و ينسخ ذلك المؤشر إلى الحافظة. ستتصرف عملية "لصق" لاحقة في محرر نصوص أو في دلفين تمامًا مثل عملية <guimenuitem
+>انسخ الرسالة</guimenuitem
+> السابقة. ستؤدي عملية لصق لاحقة في بريدك إما لإنشاء نسخة ثانية من الرسالة (الرسائل) (إذا أُلصقت في المجلد الأصلي) أو نقل الرسالة (الرسائل) إلى مجلد مختلف (إذا أُلصقت في مجلد آخر غير المجلد الأصلي).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-paste">
+  <term
+><menuchoice
+><shortcut
+>&Ctrl;<keycap
+>V</keycap
+></shortcut
+> <guimenu
+>حرر</guimenu
+> <guimenuitem
+>ألصق</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يلصق إما كامل محتويات المجلد، أو محتويات الرسائل المحددة، اعتمادًا على العملية التي سبقت "اللصق". لا يمكن استخدام هذه العملية للصق نص محدد داخل نافذة القارئ. إذا لم تكن هناك عملية نسخ / قص معلقة، فسيتم تعطيل هذا الخيار.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-to-trash">
+  <term
+><menuchoice
+><shortcut
+>&Del;</shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>انقل إلى المهملات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>ينقل الرسائل المحددة إلى مجلد المهملات. إذا كانت الرسائل المحددة موجودة بالفعل في مجلد المهملات، فستُحذف نهائيًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-thread-to-trash">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Del;</keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>انقل السلسلة إلى المهملات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>ينقل السلسلة المحددة إلى مجلد المهملات، مثل محادثة في قائمة بريدية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-find-in-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>ابحث في الرسالة...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبحث في نص الرسالة الحالية عن سلسلة أُدخلت في مربع نص <guilabel
+>ابحث:</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>حدد كل الرسائل</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحدد جميع الرسائل في المجلد الحالي.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-text">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>حدد كل النص</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحدد نص الرسالة المعروضة حاليًا.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-view-menu">
+<title
+>قائمة عرض</title>
+<screenshot>
+<screeninfo
+>قائمة عرض</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة عرض</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة عرض</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-view-message-list">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guisubmenu
+>قائمة الرسائل &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>تحتوي هذه القائمة الفرعية على الخيارات التالية لتغيير مظهر قائمة الرسائل.</para>
+
+    <variablelist>
+    <varlistentry id="reader-view-messagelist-sorting">
+      <term
+><menuchoice
+><guisubmenu
+>الفرز &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يحتوي على خيارات لتخصيص ترتيب الفرز كما يلي:</para>
+        <itemizedlist>
+        <listitem
+><para
+>يحتوي <guilabel
+>ترتيب فرز الرسائل</guilabel
+> على عدة خيارات، معظمها تشرح نفسها. الخيارات التالية قد لا تكون واضحة على الفور، وتستحق شرحًا.</para>
+          <itemizedlist>
+            <listitem
+><para
+>سيعرض <guilabel
+>حسب المرسل/المستقبل الذكي</guilabel
+> المستقبل عندما تشاهد مجلد البريد المرسل، وسيعرض المرسل عندما تشاهد صندوق الوارد.</para
+></listitem>
+
+            <listitem
+><para
+><guilabel
+>حسب حالة عنصر الإجراء</guilabel
+> و <guilabel
+>حسب الحالة الهامة</guilabel
+>. يجب تعيين هذه الأعلام قبل أن يتم فرزها. يرجى مراجعة <link linkend="reader-mark-messages"
+>وسم الرسائل</link
+> لـ مزيد من المعلومات حول وسم رسائلك.</para
+></listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem
+><para
+>يتيح لك <guilabel
+>اتجاه فرز الرسائل</guilabel
+> و <guilabel
+>اتجاه فرز المجموعات</guilabel
+> تغيير الاتجاه الذي سيتم فيه فرز رسائلك/مجموعاتك، على التوالي. لاحظ أن خيارات "المجموعة" متاحة فقط عندما تُجمع الرسائل في مجموعات.</para
+></listitem>
+        <listitem
+><para
+>يتيح لك <guilabel
+>المجلد يستخدم دائمًا ترتيب الفرز هذا</guilabel
+> تحديد إعدادات فرز مختلفة لكل مجلد.</para
+></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-aggregation">
+      <term
+><menuchoice
+><guisubmenu
+>التجميع &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يتيح لك اختيار خيار تجميع. يرجى مراجعة علامة تبويب <link linkend="configure-appearance-message-list"
+>مظهر قائمة الرسائل</link
+> (تحت <menuchoice
+> <guimenu
+>إعدادات</guimenu
+><guisubmenu
+>اضبط بريدك...</guisubmenu
+></menuchoice
+>) لمزيد من المعلومات حول التجميع.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-theme">
+      <term
+><menuchoice
+><guisubmenu
+>السمة &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يتيح لك اختيار سمة. يرجى مراجعة علامة تبويب <link linkend="configure-appearance-message-list"
+>مظهر قائمة الرسائل</link
+> (تحت  <menuchoice
+> <guimenu
+>إعدادات</guimenu
+><guisubmenu
+>اضبط بريدك...</guisubmenu
+></menuchoice
+>) لمزيد من المعلومات حول السمات.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-create-new-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>أنشئ لسانًا جديدًا</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يُنشئ لسانًا جديدًا في شريط أدوات الألسنة. سيشير هذا اللسان إلى المجلد الذي تشاهده عند اختيار الخيار. إذا لم يكن شريط أدوات الألسنة مرئيًا بعد، فسيؤدي اختيار هذا الخيار لإنشائه. يمكن أن يكون شريط أدوات الألسنة مفيدًا إذا كان لديك العديد من المجلدات، ولكن يُدخل إلى عدد قليل منها بانتظام.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-activate-next-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&PgDn;</keycombo
+></shortcut
+> <guisubmenu
+>نشط اللسان التالي</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يفتح المجلد المرتبط باللسان التالي في شريط أدوات الألسنة.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-activate-previous-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&PgUp;</keycombo
+></shortcut
+> <guisubmenu
+>نشط اللسان السابق</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يفتح المجلد المرتبط باللسان السابق في شريط أدوات الألسنة.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-move-tab-left">
+      <term
+><menuchoice
+><guisubmenu
+>انقل اللسان لليسار</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يعيد ترتيب الألسنة في شريط أدوات الألسنة عن طريق إزاحة اللسان النشط إلى اليسار. إذا كان هذا اللسان موجودًا بالفعل في أقصى الطرف الأيسر، فسيُنقل إلى موضع الطرف الأيمن.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-move-tab-right">
+      <term
+><menuchoice
+><guisubmenu
+>انقل اللسان لليمين</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>يعيد ترتيب الألسنة في شريط أدوات الألسنة عن طريق إزاحة اللسان النشط إلى اليمين. إذا كان هذا اللسان موجودًا بالفعل في أقصى الطرف الأيمن، فسيُنقل إلى موضع الطرف الأيسر.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-close-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>أغلق اللسان</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+><action
+>يغلق اللسان المحدد حاليًا.</action
+></para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-headers">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guisubmenu
+>الترويسات &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يختار عرض الترويسات الخاص بك. يرجى مراجعة <link linkend="using-header-options"
+>خيارات الترويسات</link
+> لـ تفاصيل حول عروض الترويسات المتاحة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-attachments">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>المرفقات &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يغير الطريقة التي تظهر بها المرفقات في <guilabel
+>لوحة معاينة الرسالة</guilabel
+> (بشكل مستقل عن شجرة MIME). يرجى مراجعة <link linkend="using-attachment-view-options"
+>خيارات المرفقات</link
+> لـ تفاصيل حول عرض المرفقات.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>.</keycap
+></shortcut
+> <guimenu
+>عرض</guimenu
+><guimenuitem
+>وسع السلسلة / المجموعة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>سيعرض هذا سلسلة الرسالة الحالية، أي جميع الرسائل التي هي ردود على الرسالة الحالية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>,</keycap
+></shortcut
+> <guimenu
+>عرض</guimenu
+><guimenuitem
+>اطوِ السلسلة / المجموعة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>سيخفي هذا سلسلة الرسالة الحالية، أي سيخفي جميع الرسائل التي هي ردود على الرسالة الحالية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+></shortcut
+> <guimenu
+>عرض</guimenu
+><guimenuitem
+>وسع كل السلاسل</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يوسع جميع السلاسل في المجلد الحالي.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+></shortcut
+> <guimenu
+>عرض</guimenu
+><guimenuitem
+>اطوِ كل السلاسل</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يطوي جميع السلاسل في المجلد الحالي.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-save-display-format">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>احفظ تنسيق العرض</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>من المفترض ظاهريًا أن يحفظ هذا الخيار شيئًا ما في مكان ما، لكنه لا يعمل بشكل صحيح بعد.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-restore-display-format">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>استعد تنسيق العرض</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>من المفترض ظاهريًا أن يستعيد هذا الخيار كل ما كان من المفترض أن يحفظه خيار "الحفظ" السابق، لكنه لا يعمل بشكل صحيح بعد أيضًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-disable-emoticon">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>عطل الوجوه الضاحكة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>اختر هذا الخيار لإيقاف بريدك عن تحويل <literal
+>:-)</literal
+> إلى <inlinemediaobject
+><imageobject
+><imagedata fileref="smile.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-use-fixed-font">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>X</keycap
+></shortcut
+> <guimenu
+>عرض</guimenu
+><guimenuitem
+>استخدم خطًا ثابتًا</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يستخدم خطًا ثابت العرض (Monospace) لعرض الرسائل في المجلد الحالي. يمكن ضبط الخط المراد استخدامه في علامة تبويب <link linkend="configure-appearance-fonts"
+>الخطوط</link
+> في صفحة <guilabel
+>المظهر</guilabel
+> من حوار ضبط بريدك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-set-encoding">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guisubmenu
+>اضبط الترميز &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك اختيار ترميز الأحرف المراد استخدامه في لوحة الرسائل. الخيار المبدئي، <guilabel
+>آلي</guilabel
+>، يجب أن يعمل في كل حالة تقريبًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-zoom">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guisubmenu
+>التقريب &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك هذا الخيار تكبير أو تصغير كل رسالة تُعرض في لوحة المعاينة.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-go-menu">
+<title
+>قائمة اذهب</title>
+<screenshot>
+<screeninfo
+>قائمة اذهب</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readergo.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة اذهب</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة اذهب</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-go-jump-to-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>J</keycap
+></shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>اقفز إلى المجلد...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُعرض مربع حوار يحتوي على قائمة بجميع مجلداتك. انقر فوق المجلد الذي ترغب في مشاهدته، وسيُفتح هذا المجلد للعرض في لوحة معاينة الرسائل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>N</keycap
+></shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>الرسالة التالية</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحدد الرسالة التالية في قائمة الرسائل. يؤدي اختصار لوحة المفاتيح السهم الأيمن أيضًا هذه الوظيفة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>&plus;</keycap
+></shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>الرسالة غير المقروءة التالية</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحدد الرسالة غير المقروءة التالية في قائمة الرسائل. إذا لم تكن هناك رسائل غير مقروءة أسفل الرسالة المحددة حاليًا، فإن السلوك يعتمد على قيمة خيار <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>P</keycap
+></shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>الرسالة السابقة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحدد الرسالة السابقة في قائمة الرسائل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>&minus;</keycap
+></shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>الرسالة غير المقروءة السابقة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحدد الرسالة غير المقروءة السابقة في قائمة الرسائل. إذا لم تكن هناك رسالة غير مقروءة فوق الرسالة المحددة حاليًا، فإن السلوك يعتمد على قيمة خيار <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&plus;</keycap
+></keycombo
+></shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>المجلد غير المقروء التالي</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يقفز إلى المجلد التالي الذي يحتوي على رسائل غير مقروءة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&minus;</keycap
+></keycombo
+></shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>المجلد غير المقروء السابق</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يقفز إلى المجلد السابق الذي يحتوي على رسائل غير مقروءة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-text">
+  <term
+><menuchoice
+><shortcut
+>&Space;</shortcut
+> <guimenu
+>اذهب</guimenu
+><guimenuitem
+>النص غير المقروء التالي</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>ينتقل للأسفل إذا لم تكن قد وصلت بعد إلى نهاية الرسالة، وإلا يقفز إلى الرسالة غير المقروءة التالية.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-folder-menu">
+<title
+>قائمة مجلد</title>
+<screenshot>
+<screeninfo
+>قائمة مجلد</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfolder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة مجلد</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة مجلد</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-folder-properties">
+  <term
+><guimenu
+>خصائص المجلّد</guimenu
+></term>
+  <listitem
+><para
+>يفتح حوار <link linkend="folders-properties-window"
+>خصائص المجلد</link
+> الذي يتيح لك تعديل خصائص المجلد الحالي.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-add-folder">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>أضف مجلدًا...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يطلب منك اسمًا، ثم يُنشئ مجلدًا جديدًا كمجلد فرعي من المجلد الحالي. هذا تمامًا مثل <xref linkend="reader-add-folder"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>وسم كل الرسائل كمقروءة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يضبط حالة كل الرسائل غير المقروءة في المجلد الحالي لتكون "مقروءة".</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read-subfolder">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>علّم كل الرسائل كمقروءة في هذا المجلد وكل مجلداته الفرعية</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يضبط حالة كل الرسائل غير المقروءة في المجلد الحالي (وكل مجلداته الفرعية) لتكون "مقروءة".</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>مجلد</guimenu
+><guimenuitem
+>حدّث المجلد</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتحقق مما إذا كان هناك بريد جديد قد وصل في المجلد المحدد حاليًا.</para>
+  <note
+><para
+>يعمل هذا الخيار فقط في مجلدات IMAP.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>مجلد</guimenu
+><guimenuitem
+>حدّث هذا المجلد وكل مجلداته الفرعية</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتحقق مما إذا كان هناك بريد جديد قد وصل في المجلد المحدد حاليًا، أو في أي من مجلداته الفرعية.</para>
+  <note
+><para
+>يعمل هذا الخيار فقط في مجلدات IMAP.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-move-all-messages-to-trash">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>انقل كل الرسائل إلى المهملات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>ينقل كل الرسائل الموجودة في المجلد المحدد إلى مجلد المهملات.</para>
+  <note
+><para
+>هذا متاح فقط إذا لم يكن المجلد المحدد حاليًا هو مجلد المهملات. إذا كان المجلد المحدد حاليًا هو مجلد المهملات، فستظهر لك التسمية <guilabel
+>أفرغ المهملات</guilabel
+> بدلًا من ذلك. سيؤدي اختيار هذا الخيار إلى إفراغ المهملات عن طريق حذف الرسائل الموجودة في مجلد المهملات حذفًا نهائيًا.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-delete-folder">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>احذف المجلد</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يحذف المجلد المحدد وكل محتوياته. سيُعرض إشعار تحذيري. إذا كان المجلد الحالي أحد المجلدات المحددة مسبقًا في بريدك (صندوق الوارد، إلخ)، فسيكون عنصر القائمة هذا غير مفعّل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-archive-folder">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>أرشف المجلد...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُظهر حوارًا لتتمكن من إنشاء أرشيف للمجلد المحدد حاليًا. يرجى مراجعة قسم <xref linkend="folder-archive"/> في "استخدام بريدك" لمزيد من التفاصيل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>*</keycap
+></keycombo
+></shortcut
+> <guimenu
+>مجلد</guimenu
+><guimenuitem
+>أزل الرسائل المكررة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبحث في المجلد عن الرسائل المكررة ويحذفها.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages-subfolder">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>أزل المكررات في هذا المجلد وكل مجلداته الفرعية</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبحث في المجلد، ومجلداته الفرعية، عن الرسائل المكررة، ثم يحذف المكررات.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-folder">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>طبق المرشحات على المجلد &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يطبق المرشحات المختارة (الكل، بريد مزعج، أو ليس بريدًا مزعجًا) على المجلد المحدد حاليًا. يرجى مراجعة <link linkend="filter-dialog-id"
+>حوار المرشح</link
+> لمزيد من المعلومات حول المرشحات.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-subfolders">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>طبق المرشحات على المجلد وكل مجلداته الفرعية &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يطبق المرشحات المختارة (الكل، بريد مزعج، أو ليس بريدًا مزعجًا) على المجلد المحدد حاليًا، وعلى مجلداته الفرعية. يرجى مراجعة <link linkend="filter-dialog-id"
+>حوار المرشح</link
+> لمزيد من المعلومات حول المرشحات.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-message-default-format">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>التنسيق المبدئي للرسالة &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>هنا يمكنك اختيار أحد الخيارات الثلاثة: <guilabel
+>فضل HTML على النص المجرد</guilabel
+>، <guilabel
+>فضل النص المجرد على HTML</guilabel
+>، أو <guilabel
+>استخدم الإعداد العام</guilabel
+>.</para>
+  <warning
+><para
+>لأسباب أمنية، نوصيك فقط باختيار <guilabel
+>فضل HTML على النص المجرد</guilabel
+> في المجلدات التي لا يمكن أن تحتوي أبدًا على رسائل غير موثوقة.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-load-external-references">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>حمّل المراجع الخارجية</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>إذا كنت قد فعلت رسائل HTML (انظر أعلاه)، فسيكون لديك أيضًا خيار تنزيل الصور والموارد الأخرى المرتبطة من الويب آليًا.</para>
+  <warning
+><para
+>هذا الخيار متاح فقط إذا اختير <guilabel
+>فضل HTML على النص المجرد</guilabel
+>. إذا فعلت هذا الخيار، وقررت لاحقًا تغيير <guimenuitem
+>التنسيق المبدئي للرسالة</guimenuitem
+>، فتأكد من مسح خانة الاختيار هذه قبل إجراء التبديل. توجد علة في بريدك -- إذا لم تُمسح خانة الاختيار لهذا العنصر، وكان هذا الخيار غير مفعّل، فستكون النتائج غير متوقعة.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mailing-list-management">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>إدارة القائمة البريدية...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح هذا حوار إدارة القائمة البريدية. هذا الخيار متاح فقط إذا كان المجلد الحالي يحتوي على رسائل من قائمة بريدية. يرجى مراجعة <link linkend="folders-properties-mailinglist"
+>حوار القائمة البريدية</link
+> لمزيد من المعلومات حول القوائم البريدية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-assign-shortcut">
+  <term
+><menuchoice
+><guimenu
+>مجلد</guimenu
+><guimenuitem
+>عين اختصارًا...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك هذا تعيين اختصار لوحة مفاتيح للمجلد المحدد حاليًا.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-message-menu">
+<title
+>قائمة الرّسالة</title>
+<screenshot>
+<screeninfo
+>قائمة الرّسالة</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة الرّسالة</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة الرّسالة</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-message-new-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guimenuitem
+>رسالة جديدة...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح <link linkend="the-composer-window"
+>نافذة المحرر</link
+> لتتمكن من كتابة رسالة جديدة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-new-message-to-mailing-list">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guimenuitem
+>رسالة جديدة إلى قائمة بريدية...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة المحرر لتتمكن من كتابة رسالة جديدة. إذا كان المجلد الحالي يحتوي على قائمة بريدية وله عنوان إرسال محدد، فسيُدخل عنوان الإرسال هذا آليًا كعنوان في حقل <guilabel
+>إلى:</guilabel
+> عند فتح نافذة المحرر. إذا كان المجلد الحالي لا يحتوي على قائمة بريدية، فسيكون هذا العنصر غير مفعّل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>R</keycap
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guimenuitem
+>رد...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة المحرر، ويُدرج النص المقتبس من الرسالة المحددة حاليًا، ويضبط حقل <guilabel
+>إلى:</guilabel
+> إما لعنوان القائمة البريدية (إذا كنت ترد على رسالة قائمة بريدية)، أو لعنوان الرد المفضل للمرسل. إذا كنت تريد التحكم في العنوان الذي يُضبط في حقل <guilabel
+>إلى:</guilabel
+>، فعليك استخدام <link linkend="reader-message-reply-special"
+>رد خاص</link
+>. ستُضبط هوية الإرسال آليًا لتكون الهوية التي وُجهت إليها هذه الرسالة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-all">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>A</keycap
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guimenuitem
+>رد على الكل...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة المحرر، ويُدرج النص المقتبس للرسالة المحددة حاليًا، ويضبط حقل <guilabel
+>إلى:</guilabel
+> إما لعنوان القائمة البريدية (عند الرد على رسالة قائمة بريدية)، أو لعنوان الرد المفضل للمرسل. يُملأ حقل <guilabel
+>نسخة إلى (CC):</guilabel
+> بعناوين جميع المستلمين الآخرين للرسالة المحددة حاليًا، باستثناء عنوانك الشخصي. ستُضبط هوية الإرسال آليًا لتكون الهوية التي وُجهت إليها هذه الرسالة.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guisubmenu
+>رد خاص &gt;</guisubmenu
+><guimenuitem
+>رد على المؤلف...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة المحرر، ويُدرج النص المقتبس من الرسالة المحددة حاليًا، ويضبط حقل <guilabel
+>إلى:</guilabel
+> لعنوان الرد المفضل للمرسل. ستُضبط هوية الإرسال آليًا لتكون الهوية التي وُجهت إليها هذه الرسالة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-mailinglist">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>L</keycap
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guisubmenu
+>رد خاص &gt;</guisubmenu
+><guimenuitem
+>رد على القائمة البريدية...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة المحرر، ويُدرج النص المقتبس للرسالة المحددة حاليًا، ويضبط حقل <guilabel
+>إلى:</guilabel
+> لعنوان القائمة البريدية. إذا لم تحدد عنوان قائمة بريدية للمجلد المحدد حاليًا ولم يتمكن بريدك من تحديد عنوان الإرسال من الرسالة المحددة حاليًا، فسيكون حقل <guilabel
+>إلى:</guilabel
+> فارغًا. ستُضبط هوية الإرسال آليًا لتكون الهوية التي وُجهت إليها هذه الرسالة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-without-quote">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guisubmenu
+>رد خاص &gt;</guisubmenu
+><guimenuitem
+>رد بدون اقتباس...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>يعمل تمامًا مثل <guimenuitem
+>رد...</guimenuitem
+>، باستثناء أن نص الرسالة المحددة حاليًا لا يُقتبس.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>رد خاص &gt;</guisubmenu
+> <guimenuitem
+>رد باستخدام قالب مخصص</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعمل تمامًا مثل <guimenuitem
+>رد...</guimenuitem
+> مع خيار إضافي: يمكنك اختيار قالب مخصص ضُبط عبر <link linkend="configure-composer-custom-templates"
+>القوالب المخصصة</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-all-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>رد خاص &gt;</guisubmenu
+> <guimenuitem
+>رد على الكل باستخدام قالب مخصص</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعمل تمامًا مثل <guimenuitem
+>رد على الكل...</guimenuitem
+> مع خيار إضافي: يمكنك اختيار قالب مخصص ضُبط عبر <link linkend="configure-composer-custom-templates"
+>القوالب المخصصة</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-as-attachment">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guisubmenu
+>مرر &gt;</guisubmenu
+><guimenuitem
+>كمرفق</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>يمرر الرسالة إلى مستلم جديد. ستُرفق الرسالة ومرفقاتها بالرسالة الجديدة. ستُضمن ترويسات الرسالة الأصلية في الرسالة الممررة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-inline">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F</keycap
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guisubmenu
+>مرر &gt;</guisubmenu
+><guimenuitem
+>مضمنة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>سيُنسخ نص الرسالة وبعض حقول الترويسة الهامة إلى متن الرسالة الجديدة، مع وجود نص يحدد بداية الجزء الممرر. ستُرفق المرفقات بالرسالة الجديدة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-redirect">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>E</keycap
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guisubmenu
+>مرر &gt;</guisubmenu
+><guimenuitem
+>أعد توجيه</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعمل هذا مثل "تمرير"، باستثناء أن الرسالة تبقى كما هي (حتى حقل <guilabel
+>من:</guilabel
+>). يُحدد المستخدم الذي أعاد توجيه الرسالة بواسطة حقول ترويسة خاصة (<literal
+>Redirect-From</literal
+>، <literal
+>Redirect-Date</literal
+>، <literal
+>Redirect-To</literal
+>، إلخ).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>مرر &gt;</guisubmenu
+> <guimenuitem
+>باستخدام قالب مخصص</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعمل تمامًا مثل "تمرير"، ولكنه يمنحك خيار اختيار قالب مخصص ضُبط عبر تبويب القوالب المخصصة للمحرر في <link linkend="configure-composer-custom-templates"
+>القوالب المخصصة</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-send-again">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guimenuitem
+>أرسل مجددًا...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة محرر بالرسالة المحددة حاليًا بحيث يمكن إرسالها مرة أخرى.</para>
+  <note
+><para
+>عنصر القائمة هذا متاح فقط للرسائل التي أرسلتها، أو بدقة أكثر، للرسائل التي لها حالة <guilabel
+>أُرسلت</guilabel
+>. إذا كنت ترغب في إعادة إرسال رسالة أخرى، فانقر نقرًا مزدوجًا على مدخلها في قائمة الرسائل. أو اعرض الرسالة واستخدم الاختصار <keycap
+>T</keycap
+>. يمكنك أيضًا القيام بذلك عن طريق إضافة زر <guibutton
+>حرر كجديدة</guibutton
+> إلى شريط الأدوات.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-edit-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>T</keycap
+></shortcut>
+<guimenu
+>Message</guimenu
+><guimenuitem
+>Edit Message</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>Opens the selected message in a composer window.</para
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-message-mailing-list">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guimenuitem
+>اسم القائمة البريدية: &gt;</guimenuitem
+></menuchoice
+></term>
+
+  <listitem
+><para
+>يقدم عدة خيارات لرسائل القائمة البريدية.</para>
+  <note
+><para
+>يجب أن يُضبط مجلد العمل الحالي كقائمة بريدية ليكون هذا الخيار متاحًا. يرجى مراجعة <link linkend="folders-properties-mailinglist"
+>خصائص المجلد - القائمة البريدية</link
+> للتعرف على كيفية إعداد القوائم البريدية.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  <para
+>الخيارات التالية متاحة في مجلدات القائمة البريدية:</para>
+
+  <itemizedlist>
+    <listitem
+><para
+>سيؤدي <guimenuitem
+>انشر رسالة جديدة (بريد إلكتروني)</guimenuitem
+> إلى ضبط عنوان <guilabel
+>إلى:</guilabel
+> على العنوان المضبوط كـ "انشر في القائمة".</para
+></listitem>
+    <listitem
+><para
+>سيؤدي <guimenuitem
+>اطلب المساعدة (بريد إلكتروني)</guimenuitem
+> إلى ضبط عنوان <guilabel
+>إلى:</guilabel
+> على العنوان المضبوط في "انشر في القائمة" وسيوضع الكلمة <literal
+>help</literal
+> في حقل <guilabel
+>الموضوع:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+>سيوجه <guimenuitem
+>اشترك في القائمة (ويب)</guimenuitem
+> متصفح الويب المبدئي لديك إلى موقع الويب الخاص بـ "الاشتراك" للقائمة البريدية المضبوطة.</para
+></listitem>
+    <listitem
+><para
+>سيؤدي <guimenuitem
+>اشترك في القائمة (بريد إلكتروني)</guimenuitem
+> إلى ضبط عنوان <guilabel
+>إلى:</guilabel
+> على عنوان الاشتراك في القائمة البريدية، ووضع كلمة <literal
+>subscribe</literal
+> في حقل <guilabel
+>الموضوع:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+>سيوجه <guimenuitem
+>إلغاء الاشتراك من القائمة (ويب)</guimenuitem
+> متصفح الويب المبدئي لديك إلى موقع الويب الخاص بـ "إلغاء الاشتراك" للقائمة البريدية المضبوطة.</para
+></listitem>
+    <listitem
+><para
+>سيؤدي <guimenuitem
+>إلغاء الاشتراك من القائمة (بريد إلكتروني)</guimenuitem
+> إلى ضبط عنوان <guilabel
+>إلى:</guilabel
+> على عنوان الاشتراك في القائمة البريدية، ووضع كلمة <literal
+>unsubscribe</literal
+> في حقل <guilabel
+>الموضوع:</guilabel
+>.</para
+></listitem>
+  </itemizedlist>
+
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-copy-message-to">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>انسخ الرسالة إلى &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>ينسخ الرسائل المختارة إلى مجلد محدد. يمكنك الاختيار من المجلدات الحديثة، أو المجلدات المحلية، أو مجلد حساب IMAP محدد.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-move-message-to">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>انقل الرسالة إلى &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>نفس خيار "انسخ الرسالة إلى" أعلاه، باستثناء أن هذا الخيار سينقل الرسائل المختارة نقلًا نهائيًا إلى المجلد المختار.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-messages">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>علّم الرسالة &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك تغيير حالة الرسالة المختارة إلى إحدى القيم التالية:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>الحالة</entry
+><entry
+>الرمز</entry
+><entry
+>المعنى</entry
+></row
+></thead>
+
+    <tbody>
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+></shortcut
+> <guimenuitem
+>علّم الرسالة كمقروءة</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>قُرئت الرسالة.</entry
+></row>
+
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+></shortcut
+> <guimenuitem
+>علّم الرسالة كغير مقروءة</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>لم تُقرأ الرسالة بعد.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>علّم الرسالة كَهامّة</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>لن تُضبط هذه الحالة آليًا بواسطة بريدك. يمكنك استخدامها بحرية لتعليم الرسائل الهامة بالنسبة لك بطريقة ما.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>أزل علامة مُهمّة</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>يزيل وسم "هام" الذي ضُبط سابقًا من الرسالة.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>علّم الرسالة كمَهمة</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>لن تُضبط هذه الحالة آليًا بواسطة بريدك. استخدم هذا لتعليم الرسائل التي تمثل عناصر إجرائية؛ مثلًا، قائمة مهام.</entry
+></row>
+
+    <row
+><entry
+><guimenuitem
+>أزل علامة مَهمة</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>يزيل علامة العنصر الإجرائي التي ضُبطت سابقًا من الرسالة.</entry
+></row>
+    </tbody>
+
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-thread">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>علّم السلسلة</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك تغيير حالة كل الرسائل في السلسلة كالتالي:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>الحالة</entry
+><entry
+>الرمز</entry
+><entry
+>المعنى</entry
+></row
+></thead>
+
+    <tbody>
+    <row>
+    <entry
+><guimenuitem
+>علّم الموضوع بمقروء</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>قُرئت السلسلة بالكامل.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>علّم الموضوع بغير مقروء</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>لم تُقرأ السلسلة بعد.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>علّم الموضوع بمهمّ</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>لن تُضبط هذه الحالة آليًا بواسطة بريدك. يمكنك استخدامها بحرية لتعليم السلاسل الهامة بالنسبة لك بطريقة ما.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>أزل علامة الأهميّة من الموضوع</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>يزيل وسم "هام" الذي ضُبط سابقًا من السلسلة.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>علّم الموضوع بعنصر إجرائيّ</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>لن تُضبط هذه الحالة آليًا بواسطة بريدك. استخدم هذا لتعليم السلاسل التي تمثل عناصر إجرائية (مثلًا، قائمة مهام).</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>أزل علامة العنصر الإجرائيّ من الموضوع</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>يزيل علامة العنصر الإجرائي التي ضُبطت سابقًا من السلسلة.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>راقب الموضوع</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-watch.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>يضبط حالة السلسلة المراقبة، مما يتيح لك عرض السلاسل التي تهمك بسهولة عن طريق اختيار حالة <guimenu
+>مراقب</guimenu
+> في المربع المنسدل الموجود في شريط البحث السريع. (انقر على أيقونة <inlinemediaobject
+><imageobject
+><imagedata fileref="view-filter.png" format="PNG"/></imageobject
+></inlinemediaobject
+> لعرض الفئات القابلة للترشيح.)</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>تجاهل الموضوع</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>يتيح لك تجاهل سلاسل كاملة.</entry
+></row>
+    </tbody>
+
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="message-create-filter">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guisubmenu
+>أنشئ مرشحًا</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح <link linkend="filter-dialog-id"
+>حوار المرشح</link
+> مع إضافة مرشح جديد. يعتمد هذا المرشح الجديد على الحقول في الرسالة الحالية، اعتمادًا على عنصر القائمة الفرعية الذي تختاره:</para>
+  <simplelist>
+    <member
+>رشّح حسب الموضوع...</member>
+    <member
+>رشّح حسب المُرسل...</member>
+    <member
+>رشّح حسب المستلم...</member>
+    <member
+>رشّح حسب القائمة البريدية... (يجب أن تكون الرسالة المحددة حاليًا من قائمة بريدية ليكون هذا متاحًا).</member>
+  </simplelist
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-apply-filter">
+  <term
+><menuchoice
+><guimenu
+>الرسالة</guimenu
+><guimenuitem
+>طبق المرشح</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك <guimenuitem
+>تطبيق كل المرشحات</guimenuitem
+>. إذا كنت قد أعددت ترشيح البريد المزعج عبر <link linkend="the-anti-spam-wizard"
+>معالج مكافحة البريد المزعج</link
+>، فستتوفر هنا أيضًا خيارات <guimenuitem
+>صنف كبريد مزعج</guimenuitem
+> و <guimenuitem
+>صنف كليس بريدًا مزعجًا</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-create-to-do-reminder">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Create To-do/Reminder</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; To-do/Reminder dialog</action
+> with options to add the selected email as a link, inline, or inline without attachments.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-add-note">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Add Note...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; Note dialog to add a note to the selected email.</action
+></para
+></listitem>
+</varlistentry
+>  These items have been moved to "Plugins", and can now only be invoked via the Toolbar. @dcb2021086 -->
+
+<varlistentry id="reader-message-viewsource">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>V</keycap
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guimenuitem
+>اعرض المصدر</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يظهر الرسالة وترويساتها الكاملة بتنسيق نص مجرد في نافذة جديدة. يمكن أن يساعدك هذا في معرفة المصدر الحقيقي للرسالة. </para>
+  <note
+><para
+>يجب أن تدرك أنه من السهل تزييف، أو انتحال، ترويسة <literal
+>من:</literal
+> في الرسالة. يمكنك دائمًا معرفة خوادم البريد التي استخدمت لإرسال الرسالة من خلال فحص أسطر <literal
+>Received:</literal
+> في ترويسات الرسالة.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-show-message-structure">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+></shortcut
+> <guimenu
+>الرسالة</guimenu
+><guimenuitem
+>أظهر بنية الرسالة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعرض عارض البنية، وهي منطقة أسفل لوحة المعاينة تتيح لك عرض كل مكون MIME في الرسالة بشكل منفصل. لن يتوفر هذا العنصر إلا إذا نُشّط <link linkend="configure-plugins-tools"
+>ملحق الخبير</link
+>.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-tools-menu">
+<title
+>قائمة أدوات</title>
+<screenshot>
+<screeninfo
+>قائمة أدوات</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة أدوات</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة أدوات</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+
+<varlistentry id="reader-tools-find-messages">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>S</keycap
+></shortcut
+> <guimenu
+>أدوات</guimenu
+><guimenuitem
+>ابحث عن رسائل...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة بحث تتيح لك البحث عن رسائل بخصائص معينة، مثلًا موضوع معين. يرجى مراجعة <link linkend="filter-criteria"
+>معايير المرشح</link
+> للحصول على تفاصيل حول خيارات البحث.</para>
+  <para
+>ستُعرض نتائج البحث في منطقة النص؛ يمكنك إما <guibutton
+>فتح مجلد البحث</guibutton
+> لرؤية مجلد يحتوي على الرسائل التي عُثر عليها، أو تمييز الرسالة المطلوبة واختيار <guibutton
+>فتح الرسالة</guibutton
+>. تتوفر إجراءات إضافية عبر قائمة سياقية، يمكن تنشيطها بالنقر بزر الفأرة الأيمن.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>دفتر العناوين</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يشغل <ulink url="help:kaddressbook"
+>دفتر عناوين كيدي</ulink
+>، وهو برنامج كيدي لإدارة عناوين البريد الإلكتروني ومعلومات الاتصال الشخصية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-certificate-manager">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>مدير الشهادات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يشغل <ulink url="help:kleopatra"
+>كليوباترا</ulink
+>، وهو مدير الشهادات لكيدي.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-edit-out-of-office-replies">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guisubmenu
+>حرر ردود "خارج المكتب"...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يطلق حوار <guilabel
+>اضبط ردود "خارج المكتب"</guilabel
+>، والذي يتيح لك إعداد إشعارات العطلة.</para>
+  <note
+><para
+>تعتمد وظيفة <guilabel
+>رد خارج المكتب</guilabel
+> على الترشيح من جانب الخادم. لاستخدامها، يجب عليك ضبط <link linkend="receiving-mail"
+>تبويب الترشيح</link
+> (انظر الخيارات المتعلقة بخادم Kolab) في إعداد حساب IMAP الخاص بك.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-tools-debug-sieve">
+<term
+><menuchoice>
+<guimenu
+>Tools</guimenu>
+<guisubmenu
+>Debug Sieve...</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Launch the <guilabel
+>Sieve Diagnostics</guilabel
+> dialog.</action
+> This is useful to debug sieve if you are having problems with it.</para>
+<note
+><para
+>You must have sieve support on your email server.</para
+></note
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-tools-filter-log-viewer">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guisubmenu
+>عارض سجل المرشح...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة العارض لسجل المرشح؛ ستجد هناك بعض الخيارات للتحكم في تسجيل عملية الترشيح. ستجد في السجل معلومات قيمة حول قواعد المرشح المستخدمة، ونتيجة تقييم تلك القواعد، وإجراءات المرشح التي طبقت على رسالة معينة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-import-messages">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+> <guisubmenu
+>استورد من عميل بريد إلكتروني آخر...</guisubmenu
+> </menuchoice
+></term>
+  <listitem
+><para
+>يطلق حوار معالج استيراد Akonadi، الذي يساعد في استيراد الإعدادات والبريد الإلكتروني من مجموعة واسعة من عملاء البريد الإلكتروني. يرجى مراجعة وثائق <ulink url="help:/importwizard"
+>معالج الاستيراد</ulink
+> للحصول على التفاصيل.</para>
+  <note
+><para
+>أغلق بريدك قبل استيراد البيانات. قد يقوم المعالج بتعديل ملف تكوين بريدك، ويمكن أن يتسبب في نتائج غير متوقعة إذا حاولت استيراد البيانات أثناء تشغيل بريدك.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-export-data">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guisubmenu
+>استورد/صدّر بيانات بريدك...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يطلق حوار مصدر بيانات PIM، الذي يساعد في تصدير إعداداتك وبريدك الإلكتروني، أو استعادتها من نسخة احتياطية. يرجى مراجعة <ulink url="help:/pimdataexporter"
+>مصدر بيانات Pim</ulink
+> للحصول على التفاصيل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-activity-log">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>سجل الأنشطة...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يشغل مسجل الأنشطة، الذي يسجل أنشطة معينة. هذا الخيار متاح فقط عند تحميل ملحق <guilabel
+>سجل الأنشطة</guilabel
+>. مخصص بشكل أساسي للمطورين.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-spam-wizard">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>معالج مكافحة البريد المزعج...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يطلق معالج مكافحة البريد المزعج، الذي يمكن أن يساعدك في إعداد ترشيح البريد المزعج. يرجى مراجعة <link linkend="the-anti-spam-wizard"
+>معالج مكافحة البريد المزعج</link
+> للحصول على التفاصيل. هذا الخيار متاح فقط عند تحميل ملحق <guilabel
+>مكافحة البريد المزعج</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-virus-wizard">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>معالج مكافحة الفيروسات...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يطلق معالج مكافحة الفيروسات، الذي يمكن أن يساعدك في إعداد فحص الفيروسات. يرجى مراجعة <link linkend="the-anti-virus-wizard"
+>معالج مكافحة الفيروسات</link
+> للحصول على التفاصيل. هذا الخيار متاح فقط عند تحميل ملحق <guilabel
+>مكافحة الفيروسات</guilabel
+>.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-settings-menu">
+<title
+>قائمة إعدادات</title>
+<screenshot>
+<screeninfo
+>قائمة إعدادات</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة إعدادات</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة إعدادات</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>إذا كان عنصر القائمة الذي تبحث عنه مفقودًا، فيرجى مراجعة <ulink url="help:/fundamentals/menus.html#menus-settings"
+>قائمة إعدادات</ulink
+> في أساسيات كيدي. العناصر المدرجة هنا خاصة ببريدك.</para>
+<variablelist>
+
+<varlistentry id="reader-settings-show-quick-search-bar">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+></shortcut
+> <guimenu
+>إعدادات</guimenu
+><guimenuitem
+>أظهر شريط البحث السريع</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>يفعل شريط البحث السريع، الذي يتيح لك البحث بسرعة عن الرسائل التي تطابق معاييرك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-filters">
+  <term
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط المرشحات...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح حوار <link linkend="filters"
+>مرشحات الرسائل</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-manage-sieve-scripts">
+  <term
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>أدر برمجيات Sieve...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>إذا كان خادم البريد الخاص بك يدعم sieves (الترشيح من جانب الخادم)، فيمكنك ضبط تلك البرمجيات هنا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-add-account">
+  <term
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guisubmenu
+>أضف حسابًا...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدأ حوار معالج الحساب، الذي يساعد في إعداد حسابات جديدة أو إضافية. يرجى مراجعة <link linkend="account-wizard"
+>معالج الحساب</link
+> للحصول على التفاصيل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-automatic-archiving">
+  <term
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط الأرشفة الآلية...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدأ حوارًا لإعداد الأرشفة الآلية. انظر <ulink url="help:/akonadi_archivemail_agent"
+>الأرشفة الآلية</ulink
+> للحصول على التفاصيل.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-settings-configure-send-later-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Send Later Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to modify and remove emails that have been sent using the send later feature.</action>
+ Please see <ulink url="help:/akonadi_sendlater_agent"
+>Send Later Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-folder-archive-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Folder Archive Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to configure accounts to use the folder archive agent feature with.</action>
+ Please see <ulink url="help:/akonadi_folderarchive_agent"
+>Folder Archive Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-notifications">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Notifications...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Opens a dialog that lets you configure what happens when new mail arrives,</action
+> &eg; play a sound, display a popup, &etc;</para
+></listitem>
+</varlistentry
+> These three options have been moved to the Plugins Configuration tab. @dcb2021086.  -->
+
+<varlistentry id="reader-settings-configure-kmail">
+  <term
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح حوار <link linkend="configure"
+>اضبط بريدك</link
+>. هناك المئات من المتغيرات لتجربتها. استمتع!</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="reader-help-menu">
+<title
+>قائمة مساعدة</title>
+<screenshot>
+<screeninfo
+>قائمة مساعدة</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة مساعدة</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة مساعدة</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>هذه هي <ulink url="help:/fundamentals/menus.html#menus-help"
+>قائمة المساعدة</ulink
+> لأساسيات كيدي، مع عنصر إضافي واحد.</para>
+
+<variablelist>
+<varlistentry id="reader-help-intro">
+  <term
+><menuchoice
+><guimenu
+>مساعدة</guimenu
+><guimenuitem
+>مقدمة بريدك</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح شاشة ترحيب <link linkend="intro"
+>المقدمة</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+
+<sect1 id="composer-window-menus">
+<title
+>نافذة محرر بريدك</title>
+
+<sect2 id="composer-file-menu">
+<title
+>قائمة الرّسالة</title>
+<screenshot>
+<screeninfo
+>قائمة الرّسالة</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة الرّسالة</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة الرّسالة</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="composer-message-new-composer">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>رسالة</guimenu
+><guimenuitem
+>محرر جديد</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة محرر جديد لتتمكن من إنشاء رسالة.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-message-new-main-window">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New Main Window</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Creates a new main window.</action
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-new-addressbook-contact">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New AddressBook Contact</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; New Contact Dialog</action
+> to add a new contact your addressbook.</para
+></listitem>
+</varlistentry
+> These options not available in 5.14.2 @dcb2021088. -->
+
+<varlistentry id="composer-message-send-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Return</keycap
+></keycombo
+></shortcut
+> <guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل البريد</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُرسل الرسالة فورًا. إذا كنت تستخدم &SMTP; لإرسال رسائلك وكان خادم &SMTP; غير متاح، فستبقى الرسالة في صندوق الصادر وستتلقى رسالة خطأ. بعد حل مشكلات الاتصال، يمكنك إرسال الرسائل الموجودة في صندوق الصادر باستخدام <link linkend="reader-send-queued-messages"
+> <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>أرسل الرسائل المصطفة</guimenuitem
+></menuchoice
+></link
+> (في نافذة القارئ).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-mail-via">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل البريد عبر &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك تحديد خادم البريد الصادر الذي سيُستخدم لإرسال الرسالة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل لاحقًا</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُشغل حوار الإرسال لاحقًا. يرجى مراجعة وثائق <ulink url="help:/akonadi_sendlater_agent"
+>الإرسال لاحقًا</ulink
+> للحصول على التفاصيل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later-via">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل لاحقًا عبر &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك تحديد خادم البريد الصادر الذي سيُستخدم لإرسال الرسالة المؤجلة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-file">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>احفظ كملف</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُحفظ الرسالة كملف. تُدعم ثلاثة تنسيقات: النص المنسق (.html)، والنص المجرد (.txt)، وتنسيق المستند المفتوح (.odt).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-draft">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>رسالة</guimenu
+><guimenuitem
+>احفظ كمسودة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُحفظ الرسالة في مجلد <guilabel
+>المسودات</guilabel
+> لتتمكن من إنهائها لاحقًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-template">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>احفظ كقالب</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك حفظ رسالتك كقالب. يرجى مراجعة <link linkend="new-compose-from-templates"
+>التحرير من القوالب</link
+> لمزيد من المعلومات.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-text-file">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أدرج ملف نصي...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُدرج ملفًا نصيًا في نص الرسالة، بدءًا من موضع المؤشر.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-recent-text-file">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أدرج ملف نصي حديث &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك الاختيار من قائمة ملفات نصية أُدرجت حديثًا، ويُدرج ذلك الملف في رسالتك. اختر <guimenuitem
+>امسح القائمة</guimenuitem
+> لمسح القائمة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print-preview">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>معاينة الطباعة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة معاينة الطباعة ويعرض رسالتك منسقة للطباعة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>رسالة</guimenu
+><guimenuitem
+>اطبع...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>ينسق ويطبع الرسالة التي حررتها.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-share">
+  <term
+><menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>شارك نص البريد... &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك إنشاء نسخة ثانية من رسالتك في مكان آخر. تُوفر أربعة خيارات: Nextcloud (تطبيق مشاركة ملفات مفتوح المصدر)، وPastebin <ulink url="https://pastebin.com"
+>(موقع ويب متاح مجانًا)</ulink
+>، وبلوتوث، والبريد الإلكتروني (يفتح نافذة محرر أخرى، ويضيف الرسالة الحالية إلى تلك الرسالة الجديدة كمرفق). هذا الخيار غير متاح إلا إذا كان الملحق <guilabel
+>شارك النص</guilabel
+> مفعلًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-close">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guimenu
+>رسالة</guimenu
+><guimenuitem
+>أغلق</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يغلق نافذة المحرر هذه.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-edit-menu">
+<title
+>قائمة حرر</title>
+<screenshot>
+<screeninfo
+>قائمة حرر</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة حرر</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة حرر</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>إذا كان عنصر القائمة الذي تبحث عنه مفقودًا، يرجى مراجعة قسم <ulink url="help:/fundamentals/menus.html#menus-edit"
+>قائمة تحرير</ulink
+> في دليل أساسيات كيدي. العناصر المدرجة هنا خاصة ببريدك.</para>
+
+<variablelist>
+<varlistentry id="composer-edit-paste-quotation">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>الصق كاقتباس</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُلصق النص من الحافظة ويسمه كاقتباس (أي أن كل سطر تسبقه علامة "&gt;" ومسافة).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-attachment">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>الصق كمرفق</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُلصق ملفًا نُسخ إلى الحافظة (على سبيل المثال، باستخدام مدير الملفات دولفين) كمرفق.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-without-formatting">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>V</keycap
+></keycombo
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>الصق بدون تنسيق</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُلصق البيانات من الحافظة كنص مجرد، بدون تنسيق &HTML;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-clean-spaces">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>نظف المسافات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُفترض أن هذا الخيار يستبدل أحرف السطر الجديد أو المسافات المتعددة المتجاورة بكسور أسطر / مسافات مفردة، ولكن عند الاختبار، يبدو أنه لا يفعل شيئًا على الإطلاق.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-add-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>أضف محارف الاقتباس</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُضيف بادئة لكل سطر من النص المحدد بمؤشر الاقتباس (&gt; ومسافة، افتراضيًا). إذا لم يُحدد أي نص، يضاف المؤشر إلى كل سطر في الرسالة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-remove-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>أزل محارف الاقتباس</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُزيل مؤشر الاقتباس في أقصى اليسار من النص المحدد.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-email">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>أدرج بريدًا إلكترونيًا...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعرض قائمة بجميع الأسماء في دفتر عناوينك، ثم يدرج عنوان البريد الإلكتروني المختار في موضع المؤشر (بعد إجراء الاختيار والنقر على زر <guibutton
+>موافق</guibutton
+>). هذا الخيار متاح فقط عند تحميل ملحق <guimenuitem
+>أدرج بريدًا</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-nbsp">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+></shortcut
+> <guimenu
+>تحرير</guimenu
+><guimenuitem
+>أدرج مسافة غير قاطعة</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُدرج مسافة غير قاطعة في موضع المؤشر. هذا الخيار متاح فقط عند تحميل ملحق <guimenuitem
+>أدرج مسافة غير قاطعة</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-edit-uppercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Uppercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to uppercase.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-lowercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Lowercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to lowercase.</para
+></listitem>
+</varlistentry
+> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+
+<varlistentry id="composer-edit-insert-special-character">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>أدرج محرف خاص...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك إدراج محرف خاص في موضع المؤشر. توفر عدد كبير من محارف يونيكود. لا يتوفر هذا الخيار إلا إذا تم تفعيل ملحق <guimenuitem
+>أدرج محرف خاص</guimenuitem
+>.</para>
+
+  <para
+>نُقل عنصر القائمة هذا إلى قائمة <guimenu
+>إدراج</guimenu
+> في الإصدار 5.17. إذا كنت قد فعلت الملحق، ولم يظهر هذا الإدخال عند إعادة تشغيل بريدك، فتحقق من قائمة <guimenu
+>إدراج</guimenu
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-change-case">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>غير حالة الأحرف &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يساعدك في تعديل حالة الأحرف للنص المحدد. هناك أربعة خيارات: <guilabel
+>أحرف كبيرة</guilabel
+> (يجعل المحارف المحددة كبيرة)، و<guilabel
+>أحرف صغيرة</guilabel
+> (يجبر النص المحدد على أن يكون كله بأحرف صغيرة)، و<guilabel
+>حالة الجملة</guilabel
+> (يجعل الحرف الأول من الاختيار كبيرًا والباقي صغيرًا)، و<guilabel
+>عكس الحالة</guilabel
+> (يحول الأحرف الكبيرة إلى صغيرة والعكس). لا يتوفر هذا الخيار إلا إذا تم تفعيل ملحق <guimenuitem
+>غير حالة الأحرف</guimenuitem
+>. يظل عنصر القائمة هذا باهتًا حتى يُختار جزء من النص لتعديله.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-zoom">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>تقريب... &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك تقريب أو تبعيد الرسالة التي تحررها. هذه هي الوظيفة نفسها التي تظهر كـ <menuchoice
+><guimenu
+>عرض</guimenu
+><guisubmenu
+>تقريب &gt;</guisubmenu
+></menuchoice
+> في نافذة معاينة الرسالة. هذا الخيار غير متاح إلا إذا تم تحميل ملحق <guimenuitem
+>تقريب النص</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-variables">
+  <term
+><menuchoice
+><guimenu
+>حرر</guimenu
+><guimenuitem
+>متغيرات &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك إدراج محتويات حقل مسمى في موضع المؤشر. يمكنك الاختيار من بين <guilabel
+>إلى &gt;</guilabel
+>، و<guilabel
+>من &gt;</guilabel
+>، و<guilabel
+>نسخة &gt;</guilabel
+>، و<guilabel
+>مرفق &gt;</guilabel
+>، و<guilabel
+>التاريخ/الوقت &gt;</guilabel
+>، و<guilabel
+>متفرقات &gt;</guilabel
+> (والذي يحتوي على عنصر قائمة فرعية واحد مرتبط هو "الموضوع"). هناك ملحوظة غريبة واحدة: التاريخ/الوقت المعروض في خيارات القائمة الفرعية ثابت عند الوقت الذي فُتحت فيه نافذة المحرر، ولكن القيمة المدرجة فعليًا في الرسالة تُؤخذ من ساعة النظام.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-view-menu">
+<title
+>قائمة عرض</title>
+<screenshot>
+<screeninfo
+>قائمة عرض</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة عرض</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة عرض</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>تتيح لك هذه القائمة تبديل عرض حقول الترويسة وبعض العناصر الأخرى في نافذة المحرر. ستُعلم العناصر المختارة (يُلون مربع الاختيار) في القائمة.</para>
+
+<para
+>تتوفر عدة خيارات:</para>
+
+<itemizedlist>
+  <listitem>
+    <para
+><guimenuitem
+>كل الحقول</guimenuitem
+>. يعرض جميع الحقول الستة التالية.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>الهوية</guimenuitem
+>. إذا كنت قد عرفت أكثر من هوية، فسيظهر هذا كصندوق منسدل.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>القاموس</guimenuitem
+> المستخدم للتدقيق الإملائي. إذا رُكبت قواميس متعددة، فسيكون هذا صندوقًا منسدلًا.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>مجلد البريد المرسل</guimenuitem
+>. زر <guilabel
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="document-open.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;</guilabel
+> الذي يظهر على اليمين عند تحديد هذا الخيار يفتح حوار اختيار المجلد.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>نقل البريد</guimenuitem
+>. إذا كنت قد أنشأت أكثر من حساب صادر، فسيكون هذا صندوقًا منسدلًا.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>من</guimenuitem
+>. قد تختلف محتويات هذا الحقل اعتمادًا على الهوية التي تستخدمها.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>الموضوع</guimenuitem
+>. استخدم هذا الحقل لوصف رسالتك باختصار.</para>
+  </listitem>
+</itemizedlist>
+
+<para
+>صندوق <guilabel
+>إلى <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guilabel
+> المنسدل حاضر دائمًا في أعلى نافذة المحرر. استخدمه لاختيار عناوين <guilabel
+>نسخة</guilabel
+>، و<guilabel
+>نسخة مخفية</guilabel
+>، و<guilabel
+>الرد إلى</guilabel
+>، حسب الحاجة. يرجى مراجعة <link linkend="composer-headers"
+>ترويسات المحرر</link
+> لمزيد من التفاصيل حول ترويسات الرسائل.</para>
+
+<para
+>&nbsp;</para>
+
+<variablelist>
+<varlistentry id="composer-view-use-fixed-font">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>استخدم خطًا ثابتًا</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يستخدم خطًا ثابت العرض لعرض الرسالة التي تُحرر حاليًا. يمكن ضبط الخط المحدد المراد استخدامه في قسم <guilabel
+>المظهر</guilabel
+> في حوار ضبط بريدك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-view-snippets">
+  <term
+><menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>قصاصات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعرض عمودًا على الجانب الأيمن من نافذة المحرر يتيح لك استخدام القصاصات وإنشائها. يرجى مراجعة <link linkend="setup-text-snippets"
+>القصاصات</link
+> لمزيد من المعلومات.</para>
+  <para
+>&nbsp;</para
+></listitem>
+  </varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-options-menu">
+<title
+>قائمة خيارات</title>
+<screenshot>
+<screeninfo
+>قائمة خيارات</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeroptions.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة خيارات</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة خيارات</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>تتيح لك هذه القائمة تبديل خيارات متنوعة للرسالة الحالية. ستُعلم العناصر المختارة (يُلون مربع الاختيار) في القائمة.</para>
+
+<variablelist>
+
+<varlistentry id="composer-options-urgent">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guimenuitem
+>عاجل</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يضبط أولوية الرسالة إلى عاجلة عن طريق إدراج سطري ترويسة: "X-PRIORITY: 2 (High)" و "Priority: urgent". يجب أن يوفر عميل البريد الإلكتروني للمستلم دعمًا لهذه الترويسات؛ وإلا فلن يكون لها أي تأثير. لا يدعم بريدك نفسه الأولويات للرسائل الواردة (على الرغم من أنه يمكنك <link linkend="reader-mark-messages"
+>وسم الرسائل</link
+> كـ مهمة).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-mdn">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guimenuitem
+>طلب إشعار التصرف</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>إذا اخترت هذا الخيار، فسيقوم بريدك بإدراج سطر ترويسة Disposition-Notification-To: في الرسالة، وهو طلب لتلقي إشعار بريدي بمجرد تنزيل رسالتك وقراءتها من قبل المستلم. يجب أن تُدعم هذه الوظيفة، وتُفعل من قبل عميل البريد الإلكتروني للمستلم؛ وإلا فلن تعمل.</para>
+  <para
+>راجع <xref linkend="configure-security-reading-mdns"/> للحصول على معلومات خلفية وعدة طرق لتخصيص إيصالات القراءة التي يرسلها بريدك نفسه ردًا على سطر ترويسة Disposition-Notification-To: المستلم.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-confirm">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guimenuitem
+>طلب تأكيد التسليم</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>إذا اخترت هذا الخيار، فسيقوم بريدك بإدراج سطر ترويسة Return-Receipt-To: في الرسالة، وهو طلب لتلقي إشعار بريدي بمجرد رفع رسالتك بواسطة خادم البريد الخاص بك وتسليمها إلى المستلم. يجب أن تُدعم هذه الوظيفة من قبل خادم البريد الصادر الخاص بك؛ وإلا فلن تعمل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-sign-message">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guisubmenu
+>وقع الرسالة</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يوقع الرسالة رقميًا باستخدام <application
+>OpenPGP</application
+> أو شهادة X.509. يمكنك معرفة المزيد حول هذا الخيار في <link linkend="pgp"
+>فصل OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encrypt-message">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guisubmenu
+>عمِّ الرسالة</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يُعمي الرسالة باستخدام <application
+>OpenPGP</application
+> أو شهادة X.509. يمكنك معرفة المزيد حول التعمية في <link linkend="pgp"
+>فصل OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-select-crypto-message-format">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guisubmenu
+>تنسيق الرسالة المعماة &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك اختيار تنسيق الرسالة التعموية لاستخدامه عند التوقيع رقميًا و/أو تعمية هذه الرسالة. يرجى مراجعة <link linkend="cryptographic-message-formats"
+>تنسيقات الرسائل التعموية</link
+> لمزيد من المعلومات.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-rich-text-editing">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guisubmenu
+>تحرير نص منسق</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يفعل تحرير النص المنسق (أي &HTML;).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encoding">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guisubmenu
+>الترميز &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>يضبط ترميز طقم المحارف لهذه الرسالة. سيُحدد الترميز المختار بواسطة سطر ترويسة في الرسالة الصادرة. يمكنك استخدام <guilabel
+>آلي</guilabel
+> في معظم الحالات تقريبًا؛ وسيقوم بريدك بإشعارك إذا كان يجب عليك اختيار ترميز مختلف يدويًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-wordwrap">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guimenuitem
+>لف الكلمات</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدل ميزة لف الكلمات الآلي. قد ترغب في إيقاف تشغيل هذا عند لصق أسطر طويلة (مثل عناوين &URL;) التي لا ينبغي لفها.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-automatic-spellchecking">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guimenuitem
+>تدقيق إملائي آلي</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدل التدقيق الإملائي الآلي تشغيلًا أو إيقافًا.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-followup">
+  <term
+><menuchoice
+><guimenu
+>خيارات</guimenu
+><guimenuitem
+>أنشئ تذكيرًا للمتابعة...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يبدأ حوارًا يتيح لك إضافة عنصر "للقيام به" إلى تقويمك. يكون هذا العنصر باهتًا إذا لم يُفعل ملحق <ulink url="help:/akonadi_followupreminder_agent"
+>عميل تذكير المتابعة</ulink
+>.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-attach-menu">
+<title
+>قائمة إرفاق</title>
+<screenshot>
+<screeninfo
+>قائمة إرفاق</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerattachmenu.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة إرفاق</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة إرفاق</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>تتيح لك هذه القائمة اختيار خيارات المرفقات.</para>
+
+<variablelist>
+
+<varlistentry id="composer-attach-append-signature">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>ألحق التوقيع</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُلحق توقيعك (<quote
+>تذييل</quote
+>) في نهاية الرسالة. يرجى مراجعة <link linkend="configure-identity-signature"
+>اضبط توقيع الهوية</link
+> للحصول على تفاصيل حول ضبط توقيعك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-prepend-signature">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>صدّر التوقيع</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُضيف توقيعك في بداية الرسالة (<quote
+>ترويسة</quote
+>).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-cursor-signature">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>أدرج التوقيع عند موضع المؤشر</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُدرج توقيعك في موضع المؤشر الحالي.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-public-key">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>أرفق مفتاحًا علنيًا...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح حوار <guilabel
+>أرفق مفتاح OpenPGP علني</guilabel
+>. يرجى مراجعة <link linkend="configure-identity-cryptography-openpgp-sign"
+>اضبط توقيع OpenPGP التعموي للهوية</link
+> للحصول على التفاصيل.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attach-my-public-key">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>أرفق مفتاحي العلني</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُرفق مفتاح <application
+>GnuPG</application
+> العلني الخاص بك، أو شهادة X.509 الخاصة بك، (أي المفتاح العلني المرتبط بهويتك الحالية) برسالتك.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-file">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guisubmenu
+>أرفق &gt;</guisubmenu
+> <guimenuitem
+>أرفق ملفًا...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُرفق ملفًا واحدًا أو أكثر بالرسالة الحالية. تُعمى المرفقات مبدئيًا (إذا كانت الرسالة معماة). يرجى مراجعة <link linkend="cryptographic-message-formats"
+>تنسيقات الرسائل التعموية</link
+> لمزيد من المعلومات حول التعمية والمرفقات.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-directory">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guisubmenu
+>أرفق &gt;</guisubmenu
+> <guimenuitem
+>أرفق دليلًا...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُنشئ أرشيف ZIP يحتوي على الدليل المحدد، ويُرفق الأرشيف بهذه الرسالة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-ownvcard">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guisubmenu
+>أرفق &gt;</guisubmenu
+> <guimenuitem
+>أرفق بطاقتي الشخصية</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُرفق بطاقتك الشخصية (vCard) بالرسالة الحالية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-vcard">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guisubmenu
+>أرفق &gt;</guisubmenu
+> <guimenuitem
+>أرفق بطاقات شخصية...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح حوارًا مع دفتر عناوين كيدي يتيح لك اختيار شخص واحد أو أكثر (&Ctrl; ونقرة يسار)، ثم يُرفق بطاقات شخصية لجميع المختارين.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-clipboard">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guisubmenu
+>أرفق &gt;</guisubmenu
+> <guimenuitem
+>أرفق نصًا من الحافظة...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>إذا كان العنصر الأعلى المحفوظ في الحافظة يحتوي على بايتين على الأقل، فسيُفتح حوار اسم الملف. سيقوم بريدك بإنشاء مرفق يحتوي على النص من الحافظة، ويعطي المرفق الاسم الذي اخترته.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-remove-attachment">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>أزل المرفق</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُزيل المرفق المحدد (المختار عبر منطقة المرفقات أسفل نافذة المحرر الرئيسة).</para>
+  <note
+><para
+>سيكون عنصر القائمة هذا، والعنصران التاليان، باهتين حتى يُختار مرفق.</para
+></note
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-save-attachment">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>احفظ المرفق كـ...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُحفظ المرفق المختار في نافذة المرفقات كملف.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attachment-properties">
+  <term
+><menuchoice
+><guimenu
+>أرفق</guimenu
+><guimenuitem
+>خصائص المرفق</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يعرض <link linkend="attachments"
+>خصائص المرفق</link
+> الذي تم اختياره عبر نافذة المرفقات. كما يتيح لك توقيع/تعمية المرفق، وتعديل بعض خصائصه الأخرى (الاسم، الوصف، نوع MIME، إلخ).</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-tools-menu">
+<title
+>قائمة أدوات</title>
+<screenshot>
+<screeninfo
+>قائمة أدوات</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة أدوات</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة أدوات</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>إذا كان عنصر القائمة الذي تبحث عنه مفقودًا، يرجى مراجعة <ulink url="help:/fundamentals/menus.html#menus-tools"
+>قائمة أدوات</ulink
+> في أساسيات كيدي. العناصر المدرجة هنا خاصة ببريدك.</para>
+
+<variablelist>
+  <varlistentry id="composer-tools-select-recipients">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>اختر المستلمين...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح حوار <guilabel
+>اختر المستلم</guilabel
+>، مع محتويات جميع دفاتر عناوينك للاختيار منها.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>دفتر العناوين...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يُشغل برنامج <ulink url="help:/kaddressbook"
+>دفتر عناوين كيدي</ulink
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-save-distribution-list">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>احفظ قائمة التوزيع...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح حوارًا يتيح لك حفظ مجموعات من جهات الاتصال كعنصر واحد مسمى. مفيد جدًا إذا كنت ترسل الرسالة نفسها بشكل متكرر إلى جميع أعضاء نادٍ ما، على سبيل المثال.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-autocorrect">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>تصحيح النص آليًا &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>ينفذ التصحيح الآلي. لديك خياران: فحص وتصحيح النص المحدد آليًا، أو تطبيق <link linkend="configure-composer-autocorrection"
+>التصحيح الآلي</link
+> على الرسالة بأكملها. لن يكون عنصر القائمة هذا موجودًا ما لم يتم تحميل ملحق <guilabel
+>التصحيح الآلي</guilabel
+>، ولن يعمل ما لم يتم تمكين وظيفة التصحيح الآلي في صفحة ضبط المحرر.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-translator">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>أدوات</guimenu
+><guimenuitem
+>المترجم</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح <link linkend="using-the-translator"
+>نافذة المترجم</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-grammarcheck">
+  <term
+><menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>تحقق من القواعد (أداة اللغة)</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يفتح نافذة التحقق من القواعد ويفحص رسالتك، مع تمييز أي أخطاء يتم العثور عليها. هذه الميزة لا تقوم بتحديث النص المفحوص باستمرار أثناء الكتابة؛ يجب عليك أولًا تحرير رسالتك، ثم استدعاء التحقق من القواعد. هذه الأداة غير متاحة إلا إذا تم تفعيل ملحق <guilabel
+>التحقق من القواعد</guilabel
+>. مثل وظيفة المترجم، يقوم التحقق من القواعد بتمرير رسالتك عبر خادم (الخادم المبدئي: https://languagetool.org/api/v2) على الإنترنت.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-settings-menu">
+<title
+>قائمة إعدادات</title>
+<screenshot>
+<screeninfo
+>قائمة إعدادات</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة إعدادات</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة إعدادات</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>إذا كان عنصر القائمة الذي تبحث عنه مفقودًا، يرجى مراجعة <ulink url="help:/fundamentals/menus.html#menus-settings"
+>قائمة الإعدادات</ulink
+> في أساسيات كيدي. العناصر المدرجة هنا خاصة ببريدك.</para>
+
+<variablelist>
+<varlistentry id="composer-settings-toolbars">
+  <term
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>أشرطة الأدوات المعروضة &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك التحكم في أشرطة الأدوات المعروضة. يمكنك اختيار أي مزيج من ثلاثة خيارات: شريط الأدوات الرئيس (<guilabel
+>إرسال</guilabel
+>، <guilabel
+>صف</guilabel
+>، <guilabel
+>نص منسق</guilabel
+>، إلخ)، وشريط أدوات HTML (<guilabel
+>نمط</guilabel
+>، <guilabel
+>الخط / الحجم</guilabel
+>، إلخ)، واتجاه النص (في حال كنت تستخدم نصًا من اليمين إلى اليسار). لاحظ أنه يمكن تبديل شريط أدوات HTML بسهولة بين التشغيل والإيقاف عبر زر <guibutton
+>نص منسق</guibutton
+> في شريط الأدوات الرئيس.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-settings-spellcheck">
+  <term
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>مدقق إملائي...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>يتيح لك ضبط <ulink url="help:/sonnet/"
+>سونيت</ulink
+>، وهو مدقق الإملاء الخاص بكيدي.</para
+><para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="composer-help-menu">
+<title
+>قائمة مساعدة</title>
+<screenshot>
+<screeninfo
+>قائمة مساعدة</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قائمة مساعدة</phrase>
+    </textobject>
+    <caption>
+      <para
+>قائمة مساعدة</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>هذا تمامًا مثل <ulink url="help:/fundamentals/menus.html#menus-help"
+>قائمة المساعدة</ulink
+> في أساسيات كيدي. </para>
+</sect2>
+</sect1>
+
+</chapter>

@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>وكيل متابعة التذكيرات</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE">
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>دليل عميل متابعة التّذكيرات</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (تطبيقات 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>مقدمة</title>
+
+<para
+>&i18n-followupreminderagent; هو وكيل Akonadi يتابع بريد التذكير. </para>
+
+<sect2 id="using-kapp">
+<title
+>استخدام &i18n-followupreminderagent;</title>
+
+<para
+>استخدم <menuchoice
+><guimenu
+>خيارات</guimenu
+><guimenuitem
+>أنشئ تذكير متابعة</guimenuitem
+></menuchoice
+> في نافذة مُنشئ بريدك لفتح حوار يتيح لك إنشاء تذكير لمتابعة بريدك الإلكتروني الحالي في تاريخ محدد.</para>
+
+<screenshot>
+<screeninfo
+>حوار &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>حوار &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>حوار &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>اضغط على زر السهم للأسفل بجانب حقل <guilabel
+>التاريخ</guilabel
+> لاختيار التاريخ من ودجة تقويم كيدي. من الممكن أيضًا اختيار تقويمك للتذكير باستخدام قائمة <guilabel
+>احفظ المهمة في</guilabel
+> المنسدلة.</para>
+<para
+>لإزالة التذكيرات التي جدولتها، استخدم <menuchoice
+><guimenu
+>إعدادات</guimenu
+> <guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+> ثم اختر صفحة <guilabel
+>ملحقات</guilabel
+> في بريدك واضغط على زر الضبط بجانب عنصر <guilabel
+>وكيل متابعة التذكيرات</guilabel
+>. ثم استخدم قائمة السياق التي تظهر عند النقر بزر الفأرة الأيمن على عنصر التذكير لاختيار إجراء <guimenuitem
+>احذف</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>اضبط &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>اضبط &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>اضبط &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>الحقوق والترخيص</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>حقوق ملكية البرنامج محفوظة 2014-2019 لـ &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>حقوق ملكية التوثيق محفوظة © 2014-2019 لـ &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->
