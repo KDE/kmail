@@ -1,0 +1,194 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>وكيل الإرسال لاحقًا</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE">
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>دليل وكيل الإرسال لاحقًا</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (تطبيقات 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>مقدمة</title>
+
+<para
+>&i18n-sendlateragent; هو وكيل أكونادي (Akonadi) يتيح لك إرسال الرسائل المجدولة لمرة واحدة أو بشكل متكرر. </para>
+
+<sect2 id="using-kapp">
+<title
+>استخدام &i18n-sendlateragent;</title>
+
+<para
+>استخدم <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل لاحقًا</guimenuitem
+></menuchoice
+> في نافذة المحرر في بريدك لفتح حوار يسمح لك بجدولة رسائل البريد الإلكتروني لإرسالها في تاريخ ووقت محددين.</para>
+
+<screenshot>
+<screeninfo
+>حوار &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>حوار &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>حوار &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>لنفترض أنك كتبت رسالة بريد إلكتروني رائعة تحدد المهام التي ترغب أن ينجزها موظفوك أثناء وجودك في المؤتمر، ولكنك ستكون على متن طائرة عندما يحين موعد الإرسال. استخدم هذه الميزة لإرسال البريد في تاريخ ووقت محددين. لجدولة البريد للإرسال لاحقًا، حدد أولًا مربع <guilabel
+>التأخير</guilabel
+> ثم اختر التاريخ والوقت من قائمة <guilabel
+>أرسل في:</guilabel
+>.</para>
+<para
+>إذا كنت بحاجة إلى إرسال رسالة تذكير أسبوعية لموظفيك، فيمكنك ضبطها لتكرار إرسال الرسالة عبر تحديد مربع الخيار <guilabel
+>كرر كل</guilabel
+> واختيار الفترات المطلوبة.</para>
+<para
+>يمكنك وضع الرسالة في قائمة الرسائل المجدولة عبر تحديد زر <guibutton
+>أرسل لاحقًا</guibutton
+> لجدولة الرسالة فورًا. </para>
+<para
+>يعمل هذا الوكيل بشكل مستقل عن بريدك ولا يحتاج إلى تشغيل نسخة من بريدك أو أن يكون بريدك في وضع الاتصال لإرسال الرسائل المجدولة.</para>
+<para
+>إذا لم يتوفر اتصال بالشبكة عندما يحين موعد إرسال الرسالة المجدولة، سيُبلغ الوكيل عن خطأ ويسألك عما إذا كنت ترغب في إعادة إرسالها لاحقًا.</para>
+<para
+>عند تسجيل الدخول إلى جلسة كيدي، يتحقق الوكيل من الرسائل المجدولة ويرسل جميع الرسائل التي تجاوزت موعدها منذ آخر تسجيل خروج إذا لزم الأمر. </para>
+<para
+>لتغيير خيارات رسائل البريد التي جدولتها للإرسال لاحقًا، استخدم <menuchoice
+><guimenu
+>إعدادات</guimenu
+> <guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+> ثم اختر صفحة <guilabel
+>الملحقات</guilabel
+> في بريدك واضغط على زر الضبط بجوار عنصر <guilabel
+>وكيل الإرسال لاحقًا</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>اضبط &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>اضبط &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>اضبط &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>يؤدي هذا إلى ظهور حوار يتيح لك تعديل الجدول الزمني وإزالة رسائل البريد الإلكتروني التي أُرسلت باستخدام ميزة الإرسال لاحقًا.</action>
+</para>
+<para
+>لا يمكن تغيير المحتوى (المتن، والترويسات، وإلخ) للرسالة المجدولة. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>الحقوق والترخيص</title>
+
+<para
+>وكيل الإرسال لاحقًا</para>
+<para
+>حقوق تأليف البرنامج 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>حقوق تأليف التوثيق &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

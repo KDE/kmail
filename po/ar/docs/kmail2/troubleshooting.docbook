@@ -1,0 +1,1137 @@
+<chapter id="troubleshooting">
+
+<chapterinfo>
+<authorgroup>
+<author>
+  <personname>
+  <firstname
+>حُوّلت أجزاء من هذا الفصل من صفحة <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail/FAQs_Hints_and_Tips"
+>تلميحات وتنبيهات وأسئلة بريدك الشائعة</ulink
+> في قاعدة مستخدمي كيدي في عام 2012.</firstname>
+  </personname>
+</author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2021-08-08</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>استكشاف أخطاء بريدك وإصلاحها</title>
+
+<sect1 id="introduction-to-akonadi">
+<title
+>مقدمة عن أكونادي</title>
+
+  <para
+>يخضع بريدك لتطوير نشط منذ عام 1997. ظهرت الكثير من العلات على مر السنين، وحلّ الكثير منها. إذا كنت فضوليًا بشأن أي من تلك العلات القديمة، فيرجى مراجعة <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail/FAQs_Hints_and_Tips"
+>تلميحات وتنبيهات وأسئلة بريدك الشائعة</ulink
+> في ويكي قاعدة مستخدمي كيدي. أو تفضل بزيارة <ulink url="https://bugs.kde.org"
+>صفحة تتبع علات كيدي الرئيسة</ulink
+> للتعرف على العلات الأحدث.</para>
+
+  <para
+>في الوقت الحاضر (2021)، ترتبط العديد من المشكلات التي يواجهها الأشخاص مع بريدك بخادوم أكونادي. أكونادي هو برنامج مساعد يعمل كوسيط بين بريدك (بالإضافة إلى جميع تطبيقات إدارة المعلومات الشخصية الأخرى) وعفريت قاعدة بيانات عامة الغرض (الأكثر شيوعًا هو "mysqld"). كما يسهل الاتصالات بين العمليات بين الأجزاء المختلفة لتطبيقات إدارة المعلومات الشخصية. اعتمادًا على الطريقة التي ضُبط بها نظامك، قد يبدأ أكونادي أثناء عملية الإقلاع / تسجيل الدخول، أو قد لا يبدأ حتى تستدعي برنامج تطبيق إدارة معلومات شخصية (مثل بريدك، أو دفتر عناوينك، أو كونتاتكت).</para>
+
+  <para
+>هناك برنامجان يسمحان للمرء بالتفاعل مع خادوم أكونادي مباشرة: <code
+>akonadictl</code
+> (برنامج تحكم موجه للطرفية)، و <code
+>akonadiconsole</code
+> (تطبيق واجهة رسومية). إليك القليل من المعلومات حول هذين البرنامجين.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <sect2 id="intro-to-akonadictl">
+    <title
+>برنامج التحكم Akonadictl</title>
+    <screenshot>
+      <screeninfo
+>تقرير حالة أكونادي</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="akonadictl.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>تقرير حالة أكونادي</phrase>
+          </textobject>
+          <caption>
+              <para
+>تقرير حالة Akonadictl، هناك 32 عميلًا يعمل</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>توضح لقطة الشاشة السابقة أحد الأوامر التي يمكن استخدامها مع برنامج <code
+>akonadictl</code
+>. فيما يلي جميع الأوامر التي يتعرف عليها <code
+>akonadictl</code
+>.</para>
+
+    <para
+><screen
+>~$ akonadictl start</screen
+>يبدأ خادوم أكونادي.</para>
+    <para
+><screen
+>~$ akonadictl stop</screen
+>يوقف خادوم أكونادي.</para>
+    <para
+><screen
+>~$ akonadictl restart</screen
+>يوقف خادوم أكونادي، ثم يطلقه من جديد.</para>
+    <para
+><screen
+>~$ akonadictl status</screen
+>ينتج تقرير الحالة الموضح في لقطة الشاشة السابقة.</para>
+    <para
+><screen
+>~$ akonadictl instances</screen
+>يسرد جلسات خادوم أكونادي (يمكن تشغيل أكثر من جلسة في نفس الوقت).</para>
+    <para
+><screen
+>~$ akonadictl vacuum</screen
+>ينظف مخزن أكونادي، أو يحاول فعل ذلك على الأقل.</para>
+    <para
+><screen
+>~$ akonadictl fsck</screen
+>يجري فحصًا لاتساق الملفات. يمكن أن يكون خرج هذا الأمر ضخمًا جدًا، خاصة إذا أضفت مجلداتك الخاصة إلى بريدك. استخدم هذا الإصدار من الأمر (بتمرير الخرج عبر grep) للتحقق من أن قاعدة بيانات أكونادي سليمة، دون إنتاج الكثير من الخرج الإضافي.</para>
+    <para>
+
+<screen
+>~ $ akonadictl fsck 2
+>&amp;1 | grep ^Found
+عُثر على 0 ملف خارجي.
+عُثر على 0 جزء خارجي.
+لم يُعثر على ملفات خارجية غير مرجعية.
+عُثر على 0 جزء ليُنقل إلى ملفات خارجية
+عُثر على 0 جزء ليُنقل إلى قاعدة البيانات
+عُثر على 6 مجموعات بدون RID.
+عُثر على 0 عنصر بدون RID.
+عُثر على 0 عنصر متسخ.</screen
+>يرمز RID إلى RemoteId، وهو حقل مسمى في جداول قاعدة بيانات mysql. إذا كان هناك أكثر من 0 عنصر بدون RID، فلديك مشكلة طفيفة يجب تصحيحها. أما إذا كان هناك أكثر من 0 عنصر متسخ، فقد تواجه مشكلة رئيسة <emphasis
+>يجب</emphasis
+> تصحيحها. انظر <link linkend="resource-conflict-error"
+>"تعذر جلب العنصر ..."</link
+> وكذلك <link linkend="dealing-with-dirt"
+>تصحيح عناصر بريدك "المتسخة"</link
+> أدناه. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="intro-to-akonadiconsole">
+    <title
+>برنامج Akonadiconsole</title>
+    <screenshot>
+      <screeninfo
+>كيف يبدو شكل akonadiconsole</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="akonadiconsole.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>كيف يبدو شكل akonadiconsole</phrase>
+          </textobject>
+          <caption>
+              <para
+>Akonadiconsole قيد العمل</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>يوفر برنامج <code
+>akonadiconsole</code
+> اثنتي عشرة "نافذة" مختلفة للاطلاع على الأعمال الداخلية لتطبيقات إدارة المعلومات الشخصية. فيما يلي ملخص موجز للمشاهد المتاحة.</para>
+
+    <variablelist>
+      <varlistentry id="ak-console-agents">
+        <term
+>لسان <guilabel
+>العملاء</guilabel
+>.</term>
+        <listitem
+><para
+>هنا يمكنك رؤية قائمة بعملاء المستخدم (المعالجات).</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-browser">
+        <term
+>لسان <guilabel
+>التصفح</guilabel
+>.</term>
+        <listitem
+><para
+>يوفر هذا اللسان نظرة عامة على مجموعات البيانات المختلفة التي يصونها أكونادي، منظمة كشجرة هرمية توضح عدد العناصر الموجودة في كل مجموعة.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-debugger">
+        <term
+>لسان <guilabel
+>المنقح</guilabel
+>.</term>
+        <listitem
+><para
+>هنا يمكنك تشغيل التنقيح وإيقافه، وعرض سجل رسائل التنقيح.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-logging">
+        <term
+>لسان <guilabel
+>التسجيل</guilabel
+>.</term>
+        <listitem
+><para
+>يتيح لك هذا اللسان عرض الرسائل الصادرة عن مكونات أكونادي المختلفة.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-db-browser">
+        <term
+>لسان <guilabel
+>متصفح قاعدة البيانات</guilabel
+>.</term>
+        <listitem
+><para
+>استخدم هذا اللسان لإلقاء نظرة داخل قاعدة بيانات mysql. هناك العديد من الجداول المختلفة.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-db-console">
+        <term
+>لسان <guilabel
+>طرفية قاعدة البيانات</guilabel
+>.</term>
+        <listitem
+><para
+>هنا يمكنك الاستعلام عن قاعدة بيانات mysql.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-query">
+        <term
+>لسان <guilabel
+>منقح الاستعلامات</guilabel
+>.</term>
+        <listitem
+><para
+>استخدم هذا اللسان لتشغيل تنقيح استعلامات قاعدة البيانات وإيقافه. يستعلم بريدك عن قاعدة بيانات mysql عدة مرات في بضع ثوانٍ فقط؛ ويمكن أن يكون الخرج ضخمًا.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-tracker">
+        <term
+>لسان <guilabel
+>متتبع المهام</guilabel
+>.</term>
+        <listitem
+><para
+>تؤدي تطبيقات إدارة المعلومات الشخصية وظائف متنوعة عن طريق بدء "مهام". استخدم هذا اللسان لتبديل تتبع المهام بين التشغيل والإيقاف.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-scheduler">
+        <term
+>لسان <guilabel
+>مجدولي الموارد</guilabel
+>.</term>
+        <listitem
+><para
+>هنا يمكنك رؤية الموارد المطلوبة عند استدعاء وظيفة معينة في إدارة المعلومات الشخصية. يمكنك رؤية قائمة بجميع موارد أكونادي في نظامك في دليل <filename
+>~/.config/akonadi/</filename
+>.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-notif-monitor">
+        <term
+>لسان <guilabel
+>مراقب الإشعارات</guilabel
+>.</term>
+        <listitem
+><para
+>استخدم هذا اللسان لمراقبة الإشعارات المرسلة بواسطة موارد أكونادي المختلفة.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-search">
+        <term
+>لسان <guilabel
+>بحث العناصر</guilabel
+>.</term>
+        <listitem
+><para
+>يوفر هذا اللسان وظيفة بحث عامة. يمكن قصر عمليات البحث على التقويم أو جهة الاتصال أو البريد الإلكتروني أو الملاحظة.</para
+></listitem>
+      </varlistentry>
+
+      <varlistentry id="ak-console-monitors">
+        <term
+>لسان <guilabel
+>المراقبين</guilabel
+>.</term>
+        <listitem
+><para
+>هنا يمكنك رؤية قائمة بجميع المراقبين الذين يعملون تحت أكونادي، وكذلك عرض خصائصهم. تُراقب الوكلاء والموارد وحتى بعض برامج التطبيقات.</para
+></listitem>
+      </varlistentry>
+    </variablelist>
+
+    </sect2>
+
+</sect1>
+
+<!-- <sect1 id="kmail2-doesnt-send-mail">
+<title
+>KMail doesn't send mail</title>
+  <para
+>Some users find that mail does not go out, and it appears that &SMTP; is missing, even though the
+  <guilabel
+>Settings</guilabel
+> page looks correct.  It has been reported that this is cured by opening
+  <application
+>akonadiconsole</application
+> and adding Mail Dispatcher Agent.</para
+>ttps://bugs.kde.org/show_bug.cgi?id=283682
+  <para
+>If the computer was suddenly turned off in suspend mode (&eg; by a power cut) sometimes e-mails simply
+  stay in the outbox without being sent, but no error message is generated either. This may be due to the fact
+  that the Mail Dispatcher Agent is set to <quote
+>offline</quote
+> in the configuration file during suspend and
+  is not changed back due to the crash. Edit the following file:</para>
+  <para
+><filename
+>~/.config/akonadi/agent_config_akonadi_maildispatcher_agent</filename
+> and change</para>
+  <para
+><screen
+>[Agent] Online=false</screen
+></para>
+  <para
+>to</para>
+  <para
+><screen
+>[Agent] Online=true</screen
+></para>
+</sect1
+> --> <!-- This section removed 8/8/2021. -->
+
+<!-- <sect1 id="clean-start-after-a-failed-migration"
+><title
+>Clean start after a failed migration</title>
+<para
+>In case migration from &kmail; 1 to &kmail; 2 fails or you have weird problems after it, you can try to do a clean import of your data, instead of migrating the existing settings. Be warned, this needs more manual setup, so do only if you are confident of setting up your &kmail; accounts again; it can generate a large amount of network traffic for &IMAP; resources.
+</para>
+<orderedlist>
+<listitem
+><para
+>Stop Akonadi and related applications</para>
+<para
+>quit &kmail;/&kontact;/&korganizer;, and issue this command:
+</para>
+<para
+><userinput
+><command
+>akonadictl stop</command
+></userinput>
+</para>
+<para
+>Make sure no <application
+>Akonadi</application
+> or <application
+>MySQL</application
+> process is running:
+</para>
+<para
+><userinput
+><command
+>ps ux | grep mysql</command
+></userinput>
+</para>
+<para
+><userinput
+><command
+>ps ux | grep akonadi</command
+></userinput>
+</para>
+<para
+>They should not show anything else but the <application
+>grep</application
+> process itself.
+</para>
+</listitem>
+<listitem
+><para
+>Remove old Akonadi database and config</para>
+<para
+>Delete the following folders
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.local/share/akonadi</filename>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.config/akonadi</filename>
+    </para>
+  </listitem>
+</itemizedlist>
+<para
+>Delete also the files starting with <emphasis
+>akonadi</emphasis
+> from <filename role="directory"
+>~/.kde4/share/config</filename>
+</para>
+</listitem>
+<listitem
+>ttps://bugs.kde.org/show_bug.cgi?id=283682
+<para
+>Restart Akonadi server
+</para>
+<para
+><userinput
+><command
+>akonadictl start</command
+></userinput>
+</para>
+</listitem>
+<listitem>
+<para
+>Add back the accounts
+</para>
+<para
+>Now it is time to add your account back. You can use &kmail; (&kontact;) for it, or you can use the <application
+>akonadiconsole</application
+> tool.
+</para>
+<para
+>In &kmail;: <menuchoice
+><guimenu
+>Settings</guimenu
+><guisubmenu
+>Configure KMail</guisubmenu
+><guimenuitem
+>Accounts</guimenuitem
+></menuchoice
+> and use <guilabel
+>Add</guilabel
+>.
+</para>
+<para
+>If you use &IMAP;, add a new <guimenuitem
+>&IMAP; E-Mail server</guimenuitem
+>. If you want disconnected mode (so you can read the mails offline), enable it on the <guilabel
+>Advanced</guilabel
+> tab. Be sure to check that you are subscribed to all your important folders.
+</para>
+<para
+>You might already see a <guilabel
+>Local folder</guilabel
+> resource. This points to a local maildir folder. You can either modify this to point to your existing maildir folders or you can add a new resource for local mails.
+</para>
+<para
+>When adding a maildir resource you can choose between <guilabel
+>&kmail; Mail Folder</guilabel
+> or <guilabel
+>Maildir</guilabel
+>. Unless you have a mixed folder containing <emphasis
+>both</emphasis
+> maildir folders and mbox files, you should choose <guilabel
+>Maildir</guilabel
+>. For independent mbox files, like the one in the <filename role="directory"
+>/var/spool/mail</filename
+>, you can set up a new <emphasis
+>MBox</emphasis
+>  folder.
+</para>
+<para
+>Add the POP3 accounts as well. If you have multiple Local Folders set up, on the <guilabel
+>Advanced</guilabel
+> tab, choose the destination folder where the newly downloaded mails are put.
+</para>
+<para
+>For all accounts, configure the mail check interval. For Local folders disable interval checking and also disable <guilabel
+>Include in manual mail check</guilabel
+> in the <guilabel
+>Retrieval options</guilabel
+>.
+</para>
+<para
+>Add the sending (SMTP) accounts.
+</para>
+</listitem>
+<listitem>
+<para
+>Fix your filters, identities and favorite folders
+</para>
+<para
+>If you have client side filtering (common with POP3 mails), go to <menuchoice
+><guimenu
+>Settings</guimenu
+><guimenuitem
+>Configure Filters</guimenuitem
+></menuchoice
+> and fix the destination folder for the filters, they most probably are wrong. Otherwise mails will end up in folders you don't expect.
+</para>
+<para
+>Spam filter (at least in version 4.7.3 and earlier) does not work as expected in that the rule that the wizard creates does not send spam to the folder you have defined.
+</para>
+<para
+>The workaround for this is to change the <quote
+>spam</quote
+> and <quote
+>spam unsure</quote
+> (if the spam filter you use supports that) from looking at Status-fields in the header <literal
+>X-Spam-Status</literal
+> to look <guimenuitem
+>Anywhere in headers</guimenuitem
+> for X-<replaceable
+>your spam filter</replaceable
+>-Classification: <quote
+>SPAM or unsure</quote
+>. Look at the filters the wizard creates and copy the <quote
+>contains</quote
+> part. Example for <application
+>Spambayes</application
+>: <quote
+>X-Spambayes-Classification: spam</quote
+> and <quote
+>X-Spambayes-Classification: unsure</quote
+>.
+</para>
+<para
+>You also need to verify the identity settings and set the sent-mail, drafts and templates folders to point to the right folders. To do that go to <menuchoice
+><guimenu
+>Settings</guimenu
+><guisubmenu
+>Configure KMail</guisubmenu
+><guimenuitem
+>Identities</guimenuitem
+></menuchoice
+>, modify the identity, go to the  <guilabel
+>Advanced</guilabel
+> tab and modify the above mentioned folder settings.
+</para>
+<para
+>Check also that your <guilabel
+>Favorite Folders</guilabel
+> are the ones you have chosen before.
+</para>
+</listitem>
+<listitem>
+<para
+>Initiate a mail check
+</para>
+<para
+>Start a mail check for your accounts. It is suggested doing it per account.
+</para>
+<para
+>First check for &IMAP;, if you have it.
+</para>
+<para
+>Next check (import) your local mails. One solution is to do a full check in one go <menuchoice
+><guimenu
+>File</guimenu
+><guimenuitem
+>Check Mail In</guimenuitem
+></menuchoice
+> and select the local account; the other is to click one by one on the folders, that should initiate the check for that folder (alternatively right click on the folder name and select <guilabel
+>Update Folder</guilabel
+>).
+</para>
+<para
+>The initial import might be slow and could use a lot of memory, especially if you have folders with a large amount of mail. In that case per-folder check is preferred. If the check (complete or for one folder) is finished and the memory usage is still high, you could restart the Akonadi server &mdash; as seen above &mdash; or just the maildir agent, if you use <varname
+>akonadiconsole</varname
+>. Do not worry, this high memory usage is <emphasis
+>only</emphasis
+> for initial import.
+</para>
+<para
+>Initiate a check mail for POP3 resources.
+</para>
+</listitem>
+</orderedlist>
+<para
+>Hopefully after these steps, you will have a much nicer &kmail; experience.
+</para>
+</sect1
+> --> <!-- This section removed 8/8/2021. -->
+
+<!-- <sect1 id="local-folders-is-added-over-and-over"
+><title
+>Local Folders is added over and over</title>
+<para
+>In some cases you might end up with a maildir account pointing to a certain place (like <filename
+>$HOME/Mail</filename
+>), but you still see a <guilabel
+>Local Folders</guilabel
+> folder in the folder list with Inbox/Outbox/Trash/Drafts/&etc; subfolders and &kmail; keeps putting mails there, especially sent mails.
+</para>
+<para
+>The problem is that certain folders are marked as special folders (system folders) and if you don't have them, &kmail; cannot operate correctly. That is the reason why it keeps re-creating that folder.
+</para>
+<para
+>At this time there is no easy way to change this in the UI for all types of special folders. Here is what you can do:
+</para>
+<orderedlist>
+<listitem
+><para
+>The <emphasis
+>Sent-Mail, Drafts and Templates</emphasis
+> folder is configurable for each identity. Go to  <menuchoice
+><guimenu
+>Settings</guimenu
+><guisubmenu
+>Configure KMail</guisubmenu
+><guimenuitem
+>Identities</guimenuitem
+></menuchoice
+>, select your identity, click on <guilabel
+>Modify</guilabel
+>, go to the <guilabel
+>Advanced</guilabel
+> tab and set the folders to point to the right place.</para
+></listitem>
+<listitem
+><para
+>The default <emphasis
+>Inbox</emphasis
+> is configurable for each POP3 account. Go to  <menuchoice
+><guimenu
+>Settings</guimenu
+><guisubmenu
+>Configure KMail</guisubmenu
+><guimenuitem
+>Account</guimenuitem
+></menuchoice
+>, select your POP3 account, click on <guilabel
+>Modify</guilabel
+> go to the <guilabel
+>Advanced</guilabel
+> tab and set the <guilabel
+>Destination folder</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>For IMAP accounts you can configure the <emphasis
+>Trash</emphasis
+> folder. Do as above. The setting name is <emphasis
+>Trash folder</emphasis
+>.</para
+></listitem>
+<listitem
+><para
+>The most problematic part is the <emphasis
+>Outbox</emphasis
+>. First, locate <filename
+>specialmailcollectionsrc</filename
+> in your &kde; configuration directory (<filename
+>$HOME/.kde4/share/config</filename
+> or similar). It contains something like this:</para
+></listitem>
+</orderedlist>
+<para
+><userinput>
+[SpecialCollections]
+DefaultResourceId=akonadi_maildir_resource_0</userinput>
+</para>
+<para
+>Now start <application
+>akonadiconsole</application
+>, on the <guilabel
+>Agents</guilabel
+> tab locate your local account for your <emphasis
+>Outbox</emphasis
+> folder, click on it and note the identifier that appears in the lower part (<replaceable
+>akonadi_maildir_resource_XXX</replaceable
+> or similar). Put this identifier in the above shown <filename
+>specialmailcollectionsrc</filename
+>, by replacing the existing one.
+</para>
+<para
+>After that restart <application
+>akonadi</application
+> (you can do from the <application
+>akonadiconsole</application
+>, <menuchoice
+><guimenu
+>Server</guimenu
+><guimenuitem
+>Restart Server</guimenuitem
+></menuchoice
+> or from command line with:
+</para>
+<para
+><userinput
+>akonadictl restart</userinput>
+</para>
+<para
+>Now remove the <guilabel
+>Local Folders</guilabel
+> that you don't want to use anymore.
+</para>
+<para
+>If it keeps reappearing and the <guilabel
+>Mail Dispatcher Agent</guilabel
+> still crashes, you need to do one more thing in <application
+>akonadiconsole</application
+>. Go to the <guilabel
+>Browser</guilabel
+> tab, find the outbox you <emphasis
+>want</emphasis
+> to use, right click on it, select <guilabel
+>Folder Properties</guilabel
+>, <guilabel
+>Attributes</guilabel
+> tab, enter <userinput
+>SpecialCollectionAttribute</userinput
+> then click <guilabel
+>Add</guilabel
+>, double click on the <guilabel
+>Value</guilabel
+> near the <guilabel
+>SpecialCollectionAttribute</guilabel
+> and enter <userinput
+>outbox</userinput
+>. Add also another attribute, the attribute name has to be <guilabel
+>ENTITYDISPLAY</guilabel
+> and the value <userinput
+>("outbox" "mail-folder-outbox" "" ())</userinput
+> (just copy paste from here). Restart <application
+>akonadi</application
+> and now you should be able to remove completely the unneeded local folder account.
+</para>
+</sect1
+> --> <!-- This section removed 8/8/2021. -->
+
+<sect1 id="unable-to-fetch-item-from-backend">
+<title
+>"تعذر جلب العنصر من الخلفية" عند دخول مجلد IMAP</title>
+
+  <para
+>هناك سببان محتملان على الأقل لذلك. إليك بعض الحلول البديلة.</para>
+
+  <variablelist>
+    <varlistentry>
+      <term
+>حل بديل 1</term>
+      <listitem>
+        <itemizedlist>
+          <listitem
+><para
+>حرر <filename
+>~/.local/share/akonadi/mysql.conf</filename
+></para
+></listitem>
+          <listitem
+><para
+>تحت قسم <guilabel
+>[mysql]</guilabel
+>، أضف: <userinput
+>binlog_format=row</userinput
+></para
+></listitem>
+        </itemizedlist>
+        <para
+>إذا لم يفلح ذلك، جرب الحل البديل 2 (أدناه).</para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+>حل بديل 2</term>
+      <listitem>
+        <para
+>هذا الحل عبارة عن إعادة تشغيل حتى يتمكن بريدك من جلب تلك العناصر المزعجة. تتضمن بعض الخطوات الممكنة ما يلي:</para>
+        <para
+>استخدم <keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+> (مشغل كيدي) أو الصدفة لطباعة <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>، ثم انتظر دقيقة، ثم <userinput
+><command
+>akonadictl stop</command
+></userinput
+>. انتظر دقيقة، واكتب <userinput
+><command
+>akonadictl start</command
+></userinput
+>، انتظر دقيقة، ثم اكتب <userinput
+><command
+>kmail</command
+></userinput
+>. سيؤدي هذا إلى إيقاف بريدك (إغلاق <emphasis
+>جميع</emphasis
+> النوافذ)، وإيقاف خلفية بريدك، وإعادة تشغيل الخلفية، وإعادة تشغيل بريدك. يزيد وجود اتصال إنترنت عامل من فرص النجاح. في بعض الأحيان، يمكنك أيضًا القيام بـ <userinput
+><command
+>kquitapp kmail</command
+></userinput
+> فقط، والانتظار لمدة دقيقة، ثم بدء بريدك مرة أخرى. غالبًا ما يبدو أن هناك حاجة لإعادة التشغيل بضع مرات. ليس من الواضح سبب هذا الخطأ، ولكن من المرجح حدوثه عندما تكون اتصالات الشبكة سيئة. </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <para
+>انظر أيضًا <link linkend="your-mails-are-not-being-sent"
+>الموضوع التالي</link
+> للتعرف على كيفية الاستفادة من <application
+>akonadiconsole</application
+>.</para>
+</sect1>
+
+<sect1 id="your-mails-are-not-being-sent">
+<title
+>رسائلك الإلكترونية لا تُرسل، دون ظهور رسائل خطأ</title>
+
+  <para
+>إذا لم يرسل بريدك البريد دون إبداء أي شيء، فقد يكون <quote
+>العميل</quote
+> المسؤول عن إرسال الرسائل عالقًا. بالطبع، يجب عليك أولًا التأكد من أن لديك اتصال شبكة مناسب بحيث يمكن إرسال البريد!</para>
+
+  <para
+>لمعالجة هذه المشكلة، قد يساعد إجهاض الإجراء الحالي وإعادة تشغيله. أولًا، اخرج من بريدك باستخدام مشغل كيدي (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) أو الصدفة واكتب: <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>. لاحظ أن استخدام <keycombo
+>&Alt;<keycap
+>F4</keycap
+></keycombo
+> العادي أو <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>اخرج</guimenuitem
+></menuchoice
+> <emphasis
+>لا</emphasis
+> يفي بالغرض! انتظر دقيقة، ثم ابدأ بريدك مرة أخرى. الآن ابدأ <application
+>akonadiconsole</application
+> باستخدام مشغل كيدي أو الصدفة. انتقل إلى <guilabel
+>Mail Dispatcher Agent</guilabel
+> (تحت لسان <guilabel
+>العملاء</guilabel
+>)، وانقر بزر الفأرة الأيمن، وأجهض الإجراء الحالي. من المرجح أن تظهر لك بعض رسائل الخطأ. اذهب الآن إلى بريدك واختر <menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>أرسل الرسائل المجدولة</guimenuitem
+></menuchoice
+>. قد يعمل الآن. إذا لم يكن الأمر كذلك، فبدلًا من إجهاض الإجراء الحالي، حاول تبديل حالة الاتصال/عدم الاتصال لـ <guilabel
+>Mail Dispatcher Agent</guilabel
+> (نفس القائمة السياقية) أو إعادة تشغيل الأشياء كما ذُكر في الحل البديل 2 في <link linkend="unable-to-fetch-item-from-backend"
+> الموضوع السابق</link
+>.</para>
+
+  <para
+><note
+><para
+>يمكن أن يكون akonadiconsole مفيدًا جدًا في عدد من الحالات لأنه يعرض جميع <quote
+>العملاء</quote
+>، وهي المكونات المنفصلة لخلفية بريدك. يمكنك إيقافهم وبدؤهم، ووضعهم في وضع عدم الاتصال، وإجهاض الإجراءات الجارية وما إلى ذلك. يمكن أن يكون مفيدًا للغاية عندما يتصرف بريدك بغرابة.</para
+></note
+></para>
+
+  <para
+>في بعض الأحيان يفشل <guilabel
+>Mail Dispatcher Agent</guilabel
+> في العمل لأن عفريت dbus (وهو مرفق على مستوى النظام للاتصالات بين العمليات) لا يعمل بشكل صحيح. أفضل رهان لك في هذه الحالة هو ببساطة إعادة تشغيل الحاسوب. يُعد عفريت dbus من أوائل العمليات التي تبدأ عند تسجيل الدخول إلى سطح مكتب كيدي، لذا لا يمكن إيقافه وإعادة تشغيله بسهولة. تعتمد بيئة بلازما بالكامل عليه.</para>
+
+</sect1>
+
+<sect1 id="resource-conflict-error">
+<title
+>"تعذر جلب العنصر من الخلفية ... [LRCONFLICT]"</title>
+
+  <para
+>تتعلق هذه المشكلة مباشرة بـ <ulink url="https://bugs.kde.org/show_bug.cgi?id=283682"
+>علة أكونادي رقم 283682</ulink
+>، والتي كانت مصدر إزعاج لبريدك منذ أكتوبر 2011. هناك مشكلة في التوقيت / التنسيق في المعالجة غير المتزامنة لمرشحات الرسائل. بين الحين والآخر، "تتعثر" قاعدة مرشح تنقل الرسائل إلى مجلد مختلف، وتنتج أكثر من مدخل واحد في قاعدة البيانات لرسالة وُصل إليها. عندما تحاول فتح النسخة الثانية من هذه الرسالة، تظهر رسالة الخطأ "تعذر جلب العنصر من الخلفية ...[LRCONFLICT]". لا يمكن حذف مثل هذه الرسائل الوهمية أو نقلها إلى المهملات باستخدام وظائف بريدك المدمجة. ولكن <emphasis
+>يمكنك</emphasis
+> التخلص منها. إليك كيفية القيام بذلك.</para>
+
+<procedure>
+  <step
+><para
+>أولًا، اخرج من برنامج بريدك. قد لا يكون هذا ضروريًا، ولكن الوقاية خير من العلاج.</para
+></step>
+
+  <step
+><para
+>يمكنك معرفة عدد الرسائل التالفة الموجودة باستخدام <code
+>akonadictl</code
+>. <screen
+>~ $ akonadictl fsck 2
+>&amp;1 | grep ^Found
+عُثر على 6 ملفات خارجية.
+عُثر على 6 أجزاء خارجية.
+لم يُعثر على ملفات خارجية غير مرجعية.
+عُثر على 0 جزء ليُنقل إلى ملفات خارجية
+عُثر على 0 جزء ليُنقل إلى قاعدة البيانات
+عُثر على 6 مجموعات بدون RID.
+عُثر على 9 عناصر بدون RID.
+عُثر على 0 عنصر متسخ.</screen
+> في هذه الحالة، هناك تسع رسائل مكررة (بدون RID).</para>
+<para
+>&nbsp;</para
+><!-- add whitespace --></step>
+
+  <step
+><para
+>تحتاج إلى معرفة كيفية الاتصال مباشرة بخادوم mysql. استخدم الأمرين <code
+>ps</code
+> و <code
+>grep</code
+> للقيام بذلك. <screen
+>~ $ ps ux | grep mysql
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
+--defaults-file=/home/david/.local/share/akonadi/mysql.conf
+--datadir=/home/david/.local/share/akonadi/db_data/
+--socket=/run/user/1000/akonadi/mysql.socket
+--pid-file=/run/user/1000/akonadi/mysql.pid
+david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen
+></para>
+<para
+>&nbsp;</para
+><!-- add whitespace --></step>
+
+  <step
+><para
+>استدعِ برنامج خادوم mysql باستخدام معلومات المقبس من الخطوة 3 وأصدر ثلاثة أوامر mysql، كما هو موضح أدناه. <screen
+>~ $ mysql  --socket=/run/user/1000/akonadi/mysql.socket                 &lt;==
+أهلًا بك في مراقب MariaDB. تنتهي الأوامر بـ ; أو \g.
+معرف اتصال MariaDB الخاص بك هو 114
+إصدار الخادوم: 10.5.10-MariaDB Source distribution
+
+حقوق النشر (c) لعام 2000 و2018 لشركة Oracle وMariaDB Corporation Ab وآخرين.
+
+اكتب 'help;' أو '\h' للمساعدة. اكتب '\c' لمسح عبارة الإدخال الحالية.
+
+MariaDB [(none)]> use akonadi;                                         &lt;==
+تجري قراءة معلومات الجدول لإكمال أسماء الجداول والأعمدة
+يمكنك إيقاف تشغيل هذه الميزة للحصول على بدء تشغيل أسرع باستخدام -A
+
+تغيرت قاعدة البيانات
+MariaDB [akonadi]> delete from pimitemtable where remoteid is NULL;    &lt;==
+استعلام موافق، تأثرت 9 صفوف (0.003 ثانية)
+
+MariaDB [akonadi]> \q                                                  &lt;==
+وداعًا</screen
+> أوامر mysql الثلاثة هي "use akonadi;" و "delete from pimitemtable where remoteid is NULL;" و "\q". بعد كتابة "mysql --socket= ..." ستكون في حوار مع خادوم mysql (المعروف أيضًا باسم "MariaDB")، والذي يوفر حث &gt;. يُعرض الحوار بالكامل هنا للتوضيح. وُسمت خطوط إدخال المستخدم بـ &lt;== في الرسم التوضيحي السابق.</para
+></step>
+
+</procedure>
+
+  <para
+>عند إعادة تشغيل بريدك، ستختفي تلك الرسائل المكررة المزعجة. لقد كانت مجرد أوهام ناتجة عن مؤشرات NULL في جداول قاعدة بيانات mysql.</para>
+
+</sect1>
+
+<sect1 id="cleaning-aux-storage">
+<title
+>الحفاظ على نظافة مناطق التخزين المساعدة لبريدك</title>
+
+  <para
+>يخزن بريدك البيانات في عدة أماكن مختلفة على حاسوبك. معظم هذه الأماكن توجد داخل دليل <filename
+>~/.local/share/</filename
+> في مكان ما. على سبيل المثال، في معظم توزيعات لينكس، توجد <guilabel
+>المجلدات المحلية</guilabel
+> في <filename
+>~/.local/share/local-mail/</filename
+>. ويخزن أكونادي معظم بياناته في <filename
+>~/.local/share/akonadi/</filename
+>. <screen
+>~ $ cd .local/share/akonadi
+~/.local/share/akonadi $ ls
+Akonadi.error      db_data  file_db_data     mysql.conf  socket-localhost-default
+Akonadi.error.old  db_misc  file_lost+found  search_db
+</screen
+></para>
+
+  <para
+><filename
+>Akonadi.error</filename
+> و <filename
+>Akonadi.error.old</filename
+> هما ملفا سجل يُنشآن كلما توقف أكونادي وأعيد تشغيله. الملف النصي <filename
+>mysql.conf</filename
+> هو ملف ضبط لعفريت mysqld الذي يعمل كخلفية لأكونادي. يحتوي الدليلان <filename
+>db_data</filename
+> و <filename
+>search_db</filename
+> على جداول قاعدة بيانات mysql الفعلية. هناك أيضًا زوجان من ملفات سجل mysql في <filename
+>db_data</filename
+> والتي قد تكون مفيدة إذا تصرف أكونادي بغرابة.</para>
+
+  <para
+>يحتوي الدليلان <filename
+>file_db_data</filename
+> و <filename
+>file_lost+found</filename
+> على بيانات مساعدة مرتبطة بالمعالجة غير المتزامنة. لا ينظف أكونادي دليل <filename
+>file_lost+found</filename
+> آليًا، لذا قد ترغب في تنظيف تلك الملفات يدويًا من وقت لآخر (على سبيل المثال، باستخدام دولفين). يحاول أكونادي تنظيف دليل <filename
+>file_db_data</filename
+> بعد دمج كل شيء في ملفات قاعدة البيانات الرئيسة، ولكن أحيانًا تتراكم المهملات هناك. استخدم هذا الأمر <screen
+>find .local/share/akonadi/file_db_data/ -type f | xargs rm</screen
+> لإصلاح ذلك عند حدوثه. (إذا كان الدليل <filename
+>file_db_data</filename
+> نظيفًا بالفعل، فإن أمر "find" الموضح أعلاه سيُرجع خطأً).</para>
+
+</sect1>
+
+<sect1 id="dealing-with-dirt">
+<title
+>تصحيح عناصر بريدك "المتسخة"</title>
+
+  <para
+>تتعلق هذه المشكلة مباشرة بـ <ulink url="https://bugs.kde.org/show_bug.cgi?id=436550"
+>علة أكونادي رقم 436550</ulink
+>، والتي أُبلغ عنها في أبريل 2021. وهي ناتجة عن العناصر "المتسخة" التي يعثر عليها أحيانًا بواسطة <code
+>akonadictl fsck</code
+>. <screen
+>~ $ akonadictl fsck 2
+>&amp;1 | grep ^Found
+عُثر على 5 ملفات خارجية.
+عُثر على 5 أجزاء خارجية.
+لم يُعثر على ملفات خارجية غير مرجعية.
+عُثر على 0 جزء ليُنقل إلى ملفات خارجية
+عُثر على 0 جزء ليُنقل إلى قاعدة البيانات
+عُثر على 6 مجموعات بدون RID.
+عُثر على 0 عنصر بدون RID.
+عُثر على 750 عنصرًا متسخًا.</screen
+> <!-- Can't indent here ... messes up the output.  -->
+  </para>
+
+  <para
+>تُستخدم علامة "متسخ" (dirty) على عنصر في pimitemtable (أحد الجداول في قاعدة بيانات أكونادي) للتحكم في جوانب معينة من المعالجة غير المتزامنة. تُضبط على أنها صحيحة عندما تكون هناك عمليات معلقة لرسالة بريد إلكتروني معينة. في معظم الأوقات، تُمسح علامة "متسخ" بعد ثانية أو ثانيتين، عندما تنتهي العملية التي كانت معلقة ذات يوم.</para>
+
+  <para
+>في بعض الأحيان، ولأسباب غير واضحة تمامًا، يمكن ضبط علامة "متسخ" على عشرات أو حتى مئات الرسائل دفعة واحدة، كما هو موضح أعلاه. عندما يحدث هذا، تتعطل آلية المسح الآلي، وتصبح غير قادرة على إصلاح نفسها آليًا. السبب الرئيس لوجود عنصر "متسخ" في هذه الحالة هو أن الحقل "remoteid" لم يُضبط بشكل صحيح، مما يجعل استرداد رسالة "متسخة" مستحيلًا في بريدك. الرسالة لا تزال موجودة على القرص، ولكن بريدك لا يمكنه العثور عليها.</para>
+
+  <para
+>يجب أن تكون هناك طريقة أفضل لتصحيح هذه المشكلة. إذا فكرت في طريقة أفضل، يرجى إعلام المؤلفين بها، حتى يمكن تحسين هذا الدليل. سيقوم الإجراء التالي على الأقل بتصحيح أخطاء قاعدة البيانات، ولكنه يستلزم الكثير من العمل.</para>
+
+  <procedure>
+    <step
+><para
+>اخرج من بريدك وأوقف خادوم أكونادي بأمر طرفي: <code
+>akonadictl stop</code
+>.</para
+></step>
+
+    <step
+><para
+>أنشئ نسخة احتياطية من جميع رسائل البريد الإلكتروني الخاصة بك. قد تتمكن من استخدام <ulink url="help:/pimdataexporter"
+>مصدر بيانات PIM</ulink
+> لهذا الغرض. أو يمكنك استخدام آرك لإنشاء أرشيف، أو دولفين لإنشاء نسخة ثانية من <filename
+>~/.local/share/local-mail/</filename
+> في مكان آخر على قرصك الصلب. إذا كنت مغامرًا، فقد تكتفي بإعادة تسمية دليل المجلدات المحلية الخاص بك إلى شيء مثل <filename
+>local-mail-save</filename
+>. ولكن من الأسلم التأكد من أن لديك نسخة احتياطية من رسائلك قبل المتابعة.</para
+></step>
+
+    <step
+><para
+>يجب عليك أيضًا إنشاء نسخة احتياطية من أي مرشحات أنشأتها، والتأكد من معرفتك بكيفية استعادة أي مدخلات مخصصة لـ <guilabel
+>مجلد البريد المرسل</guilabel
+> أو <guilabel
+>مجلد المسودات</guilabel
+> أو <guilabel
+>مجلد القوالب</guilabel
+> المرتبطة بهويات بريدك. ستقوم الخطوة التالية بإزالة جميع مجلدات البريد المخصصة شخصيًا، وستحتاج إلى إصلاح بعض الأشياء بعد أن يعيد أكونادي بناء جداول قاعدة البيانات الخاصة به.</para
+></step>
+
+    <step
+><para
+>الآن احذف جميع المجلدات الموجودة داخل الدليل <filename
+>local-mail</filename
+>، أو أعد تسمية هذا الدليل إلى شيء مثل <filename
+>local-mail-save</filename
+>. ثم ابدأ برنامج بريدك. سيؤدي هذا إلى إجبار أكونادي على مسح جميع مدخلات جداول قاعدة البيانات المرتبطة برسائل البريد الإلكتروني. سترى أسماء مجلداتك القديمة لفترة وجيزة، لكنها ستختفي عندما ينتهي أكونادي من حذف جميع العناصر "المتسخة" (وجميع العناصر النظيفة أيضًا).</para
+></step>
+
+    <step
+><para
+>اخرج من بريدك وأوقف خادوم أكونادي كما هو موضح في الخطوة 1، ثم استعد النسخة الاحتياطية من رسائلك (التي أُنشئت في الخطوة 2) إلى دليل <filename
+>~/.local/share/local-mail/</filename
+>.</para
+></step>
+
+    <step
+><para
+>ابدأ بريدك مرة أخرى، وأجبر أكونادي على إعادة مزامنة قاعدة البيانات. أسهل طريقة للقيام بذلك هي <menuchoice
+> <shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></shortcut
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>جلب البريد</guimenuitem
+></menuchoice
+>؛ يعيد أكونادي مزامنة جميع المجلدات آليًا عند جلب البريد. سيستغرق هذا عدة دقائق ليكتمِل، اعتمادًا على عدد الرسائل التي حفظتها في مجلدات بريدك. ولكن عند اكتمال العملية، ستختفي جميع العناصر "المتسخة".</para
+></step>
+
+    <step
+><para
+>أخيرًا، سترغب في استعادة قواعد مرشح البريد التي نسختها احتياطيًا في الخطوة 3، والتحقق من أن جميع عناصر المجلدات المخصصة (<guilabel
+>مجلد البريد المرسل</guilabel
+>، وغيرها) لهوياتك ضُبطت بالطريقة التي تريدها. ستحتاج أيضًا إلى إعادة ضبط أي خصائص مجلد مخصصة كنت قد أعددتها، وربما سيكون لديك مجموعة من إشعارات "رسالة غير مقروءة" كاذبة للتعامل معها. ولكن جداول قاعدة بيانات أكونادي ستكون نظيفة ولامعة مرة أخرى!</para
+></step>
+
+  </procedure>
+
+
+</sect1>
+
+
+</chapter>

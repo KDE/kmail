@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>دليل عارض ملفات TNEF</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2016-07-27</date>
+<releaseinfo
+>5.3.40 (تطبيقات 16.08)</releaseinfo>
+
+<abstract
+><para
+>عارض ملفات TNEF هو تطبيق لمرفقات البريد من نوع <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+>.</para
+></abstract>
+
+<keywordset>
+<keyword
+>بريد</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>مقدمة</title>
+
+	<para
+>يتيح عارض ملفات TNEF التعامل بسهولة مع مرفقات البريد التي تستخدم تنسيق TNEF. توجد هذه المرفقات عادةً في الرسائل القادمة من خوادم بريد <trademark class="registered"
+>مايكروسوفت</trademark
+> وتتضمن خصائص البريد بالإضافة إلى المرفقات الفعلية.</para>
+		<para
+>غالبًا ما يسمى المرفق بتنسيق TNEF باسم <filename
+>winmail.dat</filename
+> أو <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>نافذة TNEF الرئيسة</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>نافذة TNEF الرئيسة</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>يسمح هذا البرنامج المساعد بإجراء عمليات متنوعة على تلك المرفقات:</para>
+	<itemizedlist>
+		<listitem
+><para
+>عرض/فتح المرفقات باستخدام التطبيقات المرتبطة.</para
+></listitem>
+		<listitem
+><para
+>استخراج المرفقات الفعلية</para
+></listitem>
+		<listitem
+><para
+>عرض خصائص الرسالة (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>عرض/استخراج النص المنسق للرسالة (بتنسيق RTF)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>يُظهر بريدك آليًّا محتوى مرفق TNEF. يمكنك فتح المرفقات أو حفظها باستخدام الإجراءات الموجودة في القائمة السياقية.</para>
+<screenshot>
+<screeninfo
+>مرفق TNEF في بريدك</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>مرفق TNEF في بريدك</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>الحقوق والترخيص</title>
+
+	<para
+>عارض ملفات TNEF (KTnef)</para>
+
+	<para
+>حقوق تأليف البرنامج 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>حقوق تأليف البرنامج 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect1>
+
+</article>

@@ -1,0 +1,622 @@
+<chapter id="credits-and-licenses">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2021-09-10</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>الحقوق والترخيص</title>
+
+<para
+>بريدك: حقوق الطبع والنشر لمطوري بريدك، 1997-2021</para
+>&underGPL; &underFDL; <sect1 id="team">
+<title
+>فريق تطوير البرنامج</title>
+<!-- please keep in sync with the authors list in the "Help ==
+> About KMail" widget. -->
+<!-- Refer to program module aboutdata.cpp and git log history when revising this section. -->
+
+<para
+>هؤلاء هم الأشخاص الذين يستحقون أكبر قدر من التقدير لإنشائهم بريدك في البداية ورعايته منذ ولادته في عام 1997 طوال فترة طفولته المبكرة <emphasis
+>حوالي</emphasis
+> عام  2005. يمكن اعتبارهم والدي بريدك. لا يزال عدد قليل منهم يساهم في الكود وإصلاح الأخطاء في المشروع اليوم.</para>
+
+<itemizedlist>
+<listitem
+><para
+>Laurent Montel (montel at kde org): المنسق</para
+></listitem>
+<listitem
+><para
+>Ingo Klöcker (kloecker at kde org): منسق سابق، لا يزال نشطًا</para
+></listitem>
+<listitem
+><para
+>Thomas McGuire (mcguire at kde org): منسق سابق</para
+></listitem>
+<listitem
+><para
+>Don Sanders (sanders at kde org): منسق مشارك سابق</para
+></listitem>
+<listitem
+><para
+>Stefan Taferner (taferner at kde org): المؤلف الأصلي</para
+></listitem>
+<listitem
+><para
+>Michael Häckel (haeckel at kde org): منسق سابق</para
+></listitem>
+<listitem
+><para
+>Till Adam (till at adam-lilienthal de): مطور رئيس سابق</para
+></listitem>
+<listitem
+><para
+>Volker Krause (vkrause at adam-lilienthal de): مطور رئيس</para
+></listitem>
+<listitem
+><para
+>Carsten Burghardt (burghardt at kde org): مطور رئيس سابق</para
+></listitem>
+<listitem
+><para
+>Marc Mutz (mutz at kde org): مطور رئيس سابق</para
+></listitem>
+<listitem
+><para
+>Daniel Naber (daniel naber at t-online de): التوثيق</para
+></listitem>
+<listitem
+><para
+>Zack Rusin (zack at kde org): مطور رئيس سابق</para
+></listitem>
+<listitem
+><para
+>Toyohiro Asukai (toyohiro at ksmplus com): دعم اللغة اليابانية</para
+></listitem>
+<listitem
+><para
+>Waldo Bastian (bastian at kde org): تصحيحات تقنية عديدة</para
+></listitem>
+<listitem
+><para
+>Ryan Breen (ryan at ryanbreen com): إشعار صينية النظام</para
+></listitem>
+<listitem
+><para
+>Steven Brown (swbrown at ucsd edu): رقعة لـ PGP</para
+></listitem>
+<listitem
+><para
+>Matthias Kalle Dalheimer (kalle at kde org): دعم التعمية</para
+></listitem>
+<listitem
+><para
+>Matt Douhan (matt at fruitsalad org): حُسّن توثيق البرنامج الداخلي</para
+></listitem>
+<listitem
+><para
+>Cristi Dumitrescu (cristid at chip ro)</para
+></listitem>
+<listitem
+><para
+>David Faure (faure at kde org): مساهم رئيس، لا يزال نشطًا</para
+></listitem>
+<listitem
+><para
+>Philippe Fremy (pfremy at chez com)</para
+></listitem>
+<listitem
+><para
+>Kurt Granroth (granroth at kde org): أُضيف دعم maildir</para
+></listitem>
+<listitem
+><para
+>Andreas Gungl (a gungl at gmx de): دعم PGP 6 وتحسينات إضافية لدعم التعمية</para
+></listitem>
+<listitem
+><para
+>Steffen Hansen (hansen at kde org)</para
+></listitem>
+<listitem
+><para
+>Igor Janssen (rm at linux ru net)</para
+></listitem>
+<listitem
+><para
+>Matt Johnston (matt at caifex org)</para
+></listitem>
+<listitem
+><para
+>Christer Kaivo-oja (whizkid at telia com)</para
+></listitem>
+<listitem
+><para
+>Lars Knoll (knoll at kde org): دعم التعمية الأصلي، ودعم PGP 2 و PGP 5</para
+></listitem>
+<listitem
+><para
+>J. Nick Koston (bdraco at darkorb net): دعم GnuPG</para
+></listitem>
+<listitem
+><para
+>Stephan Kulow (coolo at kde org): مساهم رئيس</para
+></listitem>
+<listitem
+><para
+>Guillaume Laurent (glaurent at telegraph-road org)</para
+></listitem>
+<listitem
+><para
+>Sam Magnuson (sam at trolltech com)</para
+></listitem>
+<listitem
+><para
+>Matt Newell (newellm at proaxis com)</para
+></listitem>
+<listitem
+><para
+>Denis Perchine (dyp at perchine com)</para
+></listitem>
+<listitem
+><para
+>Samuel Penn (sam at bifrost demon co uk)</para
+></listitem>
+<listitem
+><para
+>Carsten Pfeiffer (pfeiffer at kde org): إصلاحات أخطاء متنوعة وعديدة</para
+></listitem>
+<listitem
+><para
+>Sven Radej (radej at kde org): حُسّنت العمليات غير المتزامنة</para
+></listitem>
+<listitem
+><para
+>Mark Roberts (mark at taurine demon co uk)</para
+></listitem>
+<listitem
+><para
+>Wolfgang Rohdewald (wrohdewald at dplanet ch)</para
+></listitem>
+<listitem
+><para
+>Espen Sand (espen at kde org): حُسّنت حوارات الضبط</para
+></listitem>
+<listitem
+><para
+>Aaron J. Seigo (aseigo at olympusproject org): إصلاحات تقنية؛ تكامل الملاحظات/التقويم</para
+></listitem>
+<listitem
+><para
+>George Staikos (staikos at kde org): تحسين كفاءة واتساق الكود</para
+></listitem>
+<listitem
+><para
+>Szymon Stefanek (pragma at kvirc net): قائمة رسائل جديدة وشجرة مجلدات جديدة</para
+></listitem>
+<listitem
+><para
+>Jason Stephenson (panda at mis net)</para
+></listitem>
+<listitem
+><para
+>Jacek Stolarczyk (jacek at mer chemia polsl gliwice pl)</para
+></listitem>
+<listitem
+><para
+>Roberto S. Teixeira (maragato at kde org)</para
+></listitem>
+<listitem
+><para
+>Bo Thorsen (bo at sonofthor dk): مساهمات قيمة عديدة</para
+></listitem>
+<listitem
+><para
+>Ronen Tzur (rtzur at shani net)</para
+></listitem>
+<listitem
+><para
+>Mario Weilguni (mweilguni at sime com)</para
+></listitem>
+<listitem
+><para
+>Wynn Wilkes (wynnw at calderasystems com)</para
+></listitem>
+<listitem
+><para
+>Robert D. Williams (rwilliams at kde org)</para
+></listitem>
+<listitem
+><para
+>Markus Wübben (markus wuebben at kde org): أصلح الكثير من الأخطاء</para
+></listitem>
+<listitem
+><para
+>Karl-Heinz Zimmer (khz at kde org): مساهم رئيس</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="credits">
+<title
+>المساهمون -- الأيام الأولى</title>
+
+<para
+>هؤلاء هم الأشخاص الذين ساعدوا في بناء البرنامج عندما كان لا يزال فتيًّا. انظر إليهم كالجيران الودودين الذين علموا بريدك دروسًا مهمة في الحياة، واعتنوا بالطفل عندما تاه بعيدًا عن منزل والديه.</para>
+
+<itemizedlist>
+<listitem
+><para
+>Sam Abed (earlgreykde at pop netspace net au): الابتسامات ==
+> معالجة الرموز التعبيرية</para
+></listitem>
+<listitem
+><para
+>Joern Ahrens (joern ahrens at kdemail net): تحسين القائمة المنبثقة 'وسم الرسالة كـ'</para
+></listitem>
+<listitem
+><para
+>Tom Albers (toma at kde org): صيانة Bugzilla</para
+></listitem>
+<listitem
+><para
+>Jaime Torres Amate (jtamate at gmail com): تحسينات في سرعة التنفيذ</para
+></listitem>
+<listitem
+><para
+>Albert Cervera Areny (albertca at hotpop com): ضغط المرفقات اختياريًا</para
+></listitem>
+<listitem
+><para
+>Jonathan Armond (jon armond at gmail com)</para
+></listitem>
+<listitem
+><para
+>Patrick Audley (unknown): أُضيفت حالة المزعج إلى الترويسات المزخرفة</para
+></listitem>
+<listitem
+><para
+>Benjamin Azan (b azan at free fr): نُفذت معالجة حالة المهام</para
+></listitem>
+<listitem
+><para
+>Davide Bettio (davide bettio at kdemail net): إصلاحات أخطاء، وتنظيف الكود</para
+></listitem>
+<listitem
+><para
+>Pradeepto Bhattacharya (pradeepto at kde org): دعم LDAP وصيانة</para
+></listitem>
+<listitem
+><para
+>Bruno Bigras (bigras bruno at gmail com)</para
+></listitem>
+<listitem
+><para
+>Bertjan Broeksema (broeksema at kde org): مساهم رئيس في Akonadi</para
+></listitem>
+<listitem
+><para
+>David Bryant (davidbryant at gvtc com): توثيق، لا يزال نشطًا</para
+></listitem>
+<listitem
+><para
+>Albert Astals Cid (aacid at kde org): مساهم جوهري، لا يزال نشطًا</para
+></listitem>
+<listitem
+><para
+>Frederick Emmott (fred87 at users sf net): دعم مكافح الفيروسات</para
+></listitem>
+<listitem
+><para
+>Christophe Giboudeaux (christophe at krop fr): مساهم رئيس، لا يزال نشطًا</para
+></listitem>
+<listitem
+><para
+>Sandro Giessl (sgiessl at gmail com): أُصلحت أنماط الودجات</para
+></listitem>
+<listitem
+><para
+>Olivier Goffart (ogoffart at kde org): إصلاحات أخطاء</para
+></listitem>
+<listitem
+><para
+>Severin Greimel (greimel-kde at fs-pw uni-muenchen de): رقع عديدة</para
+></listitem>
+<listitem
+><para
+>Shaheed Haque (shaheedhaque at gmail com): إصلاحات أخطاء</para
+></listitem>
+<listitem
+><para
+>Ingo Heeskens (ingo at fivemile org): تمكين تحميل المراجع الخارجية لمجلد كامل</para
+></listitem>
+<listitem
+><para
+>Kurt Hindenburg (kurt hindenburg at gmail com): حذف خيط كامل</para
+></listitem>
+<listitem
+><para
+>Heiko Hund (heiko at ist eigentlich net): مرشحات POP</para
+></listitem>
+<listitem
+><para
+>Torsten Kasch (tk at genetik uni-bielefeld de): رقعة لانهيار Solaris</para
+></listitem>
+<listitem
+><para
+>Jason 'vanRijn' Kasper (vr at movingparts net): اختيار الخطوط للرسائل الجديدة/غير المقروءة/المهمة</para
+></listitem>
+<listitem
+><para
+>Martijn Klingens (klingens at kde org): إصلاح التنقل بلوحة المفاتيح في البحث السريع</para
+></listitem>
+<listitem
+><para
+>Christoph Klünter (chris at inferno nadir org): إصلاح السحب والإفلات من دفتر العناوين إلى المحرر</para
+></listitem>
+<listitem
+><para
+>Martin Koller (kollix at aon at): مساهم جوهري</para
+></listitem>
+<listitem
+><para
+>Tobias König (tokoe at kde org): مساهم رئيس</para
+></listitem>
+<listitem
+><para
+>Nikolai Kosjar (nikolai kosjar at qt io)</para
+></listitem>
+<listitem
+><para
+>Francois Kritzinger (unknown): تحسين حوار الضبط</para
+></listitem>
+<listitem
+><para
+>Danny Kukawka (danny kukawka at bisect de): حُسّن استيراد الرسائل</para
+></listitem>
+<listitem
+><para
+>Roger Larsson (roger larsson at norran net): إضافة تفاصيل إلى رسالة شريط الحالة</para
+></listitem>
+<listitem
+><para
+>Michael Leupold (lemma at confuego org)</para
+></listitem>
+<listitem
+><para
+>Thiago Macieira (thiago at kde org)</para
+></listitem>
+<listitem
+><para
+>Andras Mantia (amantia at kde org)</para
+></listitem>
+<listitem
+><para
+>Jonathan Marten (jjm at keelhaul me uk)</para
+></listitem>
+<listitem
+><para
+>Sergio Luis Martins (iamsergio at gmail com)</para
+></listitem>
+<listitem
+><para
+>Jeffrey McGee (jeffreym at cs tamu edu): رقعة لمشكلة تغيير حجم النافذة</para
+></listitem>
+<listitem
+><para
+>Thomas Moenicke (tm at php-qt org)</para
+></listitem>
+<listitem
+><para
+>Dirk Müller (mueller at kde org): تحسين qt-cast؛ إصلاح QUrl()‎</para
+></listitem>
+<listitem
+><para
+>Torgny Nyblom (nyblom at kde org): مساهم جوهري</para
+></listitem>
+<listitem
+><para
+>OpenUsability (contact at openusability org): اختبارات وتحسينات القابلية للاستخدام</para
+></listitem>
+<listitem
+><para
+>Mario Teijeiro Otero (emeteo at escomposlinux org)</para
+></listitem>
+<listitem
+><para
+>Kevin Ottens (ervin at kde org)</para
+></listitem>
+<listitem
+><para
+>Simon Perreault (nomis80 at nomis80 org): رقعة لضبط المحرر</para
+></listitem>
+<listitem
+><para
+>Jakob Petsovits (jpetso at gmx at)</para
+></listitem>
+<listitem
+><para
+>Romain Pokrzywka (romain at kdab net)</para
+></listitem>
+<listitem
+><para
+>Bernhard Reiter (bernhard at intevation de): إدارة مشروعي Ägypten و Kroupware</para
+></listitem>
+<listitem
+><para
+>Darío Andrés Rodríguez (andresbajotierra at gmail com)</para
+></listitem>
+<listitem
+><para
+>Edwin Schepers (yez at familieschepers nl): حُسّن دعم &HTML;</para
+></listitem>
+<listitem
+><para
+>Jakob Schröter (cvsci at camaya net): دعم X-Face</para
+></listitem>
+<listitem
+><para
+>Cornelius Schumacher (schumacher at kde org): مساهم رئيس</para
+></listitem>
+<listitem
+><para
+>Jan Simonson (jan at simonson pp se): اختبار بيتا لدعم PGP 6</para
+></listitem>
+<listitem
+><para
+>Paul Sprakes (kdecvs at sprakes co uk): إصلاحات أخطاء، وتنظيف قوائم السياق</para
+></listitem>
+<listitem
+><para
+>Jarosław Staniek (staniek at kde org): النقل إلى MS Windows®</para
+></listitem>
+<listitem
+><para
+>Will Stephenson (wstephenson at kde org): مؤشر حالة المراسلة الفورية</para
+></listitem>
+<listitem
+><para
+>Hasso Tepper (hasso at kde org): تحسين تخطيط محرر المستلمين</para
+></listitem>
+<listitem
+><para
+>Frank Thieme (frank at fthieme net): إصلاحات أخطاء</para
+></listitem>
+<listitem
+><para
+>Patrick S. Vogt (patrick vogt at unibas ch): طابع زمني لرسائل حالة 'اكتمل الإرسال'</para
+></listitem>
+<listitem
+><para
+>Jan-Oliver Wagner (jan at intevation de): إدارة مشروعي Ägypten و Kroupware</para
+></listitem>
+<listitem
+><para
+>Wolfgang Westphal (wolfgang westphal at gmx de): مفاتيح تعمية متعددة لكل عنوان</para
+></listitem>
+<listitem
+><para
+>Allen Winter (winter at kde org): مساهم رئيس، لا يزال نشطًا</para
+></listitem>
+<listitem
+><para
+>Urs Wolfer (uwolfer at kde org): حُسّنت معالجة الأيقونات/الصور</para
+></listitem>
+<listitem
+><para
+>Thorsten Zachmann (t zachmann at zagge de): مرشحات POP</para
+></listitem>
+<listitem
+><para
+>Thomas Zander (zander at kde org): أُصلحت أخطاء &IMAP; عديدة</para
+></listitem>
+
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="documentation">
+<title
+>التوثيق</title>
+
+<para
+>تحديث لبريدك 5.14.2 بواسطة &David.Bryant; &David.Bryant.mail;.</para>
+
+<para
+>تحديث لبريدك 4.11 بواسطة &Laurent.Montel; &Laurent.Montel.mail; و &Scarlett.Clark; &Scarlett.Clark.mail;.</para>
+
+<para
+>تحديث لبريدك 1.7 بواسطة &Ingo.Kloecker; &Ingo.Kloecker.mail; و &Marc.Mutz; &Marc.Mutz.mail;. فصل معالج مكافحة المزعج بواسطة &Andreas.Gungl; &Andreas.Gungl.mail;. قسم حول سجل المرشحات بواسطة &Andreas.Gungl; &Andreas.Gungl.mail; و &Brad.Hards; &Brad.Hards.mail;. تغييرات إضافية بواسطة &Daniel.Naber; &Daniel.Naber.mail;.</para>
+
+<para
+>تحديث لبريدك من 1.2 إلى 1.5 بواسطة &Daniel.Naber; &Daniel.Naber.mail;، وفصل <application
+>OpenPGP</application
+> بواسطة &Andreas.Gungl; &Andreas.Gungl.mail; و &Ingo.Kloecker; &Ingo.Kloecker.mail;، وفصل مرشحات الرسائل بواسطة &Marc.Mutz; &Marc.Mutz.mail;، وفصل مرشحات التنزيل بواسطة &Thorsten.Zachmann; &Thorsten.Zachmann.mail;. ساهم مطورو بريدك المتنوعون في أجزاء أخرى.</para>
+
+<para
+>توثيق بريدك 1.0 بواسطة &David.Rugge; &David.Rugge.mail;. التوثيق الأصلي بواسطة &Bernd.Johannes.Wuebben; &Bernd.Johannes.Wuebben.mail;، و Robert Williams <email
+>rwilliams@kde.org</email
+> (محرر).</para>
+
+<para
+>شكرًا لـ Michael Elkins <email
+>me@cs.hmc.edu</email
+> لوصفه الممتاز لتنسيقات بريد &UNIX; المختلفة في توثيق <application
+>Mutt</application
+>.</para>
+
+<para
+>شكرًا للأشخاص التاليين لتقديمهم توجيهات حول استخدام صناديق بريد عملاء البريد الإلكتروني الآخرين مع بريدك:</para>
+
+<itemizedlist>
+<listitem
+><para
+>Nik Gaffney <email
+>nik@f0.am</email
+> (<application
+>Mailsmith</application
+>)</para
+></listitem>
+<listitem
+><para
+>David McMillen <email
+>mcmillen@math.bu.edu</email
+> و Mendel Mobach <email
+>mendel@mobach.nl</email
+> (بريد &Netscape;)</para
+></listitem>
+<listitem
+><para
+>Ed Shapard <email
+>shapard@bigfoot.com</email
+> (بريد <application
+>Pegasus</application
+>)</para
+></listitem>
+<listitem
+><para
+>Ray Muir <email
+>rjmuir@ibm.net</email
+> (Forte <application
+>Agent</application
+>)</para
+></listitem>
+</itemizedlist>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> 
+
+</sect1>
+</chapter>

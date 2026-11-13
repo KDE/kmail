@@ -1,0 +1,5243 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+  <author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+  <author
+>&David.Rugge; &David.Rugge.mail; </author>
+  <author
+>&Marc.Mutz; &Marc.Mutz.mail; </author>
+  <author
+>&Michel.Boyer; &Michel.Boyer.mail; </author>
+  <author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+  <author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+  <author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-02-13</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>ضبط «بريدك»</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>معلومات عامة</title>
+
+<screenshot>
+<screeninfo
+>مربع حوار الضبط بريدك</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>مربع حوار الضبط بريدك</phrase>
+    </textobject>
+    <caption>
+      <para
+>مربع حوار ضبط «بريدك»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>تتيح لك نافذة ضبط «بريدك» ضبط كيدي «بريدك». يمكنك الوصول إليها عبر <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> اضبط «بريدك»...</guimenuitem
+></menuchoice
+></para>
+<para
+>يحتوي مربع الحوار على عدة أزرار في الأسفل.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="system-help.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> مساعدة</guibutton
+></term>
+<listitem
+><para
+>سيفتح هذا دليل كيدي «بريدك» (هذا الدليل) في الصفحة المناسبة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="edit-undo.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> صفّر</guibutton
+></term>
+<listitem
+><para
+>يصفّر هذا كل التغييرات التي أجريتها منذ آخر مرة حُفظت فيها الإعدادات.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>المبدئيات</guibutton
+></term>
+<listitem
+><para
+>سيصفّر هذا خيارات الضبط في الصفحة الحالية إلى القيم المبدئية.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> حسنًا</guibutton
+></term>
+<listitem
+><para
+>يحفظ هذا الإعدادات ويغلق مربع حوار الضبط.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> طبّق</guibutton
+></term>
+<listitem
+><para
+>يحفظ هذا الإعدادات دون إغلاق مربع حوار الضبط.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-cancel.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> ألغِ</guibutton
+></term>
+<listitem
+><para
+>يغلق هذا مربع حوار الضبط دون حفظ التغييرات التي أجريتها.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>قُسم مربع حوار الضبط إلى ست مجموعات فرعية، تمثل كل واحدة منها أيقونة في القائمة على اليسار. شُرحت هذه المجموعات الفرعية بالتفصيل أدناه. </para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>صفحة الحسابات</title>
+
+<para
+>تُعرض صفحة <guilabel
+>الحسابات</guilabel
+> آليا عند تحديد <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> اضبط «بريدك»...</guimenuitem
+></menuchoice
+>. هناك أربعة ألسنة: <guilabel
+>الهويات</guilabel
+>، و<guilabel
+>الاستقبال</guilabel
+>، و<guilabel
+>الإرسال</guilabel
+>، و<guilabel
+>خادم LDAP</guilabel
+>. (للسان <guilabel
+>الهويات</guilabel
+> توضيح في قسم <link linkend="configure-generalinfo"
+>اضبط «بريدك»</link
+> أعلاه.)</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-identities-tab">
+<title
+>لسان الهويات</title>
+
+<para
+>يمكنك العثور على مقدمة سريعة للسان <guilabel
+>الهويات</guilabel
+> في قسم <link linkend="getting-started"
+>ابدأ</link
+>.</para>
+
+<para
+>تتيح لك هذه الصفحة إنشاء <emphasis
+>هوية</emphasis
+> واحدة أو أكثر، أي مزيج من الاسم، وعنوان البريد الإلكتروني، وبعض الإعدادات الأخرى. على سبيل المثال، يمكنك إنشاء هوية واحدة لمراسلات العمل وأخرى للاستخدام الشخصي. إذا كان لديك أكثر من عنوان بريد إلكتروني، فيمكنك إنشاء هوية واحدة لكل عنوان. ستتمكن بعد ذلك من تحديد هوية مناسبة كلما حررت رسالة جديدة.</para>
+
+<para
+>يتكون مربع الحوار هذا من قائمة بالهويات، بالإضافة إلى أزرار لإدارتها. بعد الإعداد الأولي، ستظهر القائمة دائما هوية واحدة على الأقل، وهي الهوية <guilabel
+>المبدئية</guilabel
+>. لإضافة هوية جديدة إلى قائمة الهويات، انقر فوق الزر <guibutton
+>أضف...</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>حوار الهوية الجديدة</title>
+<screenshot>
+<screeninfo
+>مربع حوار هوية جديدة</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="newidentity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>مربع حوار هوية جديدة</phrase>
+    </textobject>
+    <caption>
+      <para
+>حوار الهوية الجديدة</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>أدخل اسما للهوية الجديدة في حقل تحرير <guilabel
+>هوية جديدة</guilabel
+>. سيُعرض هذا الاسم في قائمة الهويات.</para>
+
+<para
+>يمكنك اختيار كيفية تهيئة الهوية الجديدة عن طريق تحديد أحد أزرار الاختيار الثلاثة.</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>بحقول فارغة</guilabel
+></term>
+<listitem>
+<para
+>ستُمسح جميع حقول الهوية الجديدة، أو تُضبط مسبقا بقيم قياسية.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>استخدم قيم إعدادات النّظام</guilabel
+></term>
+<listitem>
+<para
+>يستخدم القيم من هويتك المبدئية.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>كرّر الهويّة الموجودة</guilabel
+></term>
+<listitem>
+<para
+>ينسخ جميع الحقول من هوية موجودة. يمكنك اختيار الهوية التي تريد النسخ منها عن طريق تحديد الإدخال المقابل في المربع المنسدل <guilabel
+>الهويات الموجودة</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>عامّ</title>
+<screenshot>
+<screeninfo
+>عام للهوية</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>عام للهوية</phrase>
+    </textobject>
+    <caption>
+      <para
+>عام للهوية</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>يتيح لك لسان <guilabel
+>عام</guilabel
+> تحديد بعض الإعدادات الأساسية للهوية المحددة حاليا.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>اسمك</guilabel
+></term>
+<listitem>
+<para
+>أدخل اسمك الكامل هنا (يسمى أحيانا <emphasis
+>اسم العرض</emphasis
+>). على الرغم من أن هذا الحقل ليس إلزاميا، إلا أنه ينبغي عليك إدخال اسمك هنا.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>المنظّمة</guilabel
+></term>
+<listitem>
+<para
+>أدخل منظمتك هنا. هذا الحقل اختياري.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>عنوان البريد الإلكترونيّ</guilabel
+></term>
+<listitem>
+<para
+>أدخل عنوان بريدك الإلكتروني هنا، أي شيء مثل <userinput
+>joe@example.com</userinput
+>.</para>
+<example>
+<title
+>عنوان البريد الإلكترونيّ</title>
+<para
+>لذا إذا كان عنوانك <replaceable
+>مستخدم كيدي &lt;joe@example.com&gt;</replaceable
+>، فيجب عليك إدخال <userinput
+>مستخدم كيدي</userinput
+> في حقل <guilabel
+>اسمك</guilabel
+> و <userinput
+>joe@example.com</userinput
+> في حقل <guilabel
+>عنوان البريد الإلكتروني</guilabel
+>.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>كُنَى البريد</guilabel
+></term>
+<listitem>
+<para
+>يحتوي هذا الحقل على عناوين كنى تنتمي أيضا إلى هذه الهوية (على عكس تمثيل هوية مختلفة). يمكنك تعريف كنى متعددة. لإضافة كنية أخرى، أدخل عنوان بريد إلكتروني في حقل <guilabel
+>كنى البريد:</guilabel
+>، ثم انقر فوق زر <guibutton
+>&plus; أضف</guibutton
+></para>
+<example>
+<title
+>كُنَى البريد</title>
+<para
+>العنوان الرئيس: first.last@example.org</para>
+<para
+>الكنى: first@example.org و last@example.org</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>التعمية</title>
+<screenshot>
+<screeninfo
+>تعمية الهوية</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>تعمية الهوية</phrase>
+    </textobject>
+    <caption>
+      <para
+>تعمية الهوية</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يتيح لك لسان <guilabel
+>التعمية</guilabel
+> تحديد مفاتيح OpenPGP و/أو S/MIME المرتبطة بهذه الهوية، واختيار نسق الرسائل (المعمى) المفضل للاستخدام.</para>
+
+ <variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>مفتاح توقيع OpenPGP:</guilabel
+></term>
+<listitem>
+<para
+>هنا يمكنك تحديد مفتاح OpenPGP لتوقيع الرسائل المكتوبة بهذه الهوية. للاختصار، يُعرض فقط معرف المفتاح القصير للمفاتيح المحددة. سيؤدي حوم المؤشر فوق العنصر إلى عرض مزيد من المعلومات في تلميح. لتحديد مفتاح موجود، استخدم القائمة المنسدلة. إذا كنت ترغب في إنشاء زوج مفاتيح عام / خاص جديد، فحدد <guilabel
+>ولد زوج مفاتيح جديد</guilabel
+>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>مفتاح تعمية OpenPGP:</guilabel
+></term>
+<listitem
+><para
+>هنا يمكنك تحديد مفتاح OpenPGP لتعمية الرسائل عندما تكون هذه الهوية و <xref linkend="configure-security-composing-encrypt-to-self"/> قيد الاستخدام. يُستخدم هذا المفتاح أيضا لوظيفة <xref linkend="composer-attach-attach-my-public-key"/>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>شهادة توقيع S/MIME:</guilabel
+></term>
+<listitem>
+<para
+>هنا يمكنك تحديد شهادة x.509 مستخدمة لتوقيع الرسائل المكتوبة بهذه الهوية. لا يستطيع كيدي «بريدك» توليد شهادات x.509؛ إذ تُصدرها سلطات الشهادات. إذا كنت قد أضفت مثل هذه الشهادة إلى حلقة مفاتيحك، فيمكن لـ كيدي «بريدك» استيرادها واستخدامها.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>شهادة تعمية S/MIME:</guilabel
+></term>
+<listitem>
+<para
+>هنا يمكنك تحديد شهادة x.509 لتعمية الرسائل عندما تكون هذه الهوية و <xref linkend="configure-security-composing-encrypt-to-self"/> قيد الاستخدام.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>النّسق المفضّل:</guilabel
+></term>
+<listitem>
+<para
+>هنا يمكنك اختيار نسق الرسائل المعمى المبدئي للاستخدام مع هذه الهوية. يمكنك إما تحديد أحد الأنساق الأربعة التي يدعمها كيدي «بريدك»، أو ترك الخيار عند الإعداد المبدئي الموصى به <guilabel
+>أي</guilabel
+>؛ سيؤدي هذا إلى اختيار النسق الصحيح لكل مستلم تحدده، وقد ينشئ نسخا متعددة من الرسالة، بعضها موقع و/أو معمى بشهادة x.509، والأخرى موقعة و/أو معماة بمفتاح OpenPGP.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>وقّع الرسائل آليا:</guilabel
+></term>
+<listitem
+><para
+>يؤدي تحديد هذا المربع إلى قيام كيدي «بريدك» بإرفاق توقيعك الرقمي بالرسائل التي تحررها هذه الهوية ما لم يتم تجاوز هذا الخيار يدويا في نافذة <guilabel
+>المحرر</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>عمِّ الرسائل آليا:</guilabel
+></term>
+<listitem
+><para
+>يؤدي تحديد هذا المربع إلى قيام كيدي «بريدك» بتعمية الرسائل التي تحررها هذه الهوية كلما كانت هذه التعمية ممكنة (ما لم يتم تجاوز ذلك في نافذة <guilabel
+>المحرر</guilabel
+>).</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>متقدّم</title>
+
+<screenshot>
+<screeninfo
+>هوية متقدمة</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>هوية متقدمة</phrase>
+    </textobject>
+    <caption>
+      <para
+>هوية متقدمة</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يتيح لك لسان <guilabel
+>متقدم</guilabel
+> تحديد بعض الإعدادات غير المستخدمة بكثرة للهوية التي تحررها حاليا.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>عنوان الردّ على:</guilabel
+></term>
+<listitem>
+<para
+>أدخل العنوان الذي يجب إرسال الردود على رسائلك إليه. تحتاج إلى هذا الحقل فقط إذا كان مختلفا عن عنوانك العادي (المحدد باستخدام حقلي <guilabel
+>الاسم</guilabel
+> و <guilabel
+>عنوان البريد الإلكتروني</guilabel
+> في <link linkend="configure-identity-general"
+>لسان <guilabel
+>عام</guilabel
+></link
+>)، حيث إن الردود تُرسل مبدئيا إلى عنوان المرسل على أي حال.</para>
+<para
+>هذا الحقل مفيد إذا كنت تريد أن تذهب الردود على بريدك إلى مكان آخر غير عنوان بريدك الإلكتروني العادي، على سبيل المثال، إذا كنت تستخدم هذه الهوية لإرسال رسائل من عنوان بريد إلكتروني لا يمكنه استقبال الردود.</para>
+<note
+><para
+>تكتب بعض القوائم البريدية فوق حقل الترويسة هذا بعنوان البريد الخاص بها (لضمان ذهاب الردود إلى القائمة بدلا من الأفراد). لذا فإن موثوقية هذا الحقل محدودة، ويجب استخدامه بحذر.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>عناوين ن‌ك:</guilabel
+></term>
+<listitem>
+<para
+>أدخل اختياريا عنوانا واحدا أو أكثر، مفصولة بفواصل، والتي يجب إرسال نسخ كربونية من رسائلك إليها. عندما تحرر رسالة بهذه الهوية، سيُملأ حقل <guilabel
+>ن‌ك</guilabel
+> بهذه العناوين.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>عناوين ن‌ك‌م:</guilabel
+></term>
+<listitem>
+<para
+>أدخل اختياريا عناوين، مفصولة بفواصل، والتي يجب إرسال نسخ عمياء من رسائلك إليها. عندما تحرر رسالة بهذه الهوية، سيُملأ حقل <guilabel
+>ن‌ك‌م</guilabel
+> بهذه العناوين. إذا كنت تريد إرسال نسخة عمياء إلى نفس العنوان لكل هوية تعرفها، فراجع <link linkend="configure-composer-headers"
+>لسان <guilabel
+>الترويسات</guilabel
+> لمجموعة <guilabel
+>المحرر</guilabel
+></link
+> (أنشئ ترويسة ن‌ك‌م مخصصة).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>القاموس:</guilabel
+></term>
+<listitem>
+<para
+>حدد القاموس المبدئي للهوية الحالية.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>مجلّد البريد المُرسل :</guilabel
+></term>
+<listitem>
+<para
+>حدد المجلد الذي يجب حفظ الرسائل فيه بعد إرسالها من هذه الهوية. يجب على مستخدمي IMAP التفكير في تغيير هذا إلى مجلد IMAP، بحيث يُخزن بريدهم المرسل على خادم بدلا من تخزينه في مجلد محلي. ومن ثم يمكنهم الوصول إلى الرسائل المرسلة من موقع مختلف.</para>
+<tip
+><para
+>يمكنك ممارسة تحكم أكثر دقة في مكان أرشفة الرسائل المرسلة عن طريق إنشاء <link linkend="filters"
+>مرشح رسائل</link
+> مقابل يُطبق على الرسائل الصادرة.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>مجلّد المسودّات:</guilabel
+></term>
+<listitem>
+<para
+>حدد المجلد الذي يجب حفظ المسودات فيه عند استخدام هذه الهوية. يجب على مستخدمي IMAP التفكير في تغيير هذا إلى مجلد IMAP، بحيث تُخزن مسوداتهم على خادم بدلا من تخزينها في مجلد محلي. بهذه الطريقة يمكنهم بسهولة مواصلة العمل على مسوداتهم من موقع مختلف.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>مجلّد القوالب:</guilabel
+></term>
+<listitem>
+<para
+>حدد المجلد الذي يجب حفظ القوالب فيه عند استخدام هذه الهوية. يرجى مراجعة <link linkend="new-compose-from-templates"
+>التحرير من القوالب</link
+> لمزيد من المعلومات حول القوالب.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>حساب الصّادر:</guilabel
+></term>
+<listitem>
+<para
+>حدد خادم SMTP / Sendmail / Microsoft Exchange بديلا ليُستخدم عند إرسال الرسائل من هذه الهوية.</para>
+<note
+><para
+>تحتاج إلى ضبط خوادم البريد الصادر أولا، قبل أن تتمكن من اختيارها من القائمة. يمكنك القيام بذلك في <link linkend="configure-accounts-sending"
+>لسان <guilabel
+>الإرسال</guilabel
+></link
+> في <link linkend="configure-accounts"
+>صفحة <guilabel
+>الحسابات</guilabel
+></link
+>.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>أرفق vCard خاصّتي إلى الرّسالة</guilabel
+></term>
+<listitem>
+<para
+>اختر هذا الخيار إذا كنت تريد إرفاق ملف vCard بكل رسالة تُرسل من هذه الهوية. سيتبع ذلك مربع حوار قصير.</para>
+    <variablelist>
+        <varlistentry>
+        <term
+><guilabel
+>بحقول فارغة</guilabel
+></term>
+        <listitem
+><para
+>يفتح هذا الخيار مربع حوار تماما مثل مربع حوار <ulink url="help:/kaddressbook/editing-contact-data.html"
+>إضافة بيانات المتصل في دفتر عناوين كيدي</ulink
+>. أدخل اسمك وعنوان بريدك الإلكتروني وما إلى ذلك، ثم انقر فوق <guilabel
+>حسنا</guilabel
+> لإنشاء vCard جديد.</para
+></listitem>
+        </varlistentry>
+        <varlistentry>
+        <term
+><guilabel
+>من vCard موجودة</guilabel
+></term>
+        <listitem
+><para
+>يفتح هذا الخيار مربع حوار لتصفح الأدلة يتيح لك تحديد ملف .vcf. (تلميح: استخدم دفتر عناوين كيدي لتصدير ملف vCard يمكن استخدامه هنا.)</para
+></listitem>
+        </varlistentry>
+        <varlistentry>
+        <term
+><guilabel
+>كرّر vCard الموجودة</guilabel
+></term>
+        <listitem
+><para
+>يفتح هذا الخيار قائمة منسدلة بجميع الهويات الأخرى المعرفة بالفعل، بحيث يمكنك تحديد vCard المرتبط بواحدة منها.</para
+></listitem>
+        </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>لغة التّصحيح الآليّ:</guilabel
+></term>
+<listitem>
+<para
+>استخدم القائمة المنسدلة لتحديد اللغة المرتبطة بأداة التصحيح الآلي الاختيارية عند استخدام هذه الهوية.</para>
+</listitem
+><!-- FIXME Need a link to "Plugins" section -->
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>النطاق المبدئيّ:</guilabel
+></term>
+<listitem>
+<para
+>يُملأ هذا الحقل بالقيمة من ملف <filename
+>hostnames</filename
+> (في etc/) مبدئيا. سيلحق <guilabel
+>المحرر</guilabel
+> اسم النطاق هذا بأي عنوان بريد إلكتروني محلي بحت تحدده. هذه الميزة مفيدة في المقام الرئيس في بيئة Sendmail.</para>
+<example>
+<title
+>النطاق المبدئيّ</title>
+<para
+>ضبط النطاق المبدئي إلى <userinput
+>kde.org</userinput
+>؛ وضبط عنوان "إلى:" إلى <userinput
+>foo</userinput
+>.</para>
+<para
+>يرسل <guilabel
+>المحرر</guilabel
+> الرسالة إلى foo@kde.org.</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>القوالب</title>
+<screenshot>
+<screeninfo
+>قوالب الهوية</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>قوالب الهوية</phrase>
+    </textobject>
+    <caption>
+      <para
+>قوالب الهوية</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>هنا يمكنك إنشاء وإدارة قوالب مخصصة لهذه الهوية لاستخدامها عند تحرير رسائل جديدة، أو الرد على شخص ما، أو إعادة توجيه الرسائل مضمنة. تدعم قوالب الرسائل أوامر الاستبدال. يمكنك ببساطة كتابتها، أو تحديدها من قائمة <guimenu
+>أدرج أمرا <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guimenu
+>. تُوفر ثلاثة أنواع من الأوامر.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>الرسالة الأصلية &gt;</guilabel
+> / <guilabel
+>الرسالة الحالية &gt;</guilabel
+></term>
+        <listitem
+><para
+>تستخرج هذه الأوامر المعلومات من الرسالة التي ترد عليها، أو تعيد توجيهها، وتدرج تلك المعلومات في نافذة التحرير.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry>
+        <term
+><guilabel
+>عالج ببرامج خارجية &gt;</guilabel
+></term>
+        <listitem
+><para
+>ستقوم هذه الأوامر بتمرير الرسالة التي ترد عليها عبر برنامج خارجي، ثم تدرج المخرجات في نافذة تحرير كيدي «بريدك».</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry>
+        <term
+><guilabel
+>متنوعات &gt;</guilabel
+></term>
+        <listitem
+><para
+>تؤدي هذه الأوامر وظائف مثل اختيار القاموس الذي يجب أن يستخدمه التدقيق الإملائي، أو إدراج محتويات ملف نصي في نافذة التحرير.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>يتيح لك حقل <guilabel
+>مؤشر الاقتباس:</guilabel
+> تجاوز محرف مؤشر الاقتباس المبدئي "&gt;". سيقوم زر <guibutton
+>انسخ القوالب العامة</guibutton
+> بتصفير جميع القوالب المخصصة المعرفة هنا إلى القيم المبدئية لـ كيدي «بريدك». (يمكنك تحقيق نفس النتيجة النهائية عن طريق إلغاء تحديد مربع اختيار <guilabel
+>استخدم قوالب رسائل مخصصة لهذه الهوية</guilabel
+> في أعلى يسار مربع الحوار هذا.)</para>
+
+<para
+>القوالب المحددة هنا خاصة بالهوية. وتتجاوز القوالب العامة، ولكن يمكن تجاوزها بواسطة قوالب خاصة بالمجلد إذا حُددت تلك القوالب.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>التّوقيع</title>
+<screenshot>
+<screeninfo
+>توقيع الهوية</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>توقيع الهوية</phrase>
+    </textobject>
+    <caption>
+      <para
+>توقيع الهوية</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يتيح لك هذا اللسان تحديد توقيع (يسمى أحيانا <quote
+>تذييلا</quote
+> أو <quote
+>إخلاء مسؤولية</quote
+>) ليُلحق بكل رسالة تُرسل من هذه الهوية.</para>
+<note
+><para
+>هذا النوع من التوقيع ليس له علاقة بالتواقيع (الرقمية) التي نوقشت في قسم <link linkend="configure-identity-cryptography"
+>التعمية</link
+>. من المربك قليلا تسمية هذا توقيعا، ولكن بما أن المصطلح مستخدم بالفعل في كل مكان آخر، فإننا نحافظ على هذه التسمية. تذكر فقط أن هذه "التواقيع" والتواقيع الرقمية شيئان مختلفان تماما.</para
+></note>
+
+<para
+>حدد خيار <guilabel
+>مكّن التوقيع</guilabel
+> إذا كنت تريد أن يلحق كيدي «بريدك» توقيعا عند استخدام هذه الهوية. لإلحاقه <emphasis
+>آليا</emphasis
+> بكل رسالة جديدة، يجب عليك أيضا تحديد خيار <guilabel
+>أدرج التوقيع آليا</guilabel
+> في صفحة ضبط <guilabel
+>المحرر</guilabel
+>.</para>
+
+<para
+>يمكن لـ كيدي «بريدك» الحصول على نص التوقيع من مصادر متنوعة. المبدئي هو <guilabel
+>حقل الإدخال أدناه</guilabel
+>. فقط أدخل توقيعك في مربع النص. إذا كنت تريد استخدام نص غني، فحدد مربع اختيار <guilabel
+>استخدم HTML</guilabel
+> في أسفل اليسار. سيظهر حينها شريط أدوات التنسيق.</para>
+
+<para
+>الإجراء التقليدي في يونكس هو قراءة النص من ملف يسمى <filename
+>‎.signature</filename
+> في مجلد المنزل الخاص بك. يمكن مشاركة هذا الملف بين عدة برامج، بحيث يظهر نفس التوقيع في كل برنامج بريد إلكتروني تستخدمه. للقيام بذلك، حدد <guilabel
+>ملف</guilabel
+> من القائمة المنسدلة <guilabel
+>احصل على نص التوقيع من:</guilabel
+>. إذا كنت تريد تحرير الملف، فانقر فوق زر <guilabel
+>حرر الملف</guilabel
+>.</para>
+
+<para
+>يمكن لـ كيدي «بريدك» أيضا قراءة نص التوقيع من مخرجات أمر ما. يمكنك استخدام برامج مثل <command
+>fortune</command
+> لإنشاء توقيع محدد عشوائيا لكل رسالة جديدة. كل ما يطبعه البرنامج على <acronym
+>stdout</acronym
+> يُلتقط ويُستخدم كنص للتوقيع. لقراءة النص من مخرجات أمر ما، حدد خيار <guilabel
+>مخرجات أمر</guilabel
+>. أدخل الأمر (بالمسار الكامل) في حقل تحرير <guilabel
+>حدد الأمر:</guilabel
+>.</para>
+
+<note
+><para
+>على الإنترنت، تُفصل التواقيع حسب العرف عن متن الرسالة بسطر يحتوي فقط على المحارف الثلاثة <quote
+>-- </quote
+> (شرطة، شرطة، مسافة). إذا ضُبط خيار <guilabel
+>ألحق فاصلا بالتوقيع</guilabel
+> في ضبط <guilabel
+>المحرر</guilabel
+>، فسيقوم كيدي «بريدك» آليا بإلحاق هذا السطر قبل نص التوقيع (ما لم يكن موجودا بالفعل).</para
+></note>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>الصورة</title>
+<screenshot>
+<screeninfo
+>صورة الهوية</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>صورة الهوية</phrase>
+    </textobject>
+    <caption>
+      <para
+>صورة الهوية</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يستطيع بريدك إرسال صورة صغيرة (48×48 بكسل) منخفضة الجودة وأحادية اللون مع كل رسالة. على سبيل المثال، يمكن أن تكون هذه صورتك الشخصية أو رمزًا رسوميًا. تُعرض هذه الصورة في عميل بريد المستلم (إذا كان يدعم ذلك).</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>أرسل صورة مع كلّ رسالة</guilabel
+></term>
+<listitem>
+<para
+>حدد هذا المربع إذا كنت تريد من بريدك إضافة ترويسة تسمى X-Face إلى الرسائل المكتوبة بهذه الهوية. ترويسة X-Face هي صورة صغيرة (48×48 بكسل) باللونين الأبيض والأسود تستطيع بعض عملاء البريد عرضها.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>جلب الصورة من:</guilabel
+></term>
+<listitem>
+<para
+>تمنحك هذه القائمة المنسدلة طريقتين لاختيار صورة.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>مصدر خارجي <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> (المبدئي)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>تحديد الملف...</guibutton
+></term>
+<listitem>
+<para
+>استخدم هذا الزر لاختيار ملف صورة لإنشاء الصورة منه. استخدم صورة عالية التباين مربعة الشكل أو قريبة من المربع. تساعد الخلفية الفاتحة في تحسين النتيجة.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>عيّن من دفتر العناوين</guibutton
+></term>
+<listitem>
+<para
+>يمكنك استخدام هذا الزر لإنشاء نسخة مصغرة من الصورة التي عينتها في مدخلة دفتر عناوينك الخاصة.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>حقل الدّخل أدناه</guilabel
+></term>
+<listitem>
+<para
+>استخدم هذا الخيار لإدخال سلسلة نصية اختيارية لترويسة X-Face. تتوفر أمثلة في <ulink url="https://ace.home.xs4all.nl/X-Faces/"
+>https://ace.home.xs4all.nl/X-Faces/</ulink
+> </para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>حسابات البريد الإلكتروني</title>
+
+<para
+>يمكنك العثور على مقدمة سريعة لكل من حسابات الإرسال والاستقبال في قسم <link linkend="setting-up-your-account"
+>إعداد حسابك</link
+>.</para>
+
+<para
+>تتيح لك هذه الصفحة إنشاء <emphasis
+>حساب</emphasis
+> واحد أو أكثر (للوارد والصادر)، وهو مزيج من خوادم البريد، ومعلومات الولوج، وإعدادات أخرى. في العادة، ستنشئ حسابًا صادرًا واحدًا (يُستخدم لإرسال الرسائل) وحسابًا واردًا واحدًا (يُستخدم لجلب الرسائل). ومع ذلك، يمكنك إنشاء عدد ما تشاء من الحسابات وإسناد كل منها إلى <link linkend="configure-identity"
+>هوية</link
+> مختلفة. أو يمكنك إعداد هوية واحدة فقط، وتحديد الحساب الذي ستستخدمه في كل مرة تكتب فيها رسالة. تتيح لك هذه الصفحة أيضًا إعداد خادم واحد أو أكثر من خوادم <acronym
+>LDAP</acronym
+> (بروتوكول الوصول الخفيف إلى الدليل).</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-accounts-receiving">
+<title
+>الاستقبال</title>
+<screenshot>
+<screeninfo
+>حساب الاستقبال</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-receiving.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>حساب الاستقبال</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب حساب الاستقبال</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>للمعلومات الأساسية، راجع <link linkend="receiving-mail"
+>إعداد حسابك: الاستقبال</link
+>.</para>
+
+<para
+>يتيح لك عمود الأزرار الموجود على اليمين <guibutton
+>إضافة...</guibutton
+> حساب جديد، و <guibutton
+>تعديل</guibutton
+> أو <guilabel
+>إزالة</guilabel
+> حساب موجود. لا ينبغي لك تعديل أو إزالة مدخلة <guilabel
+>المجلدات المحلية</guilabel
+>، الموجودة بشكل مبدئي. سيقوم زر <guilabel
+>إعادة التشغيل</guilabel
+> بمحاكاة إعادة تشغيل البرنامج.</para>
+
+<para
+>يفتح زر <guibutton
+>تخصيص ترتيب الحسابات...</guibutton
+> حوارًا يتيح لك تحريك أي حسابات IMAP أنشأتها، ومجموعة الحسابات المرتبطة بـ <guilabel
+>المجلدات المحلية</guilabel
+>، لأعلى أو لأسفل في القائمة.</para>
+
+<para
+>تتيح لك القائمة المنبثقة <guilabel
+>خيارات الجلب</guilabel
+> لكل حساب تحديد ما إذا كان يجب على بريدك التحقق من وجود بريد جديد فور تشغيله. يمكنك أيضًا اختيار <guilabel
+>تضمين في التحقق اليدوي من البريد</guilabel
+> و <guilabel
+>التحول إلى وضع عدم الاتصال عند إغلاق بريدك</guilabel
+>. </para>
+
+<para
+>إذا فُعّل خيار <guilabel
+>إشعار مفصل بالبريد الجديد</guilabel
+>، فسيعرض بريدك عدد الرسائل الجديدة لكل مجلد، شريطة أن تكون قد اخترت أن تُشعر عبر حوار. تتوفر خيارات إشعار أكثر تقدمًا، مثل تشغيل صوت أو تخليق الكلام، عبر زر <guibutton
+>إجراءات أخرى</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-accounts-sending">
+<title
+>الإرسال</title>
+<screenshot>
+<screeninfo
+>حساب الإرسال</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-sending.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>حساب الإرسال</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب حساب الإرسال</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يتيح لك لسان تبويب <guilabel
+>الإرسال</guilabel
+> تعريف خوادم بريد صادر جديدة، وكذلك ضبط بعض الخيارات التي تؤثر على جميع الرسائل التي ترسلها.</para>
+
+<para
+>للمعلومات الأساسية، راجع <link linkend="sending-mail"
+>إعداد حسابك: الإرسال</link
+>.</para>
+
+<para
+>عند النقر فوق <guibutton
+>إضافة...</guibutton
+> أو <guibutton
+>تعديل...</guibutton
+> سيُفتح حوار <guilabel
+>إنشاء حساب صادر</guilabel
+> أو <guilabel
+>اضبط الحساب</guilabel
+> على التوالي. للإرسال عبر Sendmail أو برامج مماثلة، يمكنك تحديد اسم وموقع برنامج Sendmail. بالنسبة لـ SMTP، يجب تحديد <guilabel
+>الاسم</guilabel
+>، و <guilabel
+>خادم البريد الصادر</guilabel
+>، و <guilabel
+>المنفذ</guilabel
+> الخاص بالخادم. سيؤدي خيار <guilabel
+>الخادم يتطلب الاستيثاق</guilabel
+> إلى تمكين حقول <guilabel
+>الولوج</guilabel
+> و <guilabel
+>كلمة السر</guilabel
+>. إذا لم تكن متأكدًا من إعدادات الأمان، فيجب عليك جعل بريدك يختبر أفضل الإعدادات باستخدام <guibutton
+>كشف آلي</guibutton
+> في لسان تبويب <guilabel
+>متقدم</guilabel
+>.</para>
+
+<para
+>في قسم <guilabel
+>قبل الإرسال</guilabel
+>، سيُظهر خيار <guilabel
+>تأكيد الإجراء</guilabel
+> صندوق تأكيد في كل مرة ترسل فيها رسالة، بينما سيقوم خيار <guilabel
+>تدقيق الإملاء</guilabel
+> باستدعاء مدقق الإملاء قبل إرسال الرسالة.</para>
+
+<para
+>يتيح لك خيار <guilabel
+>إرسال الرسائل في مجلد الصادر</guilabel
+> تحديد موعد إرسال الرسائل المصطفة، أي الرسائل الموجودة في مجلد الصادر بانتظار إرسالها. يمكنك الاختيار من بين ثلاثة خيارات.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>غير آليّ أبدًا <inlinemediaobject
+><imageobject
+><imagedata
+fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+></term>
+<listitem
+><para
+>لن تُرسل الرسائل المصطفة إلا إذا اخترت <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>إرسال الرسائل المصطفة</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>عند التماس البريد يدويًّا</guilabel
+></term>
+<listitem
+><para
+>سوف تُرسل الرسائل المصطفة بعد التحقق يدويًا من وجود بريد جديد، مثلًا باستخدام <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>التحقق من البريد</guimenuitem
+></menuchoice
+>. بالطبع، يمكنك أيضًا إرسال الرسائل المصطفة يدويًا عبر <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>إرسال الرسائل المصطفة</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>عند كلّ التماس للبريد</guilabel
+></term>
+<listitem
+><para
+>سوف تُرسل الرسائل المصطفة بعد كل عملية تحقق من البريد الجديد، أي بعد التحقق الآلي والتحقق اليدوي أيضًا. وبالطبع، يمكنك إرسال الرسائل المصطفة يدويًا عبر <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>إرسال الرسائل المصطفة</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>يتيح لك <guilabel
+>طريقة الإرسال المبدئية:</guilabel
+> تحديد ما يحدث عند إرسال رسالة. إذا اختير <guilabel
+>إرسال الآن</guilabel
+>، تُرسل الرسالة إلى خادم البريد فورًا. وإذا اختير <guilabel
+>إرسال لاحقًا</guilabel
+>، تُوضع الرسالة في صف الانتظار بمجلد الصادر لتُرسل لاحقًا باستخدام أمر <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>إرسال الرسائل المصطفة</guimenuitem
+></menuchoice
+>، أو آليًا عند التحقق من البريد، اعتمادًا على الإعداد المختار لخيار <guilabel
+>إرسال الرسائل في مجلد الصادر</guilabel
+> أعلاه.</para>
+
+<para
+>يتيح لك مربع اختيار <guilabel
+>تمكين التراجع عن الإرسال:</guilabel
+> تحديد فترة زمنية (من 10 إلى 50 ثانية) يمكنك خلالها إيقاف نقل البريد. ستُصطف رسالتك، وسيظهر زر <guibutton
+>تراجع عن الإرسال</guibutton
+> صغير في منطقة الإشعارات. انقر فوق الزر (في الوقت المناسب) لمنع إرسال الرسالة.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-ldap-servers">
+<title
+>خوادم LDAP</title>
+<screenshot>
+<screeninfo
+>خوادم LDAP</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-ldap.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>خوادم LDAP</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب خوادم LDAP</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>استخدم هذا الحوار لضبط أي خوادم LDAP ترغب في الوصول إليها. يرجى مراجعة <ulink url="help:/kaddressbook/configure-ldap-server.html"
+>ملحق دفتر عناوين كيدي</ulink
+> لمزيد من التفاصيل.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>صفحة المظهر</title>
+
+<para
+>تتيح لك صفحة المظهر ضبط جوانب عديدة لواجهة مستخدم بريدك الرسومية، بما في ذلك مخططات الألوان، واختيار الخطوط، وحتى الترتيب المادي لقائمة الرسائل في النافذة الرئيسة.</para>
+
+<!-- <sect2 id="configure-appearance-message-window"
+> -->
+<sect2 id="configure-appearance-general">
+<title
+>عامّ</title>
+
+<screenshot>
+<screeninfo
+>المظهر العام</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancegeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>المظهر العام</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب المظهر (عام)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>إذا نُشط خيار <guilabel
+>إغلاق نافذة الرسالة بعد الرد أو التوجيه</guilabel
+>، فسيغلق بريدك نافذة الرسالة المنفصلة عند فتح نافذة المحرر (للرد أو لتوجيه الرسالة). خيار <guilabel
+>تمكين مفتاح الوصول</guilabel
+> مختار بشكل مبدئي. تتيح لك مفاتيح الوصول استخدام لوحة المفاتيح للوظائف التي تُؤدى عادة بالفأرة، مثل تتبع الروابط. لمزيد من المعلومات، راجع <ulink url="help:/konqueror/accesskeys.html"
+>مفاتيح الوصول</ulink
+>.</para>
+
+<!-- <para
+><guilabel
+>Show HTML status bar</guilabel
+> activates a bar at the left side of the reader
+pane that tells you if a message is &HTML; or not. This is important because
+&HTML; messages might imitate the look of a signed and encrypted message, so
+you should be aware of the fact that you are reading an &HTML; message. The &HTML;
+status bar itself cannot be influenced by the &HTML; code of the message.</para>
+
+<para
+>Enable <guilabel
+>Replace smileys by emoticons</guilabel
+> if you want smileys
+like <userinput
+>:-)</userinput
+> appearing in the message text to be
+replaced by emoticons (small pictures) such as
+<inlinemediaobject
+><imageobject>
+<imagedata fileref="smile.png" format="PNG"/></imageobject>
+</inlinemediaobject
+>.</para
+> --><!-- No longer on the General tab. -->
+
+<para
+>مكّن <guilabel
+>تقليل حجم الخط للنص المقتبس</guilabel
+> لعرض النص المقتبس (في الرد) بخط أصغر. يعرض خيار <guilabel
+>إظهار علامات توسيع/طي الاقتباس</guilabel
+> أدوات صغيرة بجانب كل جزء من النص المقتبس. تتيح لك هذه الأدوات إظهار (+) أو إخفاء (-) الاقتباسات المتداخلة بعد مستوى معين. هذا مفيد في المحادثات البريدية الطويلة التي لا يحذف فيها أحد ما سلف.</para>
+
+<!-- <para
+><guilabel
+>Fallback character encoding</guilabel
+>:
+Some emails, especially those generated automatically, do not specify the
+character encoding which needs to be used to properly display them. In such
+cases a fallback character encoding will be used, which you can configure
+here. Set it to the character encoding most commonly used in your part of
+the world. As a default the encoding configured for the whole system is used.</para
+> -->
+
+<para
+>تغيير <guilabel
+>تخطي ترميز المحارف:</guilabel
+> عن قيمته المبدئية <guilabel
+>آلي</guilabel
+> سيجبر استخدام الترميز المحدد لجميع الرسائل، بغض النظر عما تقوله ترويسات MIME. يتيح لك <guilabel
+>أقل حجم للخط:</guilabel
+> التحكم في أصغر خط سيستخدمه بريدك. ارفع هذه القيمة إذا كنت تواجه صعوبة في قراءة الخطوط الصغيرة جدًا.</para>
+
+<para
+>يوفر <guilabel
+>صينية النظام</guilabel
+> ثلاث طرق للتحكم في تفاعل بريدك مع شريط مهام/لوحة كيدي. إذا اختير <guilabel
+>تمكين أيقونة صينية النظام</guilabel
+>، ستُعرض أيقونة صغيرة (<inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject
+></inlinemediaobject
+>) في منطقة صينية النظام. إذا نُشط <guilabel
+>البدء مصغرًا في الصينية</guilabel
+>، فلن تظهر إلا هذه الأيقونة عند تشغيل بريدك. يؤدي اختيار <guilabel
+>إظهار البريد غير المقروء في شريط المهام</guilabel
+> إلى ظهور عدد الرسائل غير المقروءة حاليا على زر شريط مهام بريدك.</para>
+
+<para
+>عندما تكون الأيقونة مرئية، يمكنك إخفاء نافذة بريدك الرئيسة إما بالنقر على الأيقونة أو بالنقر على زر إغلاق النافذة. سيؤدي النقر على الأيقونة إلى جعل نافذة بريدك الرئيسة مرئية مرة أخرى. إذا نقرت على الأيقونة بزر الفأرة الأيمن، ستظهر قائمة سياقية. يمكنك التحقق من وجود بريد جديد، أو إنشاء رسالة جديدة، أو إنهاء بريدك. إذا كانت هناك أي رسائل غير مقروءة، فستظهر المدخلة <guilabel
+>رسائل جديدة في &gt;</guilabel
+>، مع قائمة بالمجلدات التي تحتوي على رسائل غير مقروءة. اختر أحد هذه المجلدات وسيُفتح في نافذة بريدك الرئيسة. </para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>الخطوط</title>
+
+<screenshot>
+<screeninfo
+>خطوط المظهر</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancefonts.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>المظهر العام</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب المظهر (الخطوط)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>يتيح لك هذا القسم تخصيص الخطوط التي يستخدمها بريدك. اختر <guilabel
+>استخدم خطوطًا مخصصة</guilabel
+> لتنشيط الحوار. يضبط خيار تطبيق على: <guilabel
+>متن الرسالة</guilabel
+> الخط للوحة القارئ. يضبط خيار <guilabel
+>المحرر</guilabel
+> الخط الذي تُعرض به الرسائل النصية الصرفة الجديدة أثناء كتابتها. يغير خيار <guilabel
+>قائمة الرسائل</guilabel
+> الخط المستخدم لعرض قائمة الرسائل. يمكنك أيضًا اختيار خطوط خاصة لمدخلات قائمة الرسائل غير المقروءة، والمهمة، وعناصر الإجراء. يغير خيار <guilabel
+>خرَج الطباعة</guilabel
+> الخط المستخدم عند الطباعة. ويؤثر <guilabel
+>خط ثابت العرض</guilabel
+> على عرض بعض رسائل HTML.</para>
+
+<para
+>يقيد خيار <guilabel
+>إظهار الخطوط أحادية المسافة فقط</guilabel
+> عدد الخطوط المتاحة؛ حيث لن تُعرض إلا أسماء الخطوط ثابتة العرض عند تفعيل هذا الخيار.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>الألوان</title>
+
+<screenshot>
+<screeninfo
+>ألوان المظهر</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancecolors.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>ألوان المظهر</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب المظهر (الألوان)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يتيح لك هذا القسم تغيير لون بعض العناصر بالنقر المزدوج على مدخلة في صندوق القائمة. اختر <guilabel
+>استخدم ألوانًا مخصصة</guilabel
+> لتنشيط هذه الميزة. اختر <guilabel
+>لا تغير الألوان من بريد HTML الأصلي</guilabel
+> للحفاظ على مخطط الألوان الذي اختاره مرسل أي رسالة HTML.</para>
+
+<para
+>سيقوم خيار <guilabel
+>إعادة تدوير الألوان في الاقتباس العميق</guilabel
+> بإعادة تلوين الاقتباس من المستوى الأول بعد الوصول إلى المستوى الثالث من الاقتباس. لاحظ أن ألوان <guilabel
+>النص المقتبس</guilabel
+> لا تعمل إلا في قارئ الرسائل، وليس في المحرر. إذا كنت تريد عرض المجلدات التي تقترب من حصتها (تخصيص المساحة، المستخدم في خوادم IMAP) بلون مختلف، يمكنك تحديد قيمة مئوية كعتبة.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>التخطيط</title>
+<screenshot>
+  <screeninfo
+>تخطيط مبدئي</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelayout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>تخطيط مبدئي</phrase>
+      </textobject>
+      <caption>
+        <para
+>لسان تبويب المظهر (التخطيط)</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يتيح لك لسان التبويب هذا ضبط تخطيط نافذة بريدك الرئيسة.</para>
+<para
+>في قسم <guilabel
+>قائمة المجلدات</guilabel
+> يمكنك الاختيار بين <guilabel
+>قائمة المجلدات الطويلة</guilabel
+> (الخيار المبدئي)، والتي تستخدم كامل ارتفاع النافذة، و <guilabel
+>قائمة المجلدات القصيرة</guilabel
+>. مع خيار <guilabel
+>قصيرة</guilabel
+>، إذا اخترت <guilabel
+>إظهار لوحة معاينة الرسالة أسفل قائمة الرسائل</guilabel
+>، فستحتل قائمة الرسائل وقائمة المجلدات شريطًا أفقيًا، بينما تستخدم لوحة معاينة الرسائل الجزء السفلي بالكامل من النافذة. أما إذا اخترت <guilabel
+>إظهار لوحة معاينة الرسالة بجانب قائمة الرسائل</guilabel
+>، فستحتل قائمة المجلدات وقائمة الرسائل شريطًا عموديًا، وتكون لوحة معاينة الرسائل على اليمين.</para>
+
+<para
+>اختر <guilabel
+>إظهار حقل البحث السريع في المجلدات</guilabel
+> لإنشاء صندوق نص صغير أعلى قائمة المجلدات. عندما تكتب شيئًا في هذا الصندوق، لن تظهر إلا المجلدات التي تطابق أسماؤها المحارف التي أدخلتها. افرغ الصندوق لعرض كافة مجلداتك.</para>
+
+<para
+>يتيح لك قسم <guilabel
+>إظهار عرض المجلدات المفضلة</guilabel
+> تغيير كيفية عرض مجلداتك المفضلة. خيار <guilabel
+>كأيقونات</guilabel
+> يستهلك مساحة كبيرة، لذا إذا كان لديك عدة مجلدات مفضلة فقد ترغب في تجربة خيار <guilabel
+>كقائمة</guilabel
+>. إذا كنت لا تهتم بالمجلدات المفضلة، يمكنك تعطيل هذه الميزة تمامًا باختيار <guilabel
+>أبدًا</guilabel
+>.</para>
+
+<para
+>تعرض <guilabel
+>تلميحات المجلدات</guilabel
+>، المفعّلة مبدئيًا، معلومات إضافية (إجمالي عدد الرسائل، الرسائل غير المقروءة، وحجم التخزين) عند تحويم مؤشر الفأرة فوق المجلد. اختر <guilabel
+>أبدًا</guilabel
+> لتعطيل هذه الميزة.</para>
+
+<para
+>في قسم <guilabel
+>لوحة معاينة الرسالة</guilabel
+> يمكنك اختيار مكان ظهور لوحة معاينة الرسائل بالنسبة لقائمة الرسائل. أو يمكنك إزالتها تمامًا، واستخدام قارئ الشاشة الكاملة فقط لعرض الرسائل المحددة (اضغط مفتاح الادخال).</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>قائمة الرّسائل</title>
+
+<screenshot>
+<screeninfo
+>مظهر قائمة الرسائل</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelist.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>مظهر قائمة الرسائل</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب المظهر (قائمة الرسائل)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>استخدم هذا الحوار لتغيير مظهر لوحة قائمة الرسائل.</para>
+<para
+>إذا اخترت <guilabel
+>عرض تلميحات للرسائل وتلويسات المجموعات</guilabel
+>، فسترى ملخصًا موجزًا لكل رسالة (أو مجموعة - حسب وضع العرض) عند تحويم مؤشر الفأرة فوق عنصر في قائمة الرسائل.</para>
+
+<para
+>يمكن تخطي <guilabel
+>التجميع المبدئي</guilabel
+> و <guilabel
+>السمة المبدئية</guilabel
+> باستخدام حوار <guilabel
+>خصائص المجلد</guilabel
+> لكل مجلد على حدة. يؤدي النقر فوق زر <guibutton
+>اضبط</guibutton
+> إلى فتح نافذة لتخصيص التجميعات/السمات المعدة مسبقًا؛ ويمكنك إنشاء مخططاتك الخاصة بهذه الطريقة.</para>
+
+<para
+>لقد جُهز ثمانية أوضاع تجميع وثلاث سمات مسبقًا.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>التجميع المبدئي:</guilabel
+> (قائمة منسدلة)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>النّشاط حسب التّاريخ، مسطّح</term>
+<listitem
+><para
+>يستخدم هذا العرض مجموعات يومية. الرسائل ليست في مواضيع (threads). لذا، على سبيل المثال، ستجد في مجموعة <quote
+>اليوم</quote
+> ببساطة جميع الرسائل التي وصلت اليوم. تُعرض المجموعات مبدئيًا بترتيب زمني عكسي، وتوسم بـ "اليوم"، "أمس"، ثم أيام الأسبوع الخمسة السابقة، تليها الصيغة شهر/يوم/سنة.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>النّشاط حسب التّاريخ، في مواضيع</term>
+<listitem
+><para
+>يستخدم هذا العرض مجموعات يومية، مع وضع الرسائل في مواضيع. لذا، على سبيل المثال، ستجد في <quote
+>اليوم</quote
+> جميع الرسائل التي وصلت اليوم وجميع المواضيع التي كانت نشطة اليوم. يستخدم نفس التجميع المستخدم في "النشاط حسب التاريخ، مسطح".</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>النّشاط الحاليّ، مسطّح</term>
+<listitem
+><para
+>يستخدم هذا العرض مجموعات نطاقات تاريخ ذكية. الرسائل ليست في مواضيع. لذا، على سبيل المثال، ستجد في <quote
+>اليوم</quote
+> جميع الرسائل التي وصلت اليوم. تُعرض المجموعات مبدئيًا بترتيب زمني عكسي: "اليوم"، "أمس"، أيام الأسبوع الخمسة السابقة، "الأسبوع الماضي"، "قبل أسبوعين"، ثم شهرًا فشهرًا.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>النّشاط الحاليّ، في مواضيع </term>
+<listitem
+><para
+>يستخدم هذا العرض مجموعات نطاقات تاريخ ذكية مع وضع الرسائل في مواضيع. لذا، على سبيل المثال، ستجد في <quote
+>اليوم</quote
+> جميع الرسائل التي وصلت اليوم وجميع المواضيع التي كانت نشطة اليوم. خلاف ذلك، هو مطابق لـ "النشاط الحالي، مسطح".</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>عرض التاريخ المسطح</term>
+<listitem
+><para
+>هذه قائمة رسائل بسيطة وتقليدية مرتبة حسب التاريخ. بلا مجموعات وبلا مواضيع.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>المرسلون/المستلمون، مسطّح</term>
+<listitem
+><para
+>يجمع هذا العرض الرسائل حسب المرسلين أو المستلمين (حسب نوع المجلد). يمكنك تحديد المرسلين (أو المستلمين) في حوار <menuchoice
+><guimenu
+>مجلدات</guimenu
+> <guimenuitem
+>خصائص المجلد</guimenuitem
+></menuchoice
+> (لسان تبويب "عرض"، <guilabel
+>إظهار العمود:</guilabel
+>). الرسائل ليست في مواضيع.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>قائمة بريديّة قياسيّة</term>
+<listitem
+><para
+>هذا عرض قائمة بريدية بسيط وتقليدي: بلا مجموعات مع ترابط مكثف للمواضيع، مرتب حسب تاريخ بدء كل موضوع.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>فاتحات المواضيع</term>
+<listitem
+><para
+>يرتب هذا العرض الرسائل في مواضيع ثم يجمع هذه المواضيع حسب المستخدم الذي بدأها.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+    <term
+>زر <guibutton
+>اضبط...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message Aggregation Modes</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message Aggregation Modes</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message Aggregation Modes</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+
+<para
+>لإنشاء سمة تجميع مخصصة، انقر فوق زر <guibutton
+>اضبط...</guibutton
+>. اختر تجميعًا موجودًا مشابهًا للذي تريد إنشاؤه، ثم انقر فوق <guibutton
+>استنساخ التجميع</guibutton
+>. إذا لم يكن أي منها مشابهًا، فانقر فوق زر <guibutton
+>تجميع جديد</guibutton
+>. يتيح لك لسان تبويب <guilabel
+>عام</guilabel
+> تغيير <guilabel
+>الاسم:</guilabel
+> و <guilabel
+>الوصف:</guilabel
+>. يتيح لك لسان تبويب <guilabel
+>المجموعات والمواضيع</guilabel
+> ضبط عدة عناصر لتخصيص تجميعك.</para>
+<itemizedlist>
+<listitem
+><para
+>يتيح لك <guilabel
+>التجميع:</guilabel
+> الاختيار بين التواريخ، المرسل/المستلم أو بلا. باستخدام الخيارات الذكية، سيقوم بريدك بتجميع رسائل البريد الإلكتروني ذات الصلة معًا. </para
+></listitem>
+<listitem
+><para
+>تتيح لك <guilabel
+>سياسة توسيع المجموعة:</guilabel
+> تحديد ما إذا كان بريدك سيقوم بتوسيع رسائل البريد المجمعة آليًا أم لا. </para
+></listitem>
+<listitem
+><para
+>يتيح لك <guilabel
+>المواضيع:</guilabel
+> تحديد ما إذا كان بريدك سيضمن المراجع والموضوع لتحديد الترابط المثالي للمواضيع. يمكنك أيضًا إيقاف تشغيل المواضيع تمامًا. </para
+></listitem>
+<listitem
+><para
+>يتيح لك <guilabel
+>رأس الموضوع:</guilabel
+> تغيير رأس الموضوع: الرسالة الأحدث، أو الرسالة الأولى. </para
+></listitem>
+<listitem
+><para
+>تتيح لك <guilabel
+>سياسة توسيع الموضوع:</guilabel
+> تغيير كيفية تحديد بريدك لما إذا كان يجب توسيع الموضوع. </para
+></listitem>
+</itemizedlist>
+<para
+>يتيح لك لسان تبويب <guilabel
+>متقدم</guilabel
+> تغيير <guilabel
+>استراتيجية ملء العرض:</guilabel
+> اختر "تفضيل السرعة" إذا كان اتصالك بطيئًا. سيقوم خيار "التفاعلية" بعرض جميع محادثاتك الحالية أولًا. أما وضع "الدفعة" فلن يقوم بأي فرز.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>السمة المبدئية:</guilabel
+> (قائمة منسدلة)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>تقليدي</term>
+<listitem
+><para
+>سمة صف واحد بسيطة ومتوافقة مع الإصدارات السابقة</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>ذكي</term>
+<listitem
+><para
+>سمة ذكية متعددة الأسطر ومتعددة العناصر</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>ذكي مع حالة قابلة للنقر</term>
+<listitem
+><para
+>سمة ذكية متعددة الأسطر ومتعددة العناصر مع عمود حالة قابل للنقر</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+    <term
+>زر <guibutton
+>اضبط...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message List Theme</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message List Theme</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message List Theme</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+
+<para
+>لإنشاء سمة قائمة رسائل مخصصة، انقر فوق زر <guibutton
+>اضبط...</guibutton
+>. اختر سمة موجودة مشابهة للتي تريد إنشاءها، ثم انقر فوق <guibutton
+>استنساخ السمة</guibutton
+>. إذا لم يكن أي منها مشابهًا، فانقر فوق زر <guibutton
+>سمة جديدة</guibutton
+>. يتيح لك لسان تبويب <guilabel
+>عام</guilabel
+> تغيير <guilabel
+>الاسم:</guilabel
+> و <guilabel
+>الوصف:</guilabel
+>.</para>
+
+<para
+>يتيح لك لسان تبويب <guilabel
+>المظهر</guilabel
+> ضبط الأعمدة المرئية وعناصر الحالة. لإضافة عمود، انقر بزر الفأرة الأيمن فوق شريط الأعمدة واختر <guilabel
+>إضافة عمود</guilabel
+>. سمّ العمود، ثم اختر ما سيمثله العمود من القائمة المنسدلة <guilabel
+>النقر فوق الترويسة يفرز الرسائل:</guilabel
+>. خيار <guilabel
+>مرئي مبدئيًا</guilabel
+> محدد آليًا. أزل التحديد إذا كنت تريد أن يكون العمود متاحًا فقط في القائمة السياقية لشريط الفرز القابل للنقر. اسحب اللصيقة المناسبة من <guilabel
+>عناصر المحتوى</guilabel
+> إلى صندوق عرض العمود أسفل شريط الأعمدة؛ فمثلًا، إذا اخترت إضافة عمود الحجم، فسوف تسحب لصيقة الحجم تحت عمود الحجم. استمر في ذلك حتى تحصل على جميع الأعمدة التي ترغب بها. يمكنك تغيير الخط واللون لعناصر العمود من خلال قائمة منطقة العرض المنبثقة (بزر الفأرة الأيمن). كما يمكنك نقل الأعمدة وحذفها وتغيير حجمها عبر قائمة شريط الأعمدة المنبثقة.</para>
+
+<para
+>يتيح لك لسان تبويب <guilabel
+>متقدم</guilabel
+> إظهار الترويسات. كما يمكنك تغيير حجم أيقونات الحالة.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>في قسم <guilabel
+>عرض التاريخ</guilabel
+> يمكنك اختيار واحد من ثلاثة تنسيقات للتاريخ (أو إنشاء تنسيق خاص بك). يعرض <guilabel
+>التنسيق القياسي</guilabel
+> يوم الأسبوع والتاريخ. أما <guilabel
+>التنسيق المحلي</guilabel
+> فهو أقصر ويحذف يوم الأسبوع. سيعرض <guilabel
+>التنسيق الذكي</guilabel
+> كلمات مثل اليوم، وأمس، إلخ. إذا كنت ترغب في إنشاء تنسيق تاريخ <guilabel
+>مخصص</guilabel
+>، فما عليك سوى النقر فوق <guilabel
+>معلومات التنسيق المخصص</guilabel
+> واتباع الإرشادات.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="configure-message-tags">
+    <title
+>وسوم الرّسائل</title>
+
+<screenshot>
+<screeninfo
+>وسوم المظهر</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancetags.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>وسوم المظهر</phrase>
+    </textobject>
+    <caption>
+      <para
+>لسان تبويب المظهر (الوسوم)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>يوفر لك بريدك مبدئيًا عدة طرق لتمييز الرسائل (مهم / عنصر إجراء / عيد ميلاد)، ويمكن الوصول إليها عبر القائمة الفرعية <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guisubmenu
+>ميّز الرسالة &gt;</guisubmenu
+></menuchoice
+>. يمكنك أيضًا تعريف وسوم إضافية لمساعدتك في تصنيف الرسائل.</para>
+
+<para
+>استخدم حقل إدخال <guilabel
+>الوسوم المتاحة</guilabel
+> لتسمية وسمك الخاص. استخدم زر <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> لإضافة هذا الاسم إلى القائمة. استخدم زر <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> لإزالة وسم. (وسم "عيد ميلاد" مدمج ولا يمكن إزالته). استخدم أزرار السهمين للأعلى وللأسفل لفرز العناصر في القائمة.</para>
+
+<para
+>ظلل عنصرًا في القائمة لتنشيط حوار <guilabel
+>إعدادات الوسم</guilabel
+>. يمكنك اختيار أي من الخيارات الستة أو جميعها.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>غيّر لون الخط:</guilabel
+></term>
+        <listitem
+><para
+>اختر هذا الخيار لعرض مدخلات قائمة الرسائل الموسومة بلون مختلف. ستُعرض لوحة ألوان عند اختيار هذا الخيار. اختر لونًا مجهزًا مسبقًا، أو اختر "مخصص..." لمزيد من المرونة.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry>
+        <term
+><guilabel
+>غير لون الخلفية:</guilabel
+></term>
+        <listitem
+><para
+>اختر هذا الخيار لتغيير لون الخلفية لمدخلات قائمة الرسائل الموسومة.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry>
+        <term
+><guilabel
+>تغيير الخط:</guilabel
+></term>
+        <listitem
+><para
+>يمكنك اختيار إما خط عريض أو خط <emphasis
+>مائل</emphasis
+>.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry>
+        <term
+><guilabel
+>أيقونة وسم الرسالة:</guilabel
+></term>
+        <listitem
+><para
+>انقر فوق هذا الزر لفتح حوار اختيار الأيقونات. ستُعرض الأيقونة على مدخلات قائمة الرسائل الموسومة.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry>
+        <term
+><guilabel
+>الاختصار:</guilabel
+></term>
+        <listitem
+><para
+>استخدم هذا الزر لإنشاء اختصار لوحة مفاتيح لربط هذا الوسم بالرسائل المحددة.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry>
+        <term
+><guilabel
+>مكّن زر شريط الأدوات:</guilabel
+></term>
+        <listitem
+><para
+>اختر هذا الخيار لإضافة زر جديد إلى شريط أدوات بريدك. سيؤدي النقر فوق الزر إلى وسم الرسالة المحددة حاليًا.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>ستظهر جميع الوسوم المعرفة هنا آليًا كخيارات جديدة في القائمة الفرعية <menuchoice
+> <guimenu
+>رسالة</guimenu
+><guisubmenu
+>ميّز الرسالة &gt;</guisubmenu
+></menuchoice
+>.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-composer">
+    <title
+>صفحة المحرر </title>
+
+    <para
+>لوصف كيفية استخدام <guilabel
+>المحرر</guilabel
+>، اقرأ <link linkend="the-composer-window"
+>هذه الصفحة</link
+>. ولتعلم المزيد حول الضبط الدقيق لسلوك <guilabel
+>المحرر</guilabel
+>، تابع القراءة. </para>
+
+    <sect2 id="configure-composer-general">
+      <title
+>عامّ </title>
+
+    <screenshot>
+    <screeninfo
+>عام للمحرر</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composergeneral.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>عام للمحرر</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (عام)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>تتيح لك هذه الحوارية ضبط الطريقة التي يتعامل بها بريدك مع التواقيع. كما تسمح لك بالتحكم في بعض ميزات التنسيق، وضبط بعض خيارات الإكمال الآلي، وتعديل ميزة الحفظ الآلي في بريدك. </para>
+
+    <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>أدرج التوقيع آليًّا</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيُضمن توقيعك المحدد في <link linkend="configure-identity-signature"
+>صفحة الهوية</link
+> آليًّا في نهاية كل رسالة تنشئها (مثل الرسائل الجديدة، الردود، إلخ). </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>أدخل التوقيع أعلى النص المقتبس</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيدرج بريدك توقيعك في الجزء العلوي من نافذة المحرر، وليس في الأسفل. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>أدرج فاصلًا قبل التوقيع</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيدرج بريدك "-- " (شرطة شرطة مسافة) قبل توقيعك إذا لم يبدأ التوقيع بهذه الطريقة. (خط الفاصل هذا هو معيار واقعي في الإنترنت). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>أزِل التوقيع عند الردّ</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيزيل بريدك التوقيع من الرسالة الأصلية عند صياغة رد. وبالطبع، إذا لم تحدد التوقيع وكان خيار <guilabel
+>اقتبس النّصّ المحدّد فقط...</guilabel
+> محددًا، فسيحذف بريدك التوقيع دون الرجوع إلى هذا الإعداد. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>اقتبس النّصّ المحدّد فقط عند الرّدّ</guilabel>
+    </term>
+    <listitem>
+      <para
+>إذا حُدد، سيقتبس بريدك النص المحدد فقط في نافذة الرسالة، بدلًا من الرسالة الكاملة، عند الرد. بهذا، يمكن إنشاء ردود سريعة تقتبس فقط الفقرات ذات الصلة التي ترد عليها فعليًا. إذا حُدد هذا الخيار ولم تحدد أي شيء، فسيقتبس بريدك الرسالة كاملة. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>استخدم الاقتباس الذكي</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيقسم بريدك الأسطر الطويلة ولكنه سيحاول الحفاظ على الاقتباس الصحيح (أي أن علامة <quote
+>&gt;</quote
+> ستكون دائمًا في بداية السطر). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>التفاف الكلمات في العمود:</guilabel>
+    </term>
+    <listitem>
+      <para
+>إذا حُدد، سيُختار خيار التفاف الكلمات (<menuchoice
+> <guimenu
+>خيارات</guimenu
+><guimenuitem
+>التفاف الكلمات</guimenuitem
+> </menuchoice
+> في نافذة المحرر) آليًّا. استخدم صندوق الدوران لضبط الحد الأقصى لطول السطر. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>الرد أو التمرير باستخدام نفس التنسيق المرئي للرسالة الأصلية (نص عادي أو HTML)</guilabel>
+    </term>
+    <listitem>
+      <para
+>إذا حُدد، سيفعّل بريدك دائمًا شريط أدوات تحرير النص الغني إذا كانت الرسالة التي ترد عليها تحتوي على ترويسة HTML MIME. إذا لم يُحدد هذا الخيار، سيحتفظ المحرر بحالة شريط الأدوات من الجلسة السابقة. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>حسّن إصدار النص العادي لرسالة HTML</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيلحق بريدك حواشي سفلية بنسخة النص العادي لكل رسالة تُصاغ بتنسيق HTML. ستكون هذه الحواشي في النص العادي عبارة عن روابط قابلة للنقر تشير إلى أي موارد مُرمزة كأوسمة إرساء (روابط) في نسخة HTML من الرسالة. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>اطلُب إشعارات حالة الرسالة آليًّا</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيكون <xref linkend="composer-options-request-mdn"/> مفعلًا مبدئيًا. لا تحدد هذا الخيار إلا إذا كنت تعرف ما تفعله. تُعتبر إشعارات حالة الرسالة (MDNs) مصدر إزعاج (أو تُتجاهل ببساطة) من قبل الكثير من الناس. من الأفضل طلبها عند الضرورة فقط. </para>
+	  </listitem>
+    </varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>استخدم العناوين المُفهرسة من رسائل البريد الإلكتروني للإكمال الآليّ</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيضمن بريدك العناوين من جميع رسائلك المحفوظة في قائمة أهداف الإكمال الآلي (مثلًا، عندما تبدأ الكتابة في حقل "إلى:"). ستظهر هذه العناوين كـ "جهات اتصال وُجدت في بياناتك". إذا عطّلت هذا، فستظهر فقط مدخلات دفتر عناوين كيدي المطابقة و"العناوين الأخيرة" في القائمة. استخدم صندوق الدوران للحد من عدد العناصر المعروضة في القائمة. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>استخدم العناوين الأخيرة للإكمال الآليّ</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيضمن بريدك العناوين التي استُخدمت مؤخرًا في قائمة أهداف الإكمال الآلي (مثلًا، عندما تبدأ الكتابة في حقل "نسخة:"). ستظهر هذه كـ "عناوين أخيرة". إذا عطّلت هذا، فستظهر فقط مدخلات دفتر عناوين كيدي المطابقة و"جهات اتصال وُجدت في بياناتك" في القائمة. استخدم صندوق الدوران للحد من عدد العناصر التي تُعتبر "أخيرة". </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term
+>زر <guibutton
+>اضبط الإكمال...</guibutton
+> </term>
+	  <listitem>
+	    <para
+>انقر فوق هذا الزر لفتح حوارية ضبط الإكمال الآلي. يمكنك ضبط الترتيب الذي تظهر به العناصر، وإضافة أو إزالة العناوين "الأخيرة"، وإنشاء قائمة سوداء بالعناوين التي لا ينبغي أن تظهر أبدًا كأهداف للإكمال الآلي. لاحظ أن هذه الحوارية يمكن استدعاؤها أيضًا من قائمة سياقية عن طريق النقر بزر الفأرة الأيمن في حقل "إلى:" في المحرر مثلًا. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>فترة الحفظ الآليّ</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>تُنشأ نسخة احتياطية من النص في نافذة المحرر بانتظام وبشكل مبدئي. يتيح لك هذا الخيار تحديد عدد المرات التي تُنشأ فيها نسخة احتياطية. يمكنك تعطيل الحفظ الآلي باختيار "لا حفظ آلي". </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-standard-templates">
+    <title
+>القوالب القياسيّة</title>
+    <screenshot>
+    <screeninfo
+>قوالب المحرر القياسية</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerstandard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>قوالب المحرر القياسية</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (القوالب القياسية)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>هنا يمكنك تحرير قوالب الرسائل المبدئية المستخدمة عند إنشاء رسالة جديدة، أو كتابة رد، أو تمرير رسالة. تدعم قوالب الرسائل أوامر الاستبدال، ببساطة عن طريق كتابتها أو اختيارها من قائمة <guimenu
+>أدرج أمرًا</guimenu
+>. هذه قوالب عامة (مبدئية). يمكن تخطيها بواسطة قوالب لكل هوية أو قوالب لكل مجلد إذا حُدد أي منها. معظم الناس يكتفون بالقوالب المبدئية القياسية. ولكن إذا كنت ترغب في تعديل الإعدادات المبدئية، فهذا هو المكان المناسب للقيام بذلك. </para>
+
+    <para
+>للحصول على شرح أكثر تفصيلًا لضبط القالب، يرجى الرجوع إلى <link linkend="configure-identity-templates"
+>فصل الهويات.</link
+> </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-custom-templates">
+    <title
+>القوالب المخصّصة</title>
+    <screenshot>
+    <screeninfo
+>قوالب المحرر المخصصة</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercustom.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>قوالب المحرر المخصصة</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (القوالب المخصصة)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>هنا يمكنك إضافة وتحرير وحذف قوالب الرسائل المخصصة لاستخدامها عند صياغة رد أو تمرير رسالة. أنشئ القالب المخصص عن طريق كتابة الاسم في صندوق الإدخال والضغط على زر <guiicon
+>+</guiicon
+>. يمكنك ربط اختصار لوحة مفاتيح بالقالب لعمليات أسرع. </para>
+    <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
+
+    <para
+>تدعم قوالب الرسائل أوامر الاستبدال، ببساطة عن طريق كتابتها أو اختيارها من قائمة <guimenu
+>أدرج أمرًا</guimenu
+>. </para>
+
+    <para
+>هناك أربعة أنواع من القوالب المخصصة: المستخدمة لـ <guilabel
+>الرد</guilabel
+>، و<guilabel
+>الرد على الكل</guilabel
+>، و<guilabel
+>التمرير</guilabel
+>، و<guilabel
+>عام</guilabel
+> الذي يمكن استخدامه لجميع أنواع العمليات. لا يمكنك ربط اختصار لوحة مفاتيح بقوالب <guilabel
+>عام</guilabel
+>. </para>
+
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-subject">
+    <title
+>الموضوع</title>
+    <screenshot>
+    <screeninfo
+>موضوع المحرر</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composersubject.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>موضوع المحرر</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (الموضوع)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>يحتوي هذا القسم على قائمة من البادئات لـ <quote
+>الرد</quote
+> و <quote
+>التمرير</quote
+>. إذا كنت تتلقى رسائل تستخدم بادئات تختلف عن البادئات القياسية، يمكنك إضافتها إلى هذه القائمة حتى يتعرف عليها بريدك. سيتجاهل بريدك البادئات الغريبة عند فرز الرسائل (وعند تحديد موضوع رد أو رسالة مرمرة)، ويستبدلها اختياريًا بـ <quote
+>Re:</quote
+> أو <quote
+>Fwd:</quote
+> على التوالي. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-charset">
+    <title
+>طقم المحارف</title>
+    <screenshot>
+    <screeninfo
+>طقم محارف المحرر</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercharset.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>طقم محارف المحرر</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (طقم المحارف)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>هنا يمكنك إدارة أطقم المحارف المبدئية المستخدمة لرسائلك الخاصة. ستُفحص كل رسالة ترسلها لمعرفة ما إذا كانت مكتوبة بأحد أطقم المحارف المدرجة، بدءًا من أعلى القائمة. إذا كانت كذلك، فسيُستخدم طقم المحارف هذا. إذا لم تكن كذلك، فستظهر حوارية تخبرك بأنه يجب عليك اختيار طقم محارف عبر <menuchoice
+><guimenu
+>خيارات</guimenu
+><guisubmenu
+>اضبط الترميز</guisubmenu
+></menuchoice
+>. </para>
+
+    <para
+>إذا اخترت <guilabel
+>حافظ على طقم المحارف الأصلي عند الرد أو التمرير (إذا أمكن)</guilabel
+>، فسيُحتفظ بطقم محارف الرسالة الأصلية، ما لم تكن هناك محارف لا يمكن تمثيلها باستخدام هذا الطقم. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-headers">
+    <title
+>التّرويسات</title>
+    <screenshot>
+    <screeninfo
+>ترويسات المحرر</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerheaders.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>ترويسات المحرر</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (الترويسات)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>حدد مربع الاختيار <guilabel
+>استخدم لاحقة معرف رسالة مخصصة</guilabel
+> إذا كنت تريد أن يقوم بريدك بتوليد معرفات الرسائل (Message-Id) مع لاحقة مخصصة. أدخل اللاحقة المطلوبة في حقل <guilabel
+>لاحقة معرف الرسالة المخصصة</guilabel
+>. يرجى التأكد من أن اللاحقة التي تحددها فريدة (داخل عالم الويب). أبسط طريقة لضمان التفرد هي استخدام اسم النطاق الخاص بك، إذا كان لديك واحد. إذا لم تحدد <guilabel
+>استخدم لاحقة معرف الرسالة المخصصة</guilabel
+>، فسيقوم بريدك بتوليد معرف الرسالة الكامل آليًّا. إذا كنت لا تعرف ما يدور حوله هذا، فلا تختر هذا الخيار. </para>
+
+    <para
+>تحدد قائمة <guilabel
+>عرف حقول ترويسة mime مخصصة</guilabel
+> الترويسات التي سيستخدمها بريدك لرسائله الصادرة. يمكنك ابتكار حقول جديدة والكتابة فوق الحقول الموجودة. هذه الميزة مفيدة للخبراء فقط. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-attachments">
+    <title
+>المرفقات</title>
+    <screenshot>
+    <screeninfo
+>مرفقات المحرر</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerattach.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>مرفقات المحرر</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (المرفقات)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>إذا كان عليك إرسال مرفقات بأسماء ملفات تحتوي على محارف غير إنجليزية إلى مستخدمي مايكروسوفت أوتلوك أو مايكروسوفت أوتلوك إكسبريس، فقد ترغب في تحديد خيار <guilabel
+>تسمية المرفقات المتوافقة مع أوتلوك</guilabel
+>. سيقوم بريدك حينها بترميز أسماء المرفقات بطريقة غير قياسية يفهمها مايكروسوفت أوتلوك. </para>
+
+    <para
+>عند تحديد هذا الخيار، سيقوم بريدك بإنشاء رسائل لا تتوافق مع معايير البريد الإلكتروني، وبالتالي من الممكن ألا تُفهم رسائلك من قبل عملاء البريد المتوافقين مع المعايير. لذا يجب ألا تفعل هذا الخيار إلا إذا اضطررت لذلك. </para>
+
+    <para
+>حدد مربع الاختيار <guilabel
+>فعّل كشف المرفقات المفقودة</guilabel
+> إذا كنت تريد أن يحذرك بريدك كلما أوشكت على إرسال رسالة بدون مرفقات على الرغم من أن نص الرسالة يحتوي على كلمات معينة قد تشير إلى أنك تريد تضمين مرفق. يمكن تعديل قائمة الكلمات المفتاحية. </para>
+
+    <para
+>استخدم صندوق دوران <guilabel
+>الحد الأقصى لحجم المرفق:</guilabel
+> للحد من حجم أي مرفقات ترسلها. إذا حاولت إرفاق ملف أكبر من الحد المحدد، فسيصدر بريدك رسالة خطأ ويرفض إرفاق الملف. لاحظ أن هذا حد فردي، وليس حدًا إجماليًا. أيضًا، يُفحص حجم الملف قبل تحويله إلى ترميز base 64، إذا كان ذلك ضروريًا. </para>
+
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-autocorrection">
+    <title
+>التّصحيح الآليّ</title>
+    <screenshot>
+    <screeninfo
+>تصحيح المحرر الآلي</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercorrect.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>تصحيح المحرر الآلي</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (التصحيح الآلي)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>لتمكين التصحيح الآلي لأخطاء الطباعة الشائعة، اختر خيار <guilabel
+>فعّل التصحيح الآلي</guilabel
+>. استخدم القائمة المنسدلة لاختيار لغتك. يمكنك استيراد الإعدادات، إما من ليبر أوفيس أو من تثبيت آخر لبريدك أو كاليجرا، عبر زر <guibutton
+>استورد... <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guibutton
+>. إذا كنت بحاجة إلى حفظ إعداداتك لتثبيت أو تطبيق آخر، استخدم زر <guibutton
+>صدر...</guibutton
+>. </para>
+
+    <para>
+      <variablelist
+><title
+>خيارات التصحيح الآلي</title>
+        <varlistentry>
+             <term
+><guilabel
+>تصحيح آليّ بسيط</guilabel
+></term>
+             <listitem>
+               <para
+>يتيح لك هذا ضبط بريدك لتصحيح الأخطاء المطبعية الشائعة المختلفة آليًّا. حدد المربعات المجاورة لميزات التصحيح الآلي التي تريدها. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>علامات اقتباس مخصّصة</guilabel
+></term>
+             <listitem>
+               <para
+>يمكنك استبدال علامات الاقتباس المزدوجة أو الفردية بعلامات اقتباس "ذكية" عن طريق تحديد المربع المناسب. يمكنك أيضًا إضافة مسافة غير فاصلة قبل علامات ترقيم محددة في النص الفرنسي باختيار هذا الخيار. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>تصحيح آليّ متقدم</guilabel
+></term>
+             <listitem>
+               <para
+>يمكنك تخصيص استبدال الكلمات آليًّا باختيار هذا الخيار. لإدخال سلسلة مخصصة سيُستبدل بها آليًّا، أدخل الكلمة المراد استبدالها في صندوق <guilabel
+>ابحث</guilabel
+> وأدخل الكلمة البديلة في صندوق <guilabel
+>استبدل</guilabel
+>، ثم انقر فوق زر <guibutton
+>أضف</guibutton
+>. لإزالة كلمة مخصصة من القائمة، ظلل هذا المدخل وانقر فوق <guibutton
+>أزل</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>الاستثناءات</guilabel
+></term>
+             <listitem>
+               <para
+>تتيح لك هذه الحوارية إنشاء استثناءات حيث يمكنك إخبار بريدك بتجاهل بعض النقاط (نهاية الجملة) وحرفين كبيرين (مثل بريدك). أدخل الاستثناء وانقر فوق زر <guibutton
+>أضف</guibutton
+>. لإزالة الاستثناء، ظلل السلسلة وانقر فوق <guibutton
+>أزل</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+    </para>
+
+    <para
+>بمجرد الانتهاء من جميع اختيارات التصحيح الآلي، انقر فوق <guibutton
+>طبق</guibutton
+> أو <guibutton
+>حسنًا</guibutton
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-resize-image">
+    <title
+>التّغيير الآليّ لحجم الصّورة</title>
+    <screenshot>
+    <screeninfo
+>تغيير حجم المحرر الآلي</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerresize.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>تغيير حجم المحرر الآلي</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب المحرر (تغيير حجم الصورة آليًّا)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>في بعض الظروف، قد ترغب في أن يقوم بريدك بتغيير حجم مرفقات الصور آليًّا في رسائل البريد الإلكتروني الصادرة (مثلًا بسبب حدود الخادم). للقيام بذلك، اختر <guilabel
+>غيّر حجم الصور آليًّا</guilabel
+>. هناك عدة خيارات تصاحب هذه الميزة. </para>
+
+    <variablelist>
+     <varlistentry
+><term
+><guilabel
+>عامّ</guilabel
+></term>
+       <listitem>
+         <para
+>هناك ثلاثة خيارات تحت "عام". إذا كنت ترغب في الحفاظ على نسبة العرض إلى الارتفاع لجميع الصور، فاختر <guilabel
+>حافظ على النسبة</guilabel
+>. يسألك بريدك مبدئيًا عما إذا كنت تريد تغيير الحجم قبل القيام بذلك. إذا كنت تريد أن يقوم البرنامج بتغيير حجم الصور دون سؤال، فقم بإلغاء تحديد <guilabel
+>اسأل قبل تغيير الحجم</guilabel
+>. سيرسل بريدك مبدئيًا الصورة التي تم تغيير حجمها بتنسيق JPG. إذا كنت تفضل إرسال مثل هذه الصور بتنسيق PNG، فاختر ذلك من المربع المنسدل <guilabel
+>الرجوع إلى التنسيق:</guilabel
+>. </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>الصورة</guilabel
+></term>
+       <listitem>
+         <para
+>افترض أن لديك قريبًا لا يمكنه استقبال ملفات الصور إلا بحجم معين بسبب حدود مزود البريد الإلكتروني الخاص به. يمكنك استخدام خيار <guilabel
+>قلل الصورة إلى البعد الأقصى:</guilabel
+> لاختيار حجم لتقليص الصورة إليه، وإدخال بريده الإلكتروني في المرشحات في لسان تبويب <guilabel
+>المستلمون</guilabel
+>. (تتم مناقشة لسان تبويب المستلمين بمزيد من التفصيل أدناه). إذا كنت بحاجة إلى حجم مخصص، فاختر الخيار الأخير <guilabel
+>مخصص</guilabel
+> من مربعات العرض والارتفاع المنسدلة، وأدخل عددًا من البكسلات في الصندوق النصي. يمكنك أيضًا تكبير الصور باختيار <guilabel
+>كبر الصورة إلى الحد الأدنى من البعد</guilabel
+>. يتيح لك الخيار الأخير تخطي تغيير حجم الصور الأصغر من حجم الملف المحدد. </para>
+       </listitem>
+     </varlistentry>
+
+     <varlistentry
+><term
+><guilabel
+>اسم الملفّ</guilabel
+></term>
+       <listitem>
+
+           <variablelist>
+           <varlistentry
+><term
+><guilabel
+>مرشح المصدر</guilabel
+></term>
+             <listitem>
+               <para
+>إذا كنت ترغب في أن يتم تغيير الحجم بناءً على اسم الملف، فاختر المرشح المناسب هنا. افترض أنك بحاجة إلى إرسال صور متعددة يوميًا إلى رئيسك، ويطلب رئيسك أن تكون جميعها بنفس الحجم. يمكنك تسمية صور عملك work1، work2 إلخ، ثم اختر <guilabel
+>ضمن جميع الملفات التي تحتوي أسماؤها على أحد الأنماط</guilabel
+> وأدخل work في الصندوق النصي <guilabel
+>النمط:</guilabel
+>. يمكنك أيضًا استبعاد الملفات بنفس الطريقة باختيار <guilabel
+>استبعد جميع الملفات التي تحتوي أسماؤها على أحد الأنماط</guilabel
+>. السلوك المبدئي هو عدم الترشيح. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>تنسيق الصورة</guilabel
+></term>
+             <listitem>
+               <para
+>اختر <guilabel
+>غيّر حجم جميع الصور التي لها أحد هذه التنسيقات</guilabel
+> لضبط تنسيق معين لتغيير حجم الصورة إليه. </para>
+               <itemizedlist>
+                 <listitem>
+                   <para
+>عند تمكين هذا الخيار، يجب النقر فوق زر <guibutton
+>اختر التنسيق...</guibutton
+>، ثم اختيار تنسيق من الحوارية. </para>
+                 </listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>تغيير حجم اسم الملف</guilabel
+></term>
+             <listitem>
+               <para
+>اختر <guilabel
+>أعد تسمية الصور التي تم تغيير حجمها بالنمط التالي:</guilabel
+> إذا كنت ترغب في إعادة تسمية صورك التي تم تغيير حجمها بنمط معين. أدخل النمط في الصندوق النصي. يمكنك استخدام: <simplelist>
+                 <member
+>%t ضبط الوقت الحالي</member>
+                 <member
+>%d ضبط التاريخ الحالي</member>
+                 <member
+>%n اسم الملف الأصلي</member>
+                 <member
+>%e الامتداد الأصلي</member>
+                 <member
+>%x الامتداد الجديد</member>
+               </simplelist>
+               </para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+
+         </listitem>
+       </varlistentry>
+
+       <varlistentry
+><term
+><guilabel
+>المستلمون</guilabel
+></term>
+         <listitem>
+           <para
+>هذا لسان التبويب هو المكان الذي تحدد فيه المستلمين الذين يحتاجون إلى تلقي صور مغيرة الحجم. يجب أن تقرر ما إذا كنت بحاجة إلى مدخلات متعددة أو مدخل واحد فقط، وأدخل البريد الإلكتروني في الصندوق النصي باستخدام <quote
+>;</quote
+> كفاصل عند وجود عناصر متعددة. يمكنك أيضًا تحديد مستلمين معينين لا ينبغي تغيير حجم الصور لهم. المبدئي هو عدم الترشيح. </para>
+         </listitem>
+       </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>صفحة الأمن</title>
+
+  <para
+>تتيح لك حوارية ضبط الأمن صقل بعض خيارات النص الغني (HTML). كما تتيح لك التحكم في ميزات التعمية وفك التعمية، وضبط بعض منطق مكافحة التصيد المدمج، وتحديد كيفية التعامل مع طلبات إشعار حالة الرسالة (المعروفة أيضًا باسم إيصالات العودة). لاحظ أن هذه الحوارية <emphasis
+>ليس</emphasis
+> لها علاقة بإجراءات أمن مكافحة الفيروسات. راجع فصل <link linkend="the-anti-virus-wizard"
+>استخدام بريدك: معالج مكافحة الفيروسات</link
+> إذا كنت تريد أمن مكافحة الفيروسات. </para>
+
+  <sect2 id="configure-security-reading">
+    <title
+>القراءة</title>
+
+    <screenshot>
+    <screeninfo
+>أمن القراءة</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="securityreading.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>أمن القراءة</phrase>
+        </textobject>
+        <caption>
+          <para
+>لسان تبويب الأمن (القراءة)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>في هذا اللسان، يمكنك ضبط خيارات الأمن التي تؤثر على الطريقة التي تقرأ بها الرسائل.</para>
+
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>فضّل HTML على النّصّ الصّرف</guilabel
+></term>
+	  <listitem>
+            <para
+>سيعرض بريدك مبدئيًا رسائل HTML كنص عادي. إذا كنت تفضل عرض الرسائل بتنسيق وتخطيط HTML آليًّا، فاختر هذا الخيار. ومع ذلك، نوصي بترك هذا الخيار غير مفعل، حيث قد تظهر مشاكل أمنية مع HTML. </para>
+            <para
+>لا يزال بإمكانك عرض الرسائل بتنسيق HTML بسهولة عن طريق النقر فوق شريط تبديل رسالة نصية/رسالة HTML على الجانب الأيسر من لوحة المعاينة. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>اسمح للرّسائل بتحميل المراجع الخارجيّة من الشّابكة</guilabel
+></term>
+	  <listitem>
+            <para
+>إذا حُدد، يمكن لبريدك تحميل الصور الخارجية وأنماط الصفحات وغيرها من الإنترنت عند عرض رسالة HTML. نوصي بشدة بترك هذا الخيار غير مفعل (على الرغم من أنه ليس له أي تأثير حتى تقوم بتمكين HTML). </para>
+            <para
+>بإضافة مراجع خارجية إلى رسائلهم، يمكن للأشخاص الذين يرسلون البريد المزعج اكتشاف وقت اطلاعك على رسالتهم، وموقعك، والكثير من المعلومات الأخرى التي قد تُسجل على خوادم الويب. لاحظ أن هذا الخيار ليس له أي تأثير على جافا أو جافا سكريبت، حيث أنهما غير مدعومين في بريدك على الإطلاق. </para>
+	  </listitem>
+	</varlistentry>
+
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+    <varlistentry id="configure-security-email-scams">
+      <term
+><guilabel
+>يُعلم ما إذا كانت قراءة الرسالة عملية احتيال بريدية مشتبه</guilabel
+></term>
+      <listitem>
+            <para
+>مع تزايد شعبية البريد الإلكتروني، انتشرت عمليات الاحتيال عبر البريد الإلكتروني. قد تشمل عمليات الاحتيال هذه رسائل بريد إلكتروني صُممت لتبدو وكأنها قادمة من شركات شرعية، على الرغم من أنها ترتبط في الواقع بمواقع ويب ضارة تطلب معلوماتك الشخصية. قد يؤدي ذلك إلى سرقة الهوية، وأسوأ من ذلك. يقوم بريدك مبدئيًا بتحليل الرسائل بحثًا عن عمليات الاحتيال الشائعة، وسيعلمك إذا كانت الرسالة عملية احتيال مشتبه بها. نوصي بإبقاء هذه الميزة مفعلة. إذا كنت ترغب في تعطيل هذه التحذيرات، فقم بإلغاء تحديد <guilabel
+>يُعلم ما إذا كانت قراءة الرسالة عملية احتيال بريدية مشتبه</guilabel
+>. </para>
+            <para
+>إذا كان قد وُسمت رسائل بريد إلكتروني شرعية (مثلًا من أصدقاء موثوقين)، يمكنك إضافة عناوين بريدهم الإلكتروني إلى <guilabel
+>القائمة البيضاء:</guilabel
+> بالنقر فوق زر <guibutton
+>أضف...</guibutton
+> وإدخال العنوان في الحوارية التي تظهر. يرجى ملاحظة أنه في الوقت الحالي، يمكن فقط إضافة عناوين بريد إلكتروني كاملة إلى القائمة البيضاء. </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term
+><guilabel
+>افحص المسار باستخدام نظام غوغل للتَّصيُّد</guilabel
+></term>
+          <listitem>
+            <para
+>اختر هذا الخيار لإجبار بريدك على استشارة قاعدة بيانات غوغل لمواقع الويب المشتبه في كونها تصيدية عندما تُضمن المسارات في الرسالة، ولتحذيرك كلما وُجد تطابق. </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term
+><guilabel
+>افحص رسائل البريد الإلكتروني لتتبع عناوين المواقع</guilabel
+></term>
+          <listitem>
+            <para
+>سيقوم بريدك آليًّا وبشكل مبدئي بفحص المسارات المضمنة في رسائل HTML، وسيحذرك إذا بدا أن أيًا منها يحاول تتبعك. </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term
+><guilabel
+>حاول فكُّ تعمية الرَّسائل المعمَّاة عند العرض</guilabel
+></term>
+          <listitem>
+            <para
+>سيحاول بريدك آليًّا وبشكل مبدئي فك تعمية الرسائل المعماة عند عرضها. إذا كنت تفضل القيام بذلك يدويًا، فقم بإلغاء تحديد هذا الخيار. </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+	      <term
+><guilabel
+>استورد المفاتيح والشَّهادة آليًّا</guilabel
+></term>
+	      <listitem>
+	        <para
+>إذا حُدد، سيستورد بريدك آليًّا أي مرفقات تحتوي على مفاتيح OpenPGP إلى حلقة مفاتيحك المحلية، وأي مرفقات تحتوي على مفاتيح S/MIME إلى صندوق مفاتيحك المحلي. </para>
+	        <note>
+	          <para
+>يتضمن التحقق من تواقيع S/MIME دائمًا استيراد الشهادات المتضمنة. لا يؤثر هذا الخيار على ذلك. كما أنه لا علاقة له بميزة استرجاع المفاتيح آليًّا في GPG، حيث يحاول GPG استيراد مفاتيح غير معروفة من خادم مفاتيح. </para>
+	        </note>
+	      </listitem>
+	    </varlistentry>
+      </variablelist>
+      <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-message-disposition-notifications">
+        <title
+>إشعارات حالة الرّسائل</title>
+        <screenshot>
+          <screeninfo
+>أمن إشعارات حالة الرسالة</screeninfo>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="securitymdn.png" format="PNG"/>
+              </imageobject>
+              <textobject>
+                <phrase
+>أمن إشعارات حالة الرسالة</phrase>
+              </textobject>
+              <caption>
+                <para
+>لسان تبويب الأمن (إشعارات حالة الرسائل)</para>
+              </caption>
+            </mediaobject>
+          </screenshot>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+        <variablelist>
+          <varlistentry id="configure-security-reading-mdns">
+	      <term>
+	        <guilabel
+>إشعارات حالة الرّسائل</guilabel>
+	      </term>
+	      <listitem>
+	        <para
+>تُعد إشعارات حالة الرسالة (MDNs) تعميمًا لما يسمى عادةً <quote
+>إيصال القراءة</quote
+>. يطلب مؤلف الرسالة إرسال إشعار بالحالة، ويقوم برنامج البريد الإلكتروني للمستلم بتوليد رد يمكن للمؤلف من خلاله معرفة ما حدث لرسالته. تشمل أنواع الحالة الشائعة <quote
+>عُرضت</quote
+> (أي قُرئت)، و <quote
+>حُذفت</quote
+>، و <quote
+>أُرسلت</quote
+> (أي مُررت). </para>
+	        <para
+>الخيارات التالية (المدرجة كـ <guilabel
+>سياسة الإرسال</guilabel
+>) متاحة للتحكم في <emphasis
+>متى</emphasis
+> يرسل بريدك إشعارات حالة الرسالة. </para>
+	        <variablelist>
+	          <varlistentry>
+		    <term
+><guilabel
+>تجاهل</guilabel
+> (موصى به) </term>
+		    <listitem>
+		      <para
+>يتجاهل أي طلب لإشعارات الحالة. لن تُرسل أي إشعارات حالة رسالة آليًّا أبدًا. </para>
+		    </listitem>
+          </varlistentry>
+
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>اسأل</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>يجيب على الطلبات فقط بعد سؤال المستخدم عن الإذن. بهذه الطريقة، يمكنك إرسال إشعارات حالة لرسائل مختارة مع منعها أو تجاهلها للآخرين. </para>
+		    </listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>امنع</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>يرسل دائمًا إشعار <quote
+>ممنوع</quote
+>. هذا أفضل <emphasis
+>قليلًا</emphasis
+> من إرسال إشعارات حالة الرسالة دائمًا. سيظل المؤلف يعرف أنه تم التصرف في الرسالة؛ ولكنه لا يستطيع معرفة ما إذا كانت قد حُذفت أو قُرئت، إلخ. </para>
+		    </listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>أرسل دائمًا</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>يرسل دائمًا إشعار الحالة المطلوب. هذا يعني أن مؤلف الرسالة سيعرف متى تم التصرف في الرسالة، وبالإضافة إلى ذلك، ما حدث لها (عُرضت، حُذفت، إلخ). يُنصح بشدة بعدم استخدام هذا الخيار، ولكن بما أنه منطقي حيث لا تشكل الخصوصية قلقًا، كما في إدارة علاقات العملاء، فقد تم توفيره. </para>
+		    </listitem>
+	      </varlistentry>
+	    </variablelist>
+
+	    <para
+>إذا كنت غير متأكد، فجرّب خيار <guilabel
+>اسأل</guilabel
+> لفترة. ثم، إذا وجدت أسئلة بريدك مزعجة، فانتقل إلى <guilabel
+>تجاهل</guilabel
+>. </para>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+	    <para
+>الخيارات التالية (المدرجة كـ <guilabel
+>اقتبس الرسالة الأصلية</guilabel
+>) متاحة للتحكم في <emphasis
+>مقدار</emphasis
+> الرسالة الأصلية الذي يرسله بريدك مع إشعارات حالة الرسالة. </para>
+
+	    <variablelist>
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>لا شيء</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>لا تُضمن أي أجزاء من الرسالة بخلاف معرف الرسالة الإلزامي والمستلم الأصلي في رد إشعار حالة الرسالة. هذا يحفظ معلومات كافية للمرسل للتعرف بشكل فريد على الرسالة التي وُلد من أجلها إشعار الحالة هذا. </para>
+		    </listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+            <term>
+              <guilabel
+>كامل الرسالة</guilabel>
+            </term>
+            <listitem>
+              <para
+>يُرفق الرسالة الكاملة مع إشعار الاستلام. عادة ما يكون هذا زائدًا عن الحاجة، إذ لا يضيف أي معلومات قيمة لا يمكن استنتاجها من ترويسات الرسالة وحدها، لكن البعض يصر على هذا الخيار، لأنه يسهل على البشر ربط محتوى الرسالة (وليس الترويسات فقط) بما أرسلوه سابقًا. </para>
+            </listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+            <term>
+              <guilabel
+>الترويسات فقط</guilabel>
+            </term>
+            <listitem>
+              <para
+>يُرفق الترويسات فقط مع إشعار الاستلام. يكفي هذا عادةً لتمكين البشر (عبر الموضوع) والحواسيب (عبر معرف الرسالة) من ربط إشعار الاستلام بالرسالة الأصلية بسهولة. </para>
+              </listitem>
+	      </varlistentry>
+	    </variablelist>
+
+	    <para
+>إذا لم تكن متأكدًا، اترك هذا الخيار على القيمة المبدئية (لا شيء). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>لا ترسل إشعارات استلام ردًا على الرسائل المعماة</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>يمنع هذا الخيار إرسال إشعارات الاستلام إذا كانت الرسالة معماة (كليًا أو جزئيًا). يحبط هذا محاولات استخدام ميزة إشعارات الاستلام في بريدك كـ <emphasis
+>عرّاف</emphasis
+> لاستنتاج ما إذا كنت قد تمكنت من فك تعمية الرسالة أم لا. </para>
+	    <para
+>من الناحية التقنية، لا حاجة لهذا الخيار، لأن بريدك يرسل إشعارات الاستلام سواء فُكّت تعمية الرسالة بنجاح أم لا (طلب إشعار الاستلام يوجد في الجزء غير المعمى من الرسالة)؛ لكنه يمنح المستخدم المهتم بالأمن خيارًا: إما إرسالها عند طلبها (الخيار غير محدد)، أو عدم إرسالها أبدًا (الخيار محدد). </para>
+	    <para
+>إذا لم تكن متأكدًا، اترك هذا الخيار محددًا (القيمة المبدئية). </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>التحرير</title>
+        <screenshot>
+        <screeninfo
+>أمن التحرير</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitycomposing.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>أمن التحرير</phrase>
+            </textobject>
+            <caption>
+              <para
+>تبويب الأمن (التحرير)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+      <para
+>يمكنك في هذا التبويب ضبط الخيارات المتعلقة بالأمن لتحرير الرسائل. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>وقع الرسائل آليًا</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، فإن خيار <xref linkend="composer-options-sign-message"/> في المحرر سيكون <emphasis
+>مفعلًا</emphasis
+> بشكل مبدئي. </para>
+	    <para
+>ومع ذلك، لا يزال بإمكانك تفعيله أو تعطيله لكل رسالة على حدة. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>عند تعمية البريد، عمه دائمًا أيضًا لشهادة هويتي الخاصة</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، فإن أي رسالة تعمى للمستلمين ستعمى أيضًا لنفسك إضافيًا. </para>
+	    <warning>
+	      <para
+>إذا ألغيت تحديد هذا الخيار، فقد لا تتمكن من فك تعمية الرسائل التي كتبتها بنفسك وعميتها للآخرين بعد الآن. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>خزن الرسائل المرسلة معمية</guilabel>
+	      <footnote>
+	      <para
+>يفعل هذا الخيار نمطًا لاستخدام تعمية البريد يسمى أحيانًا (بشكل مضلل) تعمية <quote
+>النقل فقط</quote
+>. في هذا النمط، تُنزع تعمية الرسالة بمجرد وصولها إلى وجهتها. تستمر التعمية فقط أثناء وجود الرسالة في الطريق. </para>
+	      <para
+>يدعم بريدك هذا النمط دون حماس، لأن مثل هذه الوظيفة يجب أن توضع في <emphasis
+>خادم</emphasis
+> البريد (MTA) وليس على مستوى <emphasis
+>عميل</emphasis
+> البريد (MUA). لذا، قد تسقط الإصدارات المستقبلية من بريدك دعم هذا الخيار. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، تُخزن الرسائل في مجلد <guilabel
+>البريد المرسل</guilabel
+> تمامًا كما أرسلتها (أي إذا كانت معماة، تُخزن بهذه الطريقة أيضًا). </para>
+	    <para
+>إذا لم يُحدد، ستُخزن الرسائل <emphasis
+>دائمًا</emphasis
+> غير معماة في مجلد <guilabel
+>البريد المرسل</guilabel
+>، حتى لو أُرسلت معماة. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>أظهر دائمًا مفاتيح التعمية للموافقة</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيظهر مربع حوار في كل مرة تعمي فيها رسالة يعرض عليك مفاتيح التعمية التي ستُستخدم لكل مستلم. يمكنك حينها مراجعة اختيار المفاتيح وتغييرها والموافقة على عملية التعمية أو إلغاؤها. نوصي بإبقاء هذا الخيار محددًا لأنه يجعل عملية التعمية أكثر شفافية. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>عمه الرسائل آليًا كلما أمكن ذلك</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>تسمى أيضًا <quote
+>التعمية الانتهازية</quote
+>. إذا حُدد، سيحاول بريدك مطابقة المستلمين بمفاتيح (OpenPGP أو S/MIME) حتى لو لم تطلب التعمية <emphasis
+>تحديدًا</emphasis
+>. إذا وُجدت مفاتيح قابلة للاستخدام لجميع المستلمين، سيسألك بريدك عما إذا كنت تريد تعمية الرسالة أم لا. </para>
+	    <para
+>يوصى بشدة بتفعيل هذا الخيار، لأنه يجعل استخدام التعمية سهلًا حقًا. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>لا توقع/تعمِ أبدًا عند الحفظ كمسودة</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، لن يحاول بريدك توقيع أو تعمية الرسائل التي تُحفظ فقط في مجلد <guilabel
+>المسودات</guilabel
+>. هذا أكثر ملاءمة ولا يؤدي إلى خسارة فادحة في الأمن، بشرط أن يكون مجلد المسودات آمنًا. قد يرغب مستخدمو IMAP في إيقاف هذا الخيار إذا كان مجلد <guilabel
+>المسودات</guilabel
+> موجودًا على الخادم. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>متنوع</title>
+        <screenshot>
+        <screeninfo
+>تصحيح آلي متنوع للأمن</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitymisc.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>أمن متنوع</phrase>
+            </textobject>
+            <caption>
+              <para
+>تبويب الأمن (متنوع)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+
+      <para
+>يمكنك في هذا التبويب تفعيل وتعطيل التحذيرات المتعلقة بالأمن. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>حذر عند محاولة إرسال رسائل غير موقعة</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيظهر بريدك تحذيرًا إذا كانت الرسالة ستُرسل دون توقيع رقمي لأي سبب كان. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>حذر عند محاولة إرسال رسائل غير معماة</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيظهر بريدك تحذيرًا إذا كانت الرسالة ستُرسل دون تعمية لأي سبب كان. </para>
+	    <note>
+	      <para
+>بينما من الشائع توقيع جميع الرسائل الصادرة، فإن تعميتها ليست كذلك. لذا، ما لم تمتلك شركتك سياسة تقضي بعدم إرسال أي رسائل غير معماة أبدًا، فقد يكون من الجيد إبقاء هذا الخيار معطلًا والاعتماد على <link linkend="configure-security-composing-opportunistic-encryption"
+>التعمية الانتهازية</link
+> لتنبيهك إذا كان <emphasis
+>بإمكانك</emphasis
+> إرسال رسائل معماة لكنك لم تطلب ذلك. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<!-- <varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Warn if receiver's email address is not in certificate</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+	      If checked, &kmail; will emit a warning if an &smime;
+	      certificate or &openpgp; key will be used for a recipient
+	      whose email address is not listed in the email addresses
+	      stored in the certificate.
+	    </para>
+	    <para>
+	      Situations in which this warning will trigger include
+	      when configuring your per-identity &openpgp; keys or
+	      &smime; certificates, when encrypting, and when verifying
+	      signatures, if the signature was made with a certificate
+	      that does not include the email address of the sender.
+	    </para>
+	  </listitem>
+    </varlistentry
+> --> <!-- This option is no longer provided. @dcb2020340. -->
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>حذر إذا كانت الشهادات/المفاتيح ستنتهي صلاحيتها قريبًا</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، سيحذر بريدك عند استخدام شهادة S/MIME أو مفتاح OpenPGP ستنتهي صلاحيته قريبًا. </para>
+	    <para
+>يمكن بعد ذلك ضبط الفترة التي يظهر فيها التحذير قبل انتهاء صلاحية المفتاح/الشهادة بشكل منفصل لمفاتيح التوقيع والتعمية، بالإضافة إلى (في حالة S/MIME) شهادات المستخدم النهائي، وشهادات سلطة التصديق (CA) الوسيطة، والشهادات الجذر. </para>
+	  </listitem>
+	</varlistentry>
+
+    <varlistentry>
+	  <term>
+	    <guibutton
+>إعدادات GnuPG...</guibutton>
+	  </term>
+	  <listitem>
+	    <para
+>انقر على هذا الزر لفتح مربع حوار موسع يضبط التفاعلات بين بريدك وGPG، برنامج حارس خصوصية جنو. إن GPG معقد للغاية بحيث لا يمكن توثيقه هنا. لمزيد من التفاصيل، يجب عليك الرجوع إلى <ulink url="https://www.gnupg.org/docs.html#guides"
+>دليل خصوصية جنو</ulink
+>. ما لم تكن خبيرًا في التعمية، فمن الأفضل قبول الإعدادات المبدئية هنا. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>أعد تفعيل جميع تحذيرات &quot;لا تسأل ثانية&quot;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>بالإضافة إلى التحذيرات الرئيسة الموضحة أعلاه، هناك العديد من رسائل التحذير والمعلومات، وكل منها يحتوي على خيار لعدم إظهارها مرة أخرى. إذا كنت ترغب في إعادة تفعيل هذه الرسائل بعد كتمها، يمكنك تحقيق ذلك بالضغط على هذا الزر. <footnote
+> <para
+>سيعيد هذا تفعيل <emphasis
+>جميع</emphasis
+> هذه التحذيرات في بريدك. ليس من المنطقي السماح باختيار أكثر دقة للتحذيرات التي يجب إظهارها بما أنه يمكنك ببساطة تحديد خيار كتمها مرة أخرى في المرة القادمة التي تظهر فيها. </para>
+        </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>تحقق S/MIME</title>
+        <screenshot>
+        <screeninfo
+>أمن تحقق S/MIME</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitysmime.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>أمن تحقق S/MIME</phrase>
+            </textobject>
+            <caption>
+              <para
+>تبويب الأمن (تحقق S/MIME)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+      <para
+>يحتوي هذا التبويب على مدخلات مختارة من <ulink url="https://linux.die.net/man/1/gpgsm"
+>مربع حوار ضبط الخلفية الديناميكي</ulink
+> الخاص بـ gpgsm. يرجى الرجوع إلى دليل gpgsm للحصول على وصف أكثر تفصيلًا لهذه الخيارات. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>تحقق من الشهادات باستخدام قوائم إبطال الشهادات (CRLs)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد، تُحقق شهادات S/MIME باستخدام قوائم إبطال الشهادات (CRLs). هذا هو خيار الضبط المبدئي. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>تحقق من الشهادات عبر الإنترنت (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد هذا الخيار، تُحقق شهادات S/MIME باستخدام بروتوكول حالة الشهادات عبر الإنترنت (OCSP). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>رابط مستجيب OCSP:</guilabel>
+          </term>
+         <listitem>
+	      <para
+>أدخل عنوان الخادم للتحقق من الشهادات عبر الإنترنت. يبدأ هذا الرابط عادةً بـ <emphasis
+>https://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>توقيع مستجيب OCSP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>اختر أو غير وأدخل مفتاح S/MIME للاستخدام. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>تجاهل رابط الخدمة للشهادات</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>حدد هذا الخيار لتخطي التحقق عبر الإنترنت باستخدام OCSP. يتطلب هذا الخيار وجود <emphasis
+>dirmngr &gt;= 0.9.0</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>لا تتحقق من سياسات الشهادات</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>مبدئيًا، يستخدم <guilabel
+>GnuPG</guilabel
+> الملف <filename
+>~/.gnupg/policies.txt</filename
+> للتحقق مما إذا كانت سياسة الشهادة مسموحًا بها. إذا حُدد هذا الخيار، لن تُفحص هذه السياسات. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>لا تراجع أبدًا قوائم إبطال الشهادات (CRLs)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد هذا الخيار، فلن تُستخدم قوائم إبطال الشهادات أبدًا للتحقق من شهادات S/MIME. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>اجلب شهادات المصدر المفقودة</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>حدد هذا الخيار إذا كنت تريد جلب شهادات المصدر المفقودة عند الضرورة. ينطبق هذا على طريقتي التحقق، CRLs وOCSP. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>لا تجرِ أي طلبات HTTP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>يعطل استخدام HTTP لـ S/MIME كليًا. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>تجاهل نقطة توزيع CRL عبر HTTP للشهادات</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>عند البحث عن موقع قائمة إبطال الشهادات (CRL)، تحتوي الشهادة <quote
+>المراد اختبارها</quote
+> عادةً على ما يعرف بمدخلات نقطة توزيع CRL (اختصارًا DP)، وهي روابط تصف طريقة الوصول إلى الرابط. يُستخدم أول مدخل DP يُعثر عليه. مع هذا الخيار، تُتجاهل جميع المدخلات التي تستخدم بروتوكول HTTP عند البحث عن DP مناسبة. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>استخدم وكيل HTTP للنظام</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>إذا حُدد هذا الخيار، ستُستخدم قيمة وكيل HTTP الموضحة على اليمين (والتي تأتي من متغير البيئة <varname
+>http_proxy</varname
+>) لأي طلب HTTP. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>استخدم هذا الوكيل لطلبات HTTP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>أدخل موقع وكيل HTTP هنا، والذي سيُستخدم لجميع طلبات HTTP المتعلقة بـ S/MIME. التنسيق هو <quote
+>المضيف:المنفذ</quote
+>، مثلًا <emphasis
+>myproxy.nowhere.com:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>لا تجرِ أي طلبات LDAP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>يعطل استخدام LDAP لـ S/MIME كليًا. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>تجاهل نقطة توزيع CRL عبر LDAP للشهادات</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>عند البحث عن موقع قائمة إبطال الشهادات (CRL)، تحتوي الشهادة <quote
+>المراد اختبارها</quote
+> عادةً على ما يعرف بمدخلات نقطة توزيع CRL (اختصارًا DP)، وهي روابط تصف طريقة الوصول إلى الرابط. يُستخدم أول مدخل DP يُعثر عليه. مع هذا الخيار، تُتجاهل جميع المدخلات التي تستخدم بروتوكول LDAP عند البحث عن DP مناسبة. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>المضيف الرئيس لطلبات LDAP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>سيؤدي إدخال خادم LDAP هنا إلى جعل جميع طلبات LDAP تذهب إلى ذلك الخادم أولًا. وبشكل أكثر دقة، يتجاوز هذا الإعداد أي جزء محدد للمضيف والمنفذ في رابط LDAP وسيُستخدم أيضًا إذا حُذف المضيف والمنفذ من الرابط. ستُستخدم خوادم LDAP الأخرى فقط في حال فشل الاتصال بـ <emphasis
+>الوكيل</emphasis
+>. التنسيق هو المضيف أو المضيف:المنفذ. إذا حُذف المنفذ، سيُستخدم المنفذ 389 (منفذ LDAP القياسي). </para>
+	  </listitem>
+	</varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+</sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>صفحة متنوعة</title>
+
+  <sect2 id="configure-misc-folders">
+    <title
+>المجلّدات</title>
+    <screenshot>
+      <screeninfo
+>مجلدات متنوعة</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscfolders.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>مجلدات متنوعة</phrase>
+          </textobject>
+          <caption>
+            <para
+>تبويب متنوع (المجلدات)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+  <variablelist>
+
+    <!--varlistentry>
+      <term
+><guilabel
+>Ask for confirmation before moving all messages to trash</guilabel
+></term>
+      <listitem>
+        <para>
+          Enable this option if you want to be asked for confirmation whenever
+          you use <menuchoice
+><guimenu
+>Folder</guimenu
+><guimenuitem
+>Move All to Trash</guimenuitem
+></menuchoice
+>.
+        </para>
+      </listitem>
+      </varlistentry--><!-- Option has been removed @dcb2020311 -->
+
+    <varlistentry>
+      <term
+><guilabel
+>استثنِ الرسائل المهمة من انتهاء الصلاحية</guilabel
+></term>
+      <listitem>
+        <para
+>فعل هذا الخيار إذا كان يجب عدم حذف الرسائل المهمة آليًا أبدًا. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="configure-misc-folders-go-unread">
+      <term
+><guilabel
+>عند محاولة العثور على رسائل غير مقروءة</guilabel
+></term>
+      <listitem>
+        <para
+>يتحكم هذا الخيار فيما يحدث إذا ضغطت على أحد الاختصارات للانتقال إلى الرسالة التالية أو السابقة غير المقروءة (مثل <keycap
+>Space</keycap
+>). إذا طلبت من بريدك الانتقال إلى الرسالة التالية غير المقروءة رغم عدم وجود رسائل غير مقروءة أسفل الرسالة المحددة حاليًا، فسيحدث ما يلي. <itemizedlist>
+              <listitem>
+                <para
+>إذا حُدد <guilabel
+>لا تكرر</guilabel
+>، فلن يحدث شيء. </para>
+              </listitem>
+              <listitem>
+                <para
+>إذا حُدد <guilabel
+>كرر في المجلد الحالي</guilabel
+>، فسيبحث بريدك عن رسالة غير مقروءة من بداية المجلد الحالي. إذا لم يُعثر على شيء، فلن يحدث شيء. </para>
+              </listitem>
+              <listitem>
+                <para
+>إذا حُدد <guilabel
+>كرر في جميع المجلدات</guilabel
+>، فسيبحث بريدك أولًا في المجلد الحالي عن رسالة أخرى غير مقروءة. وإذا لم يُعثر على شيء، فسيبحث بريدك في المجلد التالي الذي يحتوي على رسائل غير مقروءة. </para>
+              </listitem>
+            </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>عند دخول المجلد</guilabel
+></term>
+      <listitem>
+        <para
+>يتحكم هذا الخيار فيما يحدث عند فتح مجلد. <itemizedlist>
+              <listitem>
+                <para
+>إذا حُدد <guilabel
+>اقفز إلى أول رسالة غير مقروءة</guilabel
+>، فسيختار بريدك أول رسالة يجدها مميزة كغير مقروءة. </para>
+              </listitem>
+              <listitem>
+                <para
+>إذا حُدد <guilabel
+>اقفز إلى آخر رسالة محددة</guilabel
+>، فسيختار بريدك الرسالة التي كانت محددة عند آخر مرة فُتح فيها المجلد. </para>
+              </listitem>
+              <listitem>
+                <para
+>إذا حُدد <guilabel
+>اقفز إلى أحدث رسالة</guilabel
+>، فسيختار بريدك أحدث رسالة. </para>
+              </listitem>
+              <listitem>
+                <para
+>إذا حُدد <guilabel
+>اقفز إلى أقدم رسالة</guilabel
+>، فسيختار بريدك أقدم رسالة. </para>
+              </listitem>
+            </itemizedlist>
+
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>ميز الرسالة المحددة كغير مقروءة بعد...</guilabel
+></term>
+      <listitem>
+        <para
+>عندما تختار رسالة <guilabel
+>جديدة</guilabel
+> أو <guilabel
+>غير مقروءة</guilabel
+>، سيغير بريدك حالة الرسالة إلى <guilabel
+>مقروءة</guilabel
+> بعد انقضاء هذه الثواني. إذا عطلت هذا الخيار، ستحتفظ الرسائل بحالتها <guilabel
+>جديدة</guilabel
+> أو <guilabel
+>غير مقروءة</guilabel
+> حتى تعدلها يدويًا (عبر قائمة <guilabel
+>مجلد</guilabel
+>). </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>اطلب إجراء بعد سحب الرسائل إلى مجلد آخر</guilabel
+></term>
+      <listitem>
+        <para
+>عند سحب رسالة إلى مجلد مختلف، ستسألك نافذة منبثقة صغيرة عما إذا كنت تريد نقل الرسالة أو نسخها. إذا عطلت هذا الخيار، ستُنقل الرسالة فورًا دون النافذة المنبثقة. </para>
+      </listitem>
+    </varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+    <varlistentry>
+      <term
+><guilabel
+>افتح هذا المجلد عند بدء التشغيل</guilabel
+></term>
+      <listitem>
+        <para
+>يمكنك هنا تعيين المجلد الذي يجب اختياره عند بدء تشغيل بريدك. إذا كنت تستخدم مجلدات IMAP فقط، فقد ترغب في تعيين هذا المجلد ليكون صندوق الوارد في IMAP. إذا فعلت ذلك، يمكنك طي المجلدات المحلية في قائمة المجلدات، وستظل مطوية عند بدء تشغيل بريدك. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>أفرغ مجلد المهملات المحلي عند الخروج من البرنامج</guilabel
+></term>
+      <listitem>
+        <para
+>يُفرغ مجلد المهملات من الرسائل عند إنهاء بريدك إذا حُدد هذا الخيار. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>اسمح بحذف الرسائل دون تأكيد</guilabel
+></term>
+      <listitem>
+        <para
+>سلوك بريدك المبدئي هو طلب التأكيد عند حذف رسالة. اختر هذا الخيار إذا كنت ترغب في تخطي خطوة التحقق هذه. (لاحظ أن وظيفة <guilabel
+>حذف</guilabel
+> لا يمكن الوصول إليها من قوائم بريدك، ولكن يمكنك إضافة زر <guibutton
+>حذف</guibutton
+> إلى شريط الأدوات عبر مربع حوار <menuchoice
+> <guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط أشرطة الأدوات...</guimenuitem
+></menuchoice
+>). </para>
+      </listitem>
+    </varlistentry>
+
+  </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-invitation">
+    <title
+>الدّعوات</title>
+    <screenshot>
+      <screeninfo
+>دعوات متنوعة</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscinvite.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>دعوات متنوعة</phrase>
+          </textobject>
+          <caption>
+            <para
+>تبويب متنوع (الدعوات)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>شوه ترويستي من:/إلى: في الردود على الدعوات</guilabel
+></term>
+        <listitem>
+          <para
+>فعل هذا الخيار لجعل Microsoft Outlook يفهم ردك على دعوة. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>أرسل الدعوات في متن البريد</guilabel
+></term>
+        <listitem>
+          <para
+>تُرسل الدعوات عادةً كمرفقات بالرسالة. عند تفعيل هذا الخيار، تُرسل الدعوات في متن الرسالة. هذا ضروري عند إرسال الدعوات والردود إلى Microsoft Outlook. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>تسمية دعوات متوافقة مع Exchange</guilabel
+></term>
+        <listitem>
+          <para
+>يواجه Microsoft Outlook، عند استخدامه مع خادم Microsoft Exchange، مشكلة في فهم رسائل البريد الإلكتروني الجماعية المتوافقة مع المعايير. فعل هذا الخيار لإرسال دعوات العمل الجماعي بتنسيق يمكن لـ Microsoft Exchange فك شفرته. ستُرسل الدعوة كمرفق باسم <filename
+>ical.ics</filename
+>. </para>
+        </listitem>
+      </varlistentry>
+
+<!--varlistentry>
+<term
+><guilabel
+>Outlook compatible invitation reply comments</guilabel
+></term>
+<listitem>
+<para
+>When the user provides comments when responding to invitations, send the comment in a way that <application
+>&Microsoft; Outlook</application
+> understands. If this option is not enabled, the response comments will not be seen in Outlook.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Show invitation update differences in the Outlook style</guilabel
+></term>
+<listitem>
+<para
+>When viewing updated invitations, this option enables the differences between the previous
+and current invitations to be displayed in a way very much like <application
+>&Microsoft; Outlook</application
+>.
+This is the default. The user can turn this option off if they want to see the invitation
+  update differences shown in the <quote
+>classic</quote
+> &kmail; style.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Automatic invitation sending</guilabel
+></term>
+<listitem>
+<para
+>When this is checked, you will not see the mail composer window. Instead,
+all invitation mails are sent automatically. If you want to see the mail
+before sending it, you can uncheck this option. However, be aware that the
+text in the composer window is in iCalendar syntax, and you should not try
+modifying it by hand.</para>
+</listitem>
+</varlistentry--><!-- These options are no longer available. @dcb2020342-->
+
+      <varlistentry>
+        <term
+><guilabel
+>احذف رسائل الدعوات بعد إرسال الرد عليها</guilabel
+></term>
+        <listitem>
+          <para
+>عند تحديد هذا الخيار، ستُنقل الدعوات التي رُد عليها إلى مجلد المهملات بمجرد إرسال الرد. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-printing">
+    <title
+>الطباعة</title>
+    <screenshot>
+      <screeninfo
+>طباعة متنوعة</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscprint.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>طباعة متنوعة</phrase>
+          </textobject>
+          <caption>
+            <para
+>تبويب متنوع (الطباعة)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>يساعدك مربع الحوار هذا على ضبط طريقة عمل وظيفة <menuchoice
+> <guimenu
+>ملف</guimenu
+><guimenuitem
+>اطبع</guimenuitem
+> </menuchoice
+>. </para>
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>اطبع النص المحدد فقط</guilabel
+></term>
+        <listitem>
+          <para
+>فعل هذا الخيار للسماح بطباعة الجزء المحدد من الرسالة فقط. القيمة المبدئية تعطل هذه الميزة، لذا تُطبع الرسالة بالكامل مبدئيًا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>احترم إعدادات علامات توسيع/طي الاقتباس</guilabel
+></term>
+        <listitem>
+          <para
+>يهدف هذا الخيار إلى التفاعل مع ميزة <guilabel
+>أظهر علامات توسيع/طي الاقتباس</guilabel
+> في تبويب <link linkend="configure-appearance-general"
+>المظهر/عام</link
+>، لكنه لا يعمل حاليًا بشكل صحيح. بعبارة أخرى، يوجد علة برمجية. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>اطبع لون الخلفية والصور</guilabel
+></term>
+        <listitem>
+          <para
+>مثل الخيار السابق، هناك علة برمجية هنا، لذا يطبع بريدك الصور دائمًا بغض النظر عن كيفية ضبط هذا الخيار. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>أظهر دائمًا تفاصيل التعمية/التوقيع</guilabel
+></term>
+        <listitem>
+          <para
+>فعل هذا الخيار لجعل بريدك يطبع تفاصيل التعمية للرسائل المعماة أو الموقعة رقميًا. </para>
+        </listitem>
+      </varlistentry>
+
+  </variablelist>
+  </sect2>
+
+</sect1>
+
+<sect1 id="configure-plugins">
+    <title
+>صفحة الملحقات</title>
+
+    <para
+>يحتوي بريدك على عدد كبير من الوظائف الخاصة التي قد تكون مفيدة أو غير مفيدة لمستخدمين معينين. يمكنك اختيار واحدة أو أكثر من هذه الوظائف الخاصة عبر تحديدها في صفحة ضبط "الملحقات". أو إذا كنت لا تريد وظيفة معينة، يمكنك توفير الوقت ومساحة التخزين عبر إلغاء تحديد وحدة الملحق المرتبطة بها. </para>
+
+    <para
+>في العديد من توزيعات لينكس، لا تُضمن معظم هذه الملحقات في حزمة بريدك الأساسية. للحصول على وظائف الملحقات الكاملة، تأكد من تثبيت الحزمة المسماة "kdepim-addons" (أو ما يشابهها). </para>
+
+    <para
+>يمكنك أخذ فكرة عامة عما يفعله ملحق معين عبر تظليل اسم الملحق في صفحة ضبط بريدك. سيظهر وصف موجز لوظيفة الملحق على الجانب الأيمن من مربع الحوار. </para>
+
+    <para
+>الملحقات المختلفة المتاحة حاليًا في بريدك (2021) مدرجة أدناه. لاحظ أن مجموعة الملحقات "المبدئية" تعتمد على نسخة openSUSE من بريدك (5.14.2) المستخدمة كمرجع لهذا الإصدار من الوثائق. قد تختلف الإعدادات المبدئية الفعلية على نظامك؛ فهي تعتمد على التوزيعة. </para>
+
+    <para
+>نظرًا لإضافة وظائف جديدة من وقت لآخر، قد تطول هذه القائمة مع مرور الوقت. هناك قاعدتان عامتان تحكمان هيكلية الملحقات يمكنك الاعتماد عليهما حتى لو كان الملحق الذي تتعامل معه غير مدرج أدناه. </para>
+
+    <para
+>1. إذا كان الملحق يحتوي على متغيرات قابلة للضبط، يمكنك فتح مربع حوار الضبط لهذا الملحق بالنقر على زر <guibutton
+>&nbsp;<inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> الذي يظهر بجانب اسم الملحق. </para>
+
+    <para
+>2. عند تحديد ملحق أو إلغاء تحديده، يجب إعادة تشغيل بريدك قبل أن تدخل التغييرات المطلوبة حيز التنفيذ. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <sect2 id="configure-plugins-akonadi">
+    <title
+>أكونادي والتحقق قبل الإرسال</title>
+    <screenshot>
+      <screeninfo
+>صورة الملحقات رقم واحد</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin01.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>صورة الملحقات رقم واحد</phrase>
+          </textobject>
+          <caption>
+            <para
+>الملحقات: أكونادي والتحقق قبل الإرسال</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>وكيل أرشفة البريد</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين الأرشفة الآلية. راجع وثائق <ulink url="help:/akonadi_archivemail_agent"
+>وكيل أرشفة البريد</ulink
+> للحصول على معلومات مفصلة. قد ترغب أيضًا في قراءة قسم <link linkend="archiving"
+>الأرشفة</link
+> في هذا الدليل. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>وكيل تذكير المتابعة</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين تذكيرات المتابعة. راجع وثائق <ulink url="help:/akonadi_followupreminder_agent"
+>وكيل تذكير المتابعة</ulink
+> للحصول على معلومات إضافية. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>مُخطر البريد الجديد</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين إشعارات البريد الإلكتروني الجديد. يمكنك تفصيل الحقول التي ستُعرض في رسالة الإشعار "القياسية". يمكنك أيضًا تحديد إشارات صوتية (نص منطوق، أصوات مسجلة مسبقًا)، وإنشاء مدخلات في ملف السجل، وما إلى ذلك. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>وكيل الإرسال لاحقًا</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين الإرسال المؤجل. راجع وثائق <ulink url="help:/akonadi_sendlater_agent"
+>وكيل الإرسال لاحقًا</ulink
+> للحصول على معلومات إضافية. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>وكيل صندوق البريد الموحد</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإنشاء مجموعة من صناديق البريد "الموحدة". سيقوم بريدك آليًّا بإنشاء ثلاثة منها، موسومة بالوارد، والمسودات، والمرسل. إذا كنت قد حددت صندوق وارد للمجلدات المحلية ووجهة واحدة أو أكثر لصندوق وارد IMAP، سيعرض بريدك جميع ملفات الوارد المختلفة كجلد وارد افتراضي واحد مدمج. يمكنك استخدام حوار الضبط لإنشاء صناديق بريد افتراضية إضافية، وتفصيل كل منها كما تراه مناسبًا. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>إضافة المتراسلين آليًّا</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة عناوين جديدة إلى أحد دفاتر عناوينك كلما أرسلت بريدًا إلكترونيًا إلى جهة اتصال جديدة. استخدم حوار الضبط لربط دفاتر العناوين بالهويات. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>التحقق قبل الإرسال</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتطبيق بعض القواعد قبل إرسال الرسالة فعليًا. هذا الملحق مُمكن مبدئيًّا، وسيخطرك آليًّا عندما تحاول إرسال أكثر من نسخة من الرسالة إلى نفس الشخص. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>تأكيد العنوان</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين فحص العناوين في الرسائل الصادرة. استخدم حوار الضبط لتحديد قائمة بيضاء و/أو قائمة سوداء لكل هوية محددة. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-plugins-composer">
+    <title
+>المؤلِّف / المحرر</title>
+    <screenshot>
+      <screeninfo
+>صورة الملحقات رقم اثنان</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin02.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>صورة الملحقات رقم اثنان</phrase>
+          </textobject>
+          <caption>
+            <para
+>المؤلِّف والمحرر</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>فتح المؤلِّف الخارجي</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإجبار المؤلِّف على فتح محرر نصوص خارجي عند بدء التشغيل. استخدم حوار الضبط لهذا الملحق لتحديد المحرر الذي سيُستدعى. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>التصحيح الآلي</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>صحح النص آليًّا &gt;</guimenuitem
+></menuchoice
+> إلى المؤلِّف. هذا الملحق مُعطل مبدئيًّا، ويبدو أنه لا يزال قيد الإنشاء. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>غيّر حالة الأحرف</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>تحرير</guimenu
+> <guimenuitem
+>تغيير الحالة &gt;</guimenuitem
+></menuchoice
+> إلى المؤلِّف. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>إدراج بريد</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>تحرير</guimenu
+> <guimenuitem
+>أدرج بريدًا...</guimenuitem
+></menuchoice
+> إلى المؤلِّف. يتيح لك هذا إدراج عنوان بريد إلكتروني محدد من دفتر عناوين في نص رسالتك بمجرد التأشير والنقر بزر الفأرة الأيسر. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>إدراج مسافة غير قاطعة</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>تحرير</guimenu
+> <guimenuitem
+>أدرج مسافة غير قاطعة</guimenuitem
+></menuchoice
+> إلى المؤلِّف. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>إدراج مسار مختصر</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة جزء صغير من كود غير وظيفي تمامًا. هذا الملحق لا يزال قيد الإنشاء، وهو معطل أيضًا مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>أدرِج رمزّا خاصًا</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>تحرير</guimenu
+> <guimenuitem
+>أدرج رمزًا خاصًا...</guimenuitem
+></menuchoice
+> إلى المؤلِّف. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>النص السريع</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة ميزة <menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>قصاصات</guimenuitem
+></menuchoice
+> إلى المؤلِّف. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>شارك النص</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guimenuitem
+>شارك نص البريد &gt;</guimenuitem
+></menuchoice
+> إلى المؤلِّف. تُعرض أربعة خيارات: Nextcloud، وPastebin، وبلوتوث، والبريد الإلكتروني (يفتح نافذة مؤلِّف ثانية). هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>تكبير/تصغير النص</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>تحرير</guimenu
+> <guimenuitem
+>تغيير المستوى... &gt;</guimenuitem
+></menuchoice
+> إلى المؤلِّف. هذا الملحق مُعطل مبدئيًّا."#. Tag: title </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-plugins-grammar">
+    <title
+>تدقيق القواعد / أنماط الترويسات</title>
+    <screenshot>
+      <screeninfo
+>صورة الملحقات رقم ثلاثة</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin03.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>صورة الملحقات رقم ثلاثة</phrase>
+          </textobject>
+          <caption>
+            <para
+>مدققات القواعد وأنماط الترويسات</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>مدقق القواعد الفرنسي</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة خيار <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>دقق القواعد (Grammalecte)</guimenuitem
+></menuchoice
+> إلى نافذة المؤلِّف. هذا الخيار خاص باللغة الفرنسية فقط. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>مدقق القواعد (Language Tool)</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة خيار <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>دقق القواعد (Language Tool)</guimenuitem
+></menuchoice
+> إلى نافذة المؤلِّف. هذه أداة متعددة الأغراض، مع دعم لتدقيق القواعد في العديد من اللغات المختلفة. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>تسمح لك الملحقات الستة التالية بتحديد أنماط الترويسات التي يمكن تحديدها من قائمة <guimenu
+>عرض</guimenu
+>. راجع <link linkend="the-preview-pane-headers"
+>وصف عروض الترويسات المختلفة</link
+> في فصل "استخدام بريدك" لمزيد من المعلومات. </para>
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>نمط ترويسة مختصر</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين عرض الترويسات "المختصرة". هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>نمط ترويسة غرانتلي المبدئي</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين عرض ترويسات "بريدك 5.2". هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>نمط ترويسة مزخرف</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين عرض الترويسات "المزخرفة". هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>نمط ترويسة غرانتلي</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين عرض الترويسات "الجذابة". هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>نمط ترويسة طويل</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين عرض الترويسات "الطويلة". هذا الملحق مُعطل مبدئيًّا. (الترويسات الطويلة تشبه الترويسات القياسية، لكنها ستعرض بعض معلومات الترويسة الأقل شيوعًا، مثل "الرد على"، عند وجود مثل هذه الترويسات). </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>نمط ترويسة قياسي</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين عرض الترويسات "القياسية". هذا الملحق مُعطل مبدئيًّا. (الترويسات القياسية هي نفسها الترويسات المزخرفة، ولكن بدون الخلفية المظللة). </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-plugins-misc">
+    <title
+>عارض الرسائل / متنوع</title>
+    <screenshot>
+      <screeninfo
+>صورة الملحقات رقم أربعة</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin04.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>صورة الملحقات رقم أربعة</phrase>
+          </textobject>
+          <caption>
+            <para
+>عارض الرسائل ومتنوع</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>توفر الملحقات الستة التالية وظائف خاصة لا يمكن استدعاؤها إلا بزر شريط أدوات. استخدم حوار <menuchoice
+><guimenu
+>إعدادات</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+> اضبط أشرطة الأدوات... </guimenuitem
+> </menuchoice
+> لإضافة أو إزالة أزرار شريط الأدوات المرتبطة بهذه الوظائف بعد تحديد أو تعطيل أحد هذه الملحقات. </para>
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>أنشئ حدثًا</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار للسماح بإنشاء حدث تقويم أثناء عرض رسالة في بريدك. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>أنشئ ملاحظة</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار للسماح بإنشاء ملاحظة كونتكت أثناء عرض رسالة في بريدك. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>أنشئ مهمة</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار للسماح بإنشاء عنصر مهمة في منظم كيدي أثناء عرض رسالة في بريدك. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>وسّع المسار</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين وظيفة "توسيع المسار". هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>سكربت خارجي</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار للسماح باستدعاء أمر قابل للتنفيذ من شريط الأدوات. استخدم حوار الضبط المرتبط لتحديد الملف القابل للتنفيذ، وإعطائه اسمًا. الاسم الذي تختاره يمكن إضافته لاحقًا إلى شريط الأدوات كزر، بحيث يمكنك استدعاء السكربت عند الرغبة. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>المترجم</guilabel
+></term>
+        <listitem>
+          <para
+>تتوفر <link linkend="using-the-translator"
+>وظيفة المترجم</link
+> في المؤلِّف مبدئيًّا. استخدم هذا الملحق (عبر شريط الأدوات) لجعل المترجم متاحًا في نافذة معاينة الرسائل. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>العناصر الأربعة التالية ليست ملحقات حقًا؛ بل هي وظائف مدمجة في بريدك. يمكن ضبط كل واحدة منها على حدة باستخدام زر <guibutton
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> الذي يظهر بجانب اسم الوظيفة. لا حاجة لإعادة التشغيل لتفعيل متغيرات الضبط هذه. </para>
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>مدقق DKIM</guilabel
+></term>
+        <listitem>
+          <para
+>يتيح لك هذا الحوار التحكم في معالجة البريد المحدد بمفاتيح النطاق (DKIM). DKIM هو بروتوكول تعمية يمكنه التأكيد لك أن رسالة معينة قد صدرت من نطاق الإنترنت الذي تدعي صدورها منه. إذا قام المرسل بإعداد DKIM بشكل صحيح ومُكن DKIM هنا، سترى رسالة "DKIM صالح"، وأحيانًا اسم الكيان الذي وقع الرسالة، في شريط الحالة بأسفل نافذة معاينة الرسالة. </para>
+          <note
+><para
+>إذا مكنت هذا الخيار، تأكد من تغيير القيمة المبدئية ("لا شيء") في المربع الدوار الموسوم بـ "حفظ مفتاح السجل" إلى قيمة أخرى. لا يعمل مدقق DKIM بشكل صحيح إذا ضبط هذا المتغير على "لا شيء". </para
+></note>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>انتهاء صلاحية مجلد المهملات</guilabel
+></term>
+        <listitem>
+          <para
+>استخدم حوار الضبط هذا لتعيين معايير انتهاء الصلاحية لمجلد (أو مجلدات) المهملات. راجع وثائق <link linkend="folders-properties-expiry"
+>"خصائص المجلد"</link
+> لمزيد من المعلومات. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>إعدادات المجلد</guilabel
+></term>
+        <listitem>
+          <para
+>استخدم حوار الضبط هذا لتعيين خصائص مخصصة للمجلد لعدة مجلدات مختلفة في وقت واحد. يمكنك تحديد المجلدات المراد تعديلها من عرض شجري لجميع مجلداتك على اليسار، وتحديد الخصائص المراد ضبطها من تبويبات عام، وعرض، وقوالب، وانتهاء الصلاحية في حوار <link linkend="folders-properties-window"
+>"خصائص المجلد"</link
+>. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>غرافاتار</guilabel
+></term>
+        <listitem>
+          <para
+>استخدم حوار الضبط هذا لتمكين / تعطيل دعم غرافاتار (الصورة الرمزية المعترف بها عالميًا). </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-plugins-tools">
+        <title
+>أدوات</title>
+
+    <screenshot>
+      <screeninfo
+>صورة الملحقات رقم خمسة</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin05.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>صورة الملحقات رقم خمسة</phrase>
+          </textobject>
+          <caption>
+            <para
+>الأدوات ومحرك الويب</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>مكافحة السخام</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة <link linkend="the-anti-spam-wizard"
+>معالج مكافحة السخام</link
+> إلى قائمة <guimenu
+>أدوات</guimenu
+>. هذا الملحق مُعطل مبدئيًّا. لاحظ أنه بمجرد تثبيت برنامج مكافحة السخام، يمكن تعطيل هذا الملحق بأمان؛ فالملحق مطلوب فقط لتثبيت برنامج مكافحة السخام، وليس لتشغيله. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>مكافحة الفيروسات</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة <link linkend="the-anti-virus-wizard"
+>معالج مكافحة الفيروسات</link
+> إلى قائمة <guimenu
+>أدوات</guimenu
+>. هذا الملحق مُعطل مبدئيًّا. لاحظ أنه بمجرد تثبيت برنامج مكافحة الفيروسات، يمكن تعطيل هذا الملحق بأمان؛ فالملحق مطلوب فقط لتثبيت برنامج مكافحة الفيروسات، وليس لتشغيله. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>ملحق الخبراء</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة وظيفة <menuchoice
+><guimenu
+>رسالة</guimenu
+> <guimenuitem
+>أظهر بنية الرسالة Ctrl+Alt+D</guimenuitem
+></menuchoice
+> في نافذة معاينة الرسائل. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>سجل الأنشطة</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لتمكين وظيفة سجل الأنشطة، وهي معطلة مبدئيًّا. يضيف هذا الملحق مدخلًا جديدًا <guilabel
+>سجل الأنشطة</guilabel
+> إلى قائمة <guilabel
+>أدوات</guilabel
+>. مخصص بشكل رئيس لاستخدام مطوري البرامج -- فوظيفة السجل المبدئية لا توفر الكثير من المعلومات (مجرد طابع زمني و "جاهز" لمعظم "الأحداث"). </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>حاجب الإعلانات</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإضافة مرشحات <ulink url="https://adblockplus.org"
+>Adblock Plus</ulink
+> إلى بريدك. إذا اخترت تنشيط هذا الملحق، فكن مستعدًا لقضاء وقت طويل في تعديل ملف الضبط للحصول على المرشحات التي تريدها حقًا. هذا الملحق مُعطل مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term
+><guilabel
+>عدم التعقب</guilabel
+></term>
+        <listitem>
+          <para
+>حدد هذا الخيار لإجبار بريدك على إرسال طلب "عدم التعقب" إلى خادم بعيد عندما تطلب رسالة HTML تنزيل محتوى بعيد. يعتمد تأثير طلب "عدم التعقب" على السياسة المتبعة من قبل خادم الويب الذي يتلقى الطلب. تلتزم بعض المواقع به، وبعضها الآخر لا. </para>
+          <para
+>المعلنون لديهم أعين في كل مكان. غالبًا ما تتضمن الرسائل المرمزة بـ HTML "صورة" بحجم 0×0 أو 1×1 بكسل (تُعرف باسم "بكسل التتبع") وهي في الواقع مسار تتبع متخفٍ. عندما يجلب بريدك بيانات الصور من خادم ويب، يجب عليه استخدام المسارات المضمنة في الرسالة؛ يمكن للخادم استخدام المعلومات المضمنة في المسار للاستنتاج بأنك قد فتحت الرسالة، وما إلى ذلك. </para>
+          <para
+>إرسال طلب "عدم التعقب" قد يعزز خصوصيتك قليلًا. ولكن الطريقة الوحيدة المؤكدة لتجنب بكسلات التتبع هي عدم تنزيل الصور البعيدة المرمزة في رسائل HTML أبدًا. هذا الملحق مُمكن مبدئيًّا. </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+    </sect2>
+
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>خيارات بدون تمثيل في واجهة المستخدم</title>
+<para
+>بصرف النظر عن الخيارات المقدمة في حوار الضبط، بعض الخيارات لا يمكن ضبطها إلا مباشرة في ملف ضبط بريدك أو عبر KIOSK (مثل المدخلات في الطرفية). خيارات الضبط هذه التي تسمى <quote
+>مخفية</quote
+> لا يمكن تغييرها عبر حوار إعدادات بريدك العادي؛ بل يجب القيام بذلك عن طريق تعديل ملف الضبط باستخدام محرر نصوص أو برنامج <command
+>kwriteconfig</command
+>. يُكتب ملف الضبط بتنسيق [اسم القسم] والأسطر التالية هي المتغيرات وإعداداتها. إذا كنت تحرر ملف الضبط يدويًا، فستحتاج إلى إضافة [اسم القسم] قبل إضافة المتغيرات. سيقوم <command
+>kwriteconfig</command
+> بإضافة القسم نيابة عنك طالما أنك تستخدم مفتاح <userinput
+>--group</userinput
+>. </para>
+
+<para
+>يسمى ملف ضبط بريدك <filename
+>kmail2rc</filename
+> ويمكن العثور عليه في مجلدك المنزلي. قد يختلف الموقع وفقًا لـ نظام التشغيل أو التوزيعة، ولكن يمكن العثور عليه دائمًا عن طريق تشغيل الأمر <userinput
+><command
+>kf5-config --path config --locate kmail2rc</command
+></userinput
+>. في بقية هذا القسم، افترض أن ملف الضبط موجود في <filename
+>/path/to/kmail2rc</filename
+>. </para>
+
+<warning
+><para
+>عندما تغير هذه الخيارات، تأكد من إنهاء بريدك أولًا قبل تحرير ملف الضبط. أعد تشغيل بريدك فقط بعد إجراء <emphasis
+>وحفظ</emphasis
+> التغييرات في ملف الضبط. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>إرسال إشعارات استلام الرسائل بمرسل فارغ</guilabel
+></term>
+<listitem>
+<para
+>أرسل إشعارات استلام الرسائل بسلسلة مرسل فارغة. بعض الخوادم قد تُضبط لرفض مثل هذه الرسائل، لذا إذا كنت تواجه مشكلات في إرسال MDNs، فتأكد من ضبط هذا الخيار على خطأ. لتمكين هذه الميزة، أضف إلى قسم <quote
+>[MDN]</quote
+>:</para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>الإعداد المبدئي <quote
+>خطأ</quote
+> ينتهك معايير الإنترنت من الناحية النظرية، ولكنه ضُبط بهذا الشكل لأسباب عملية، لتجنب رفض الخوادم لإشعارات MDNs التي يولدها بريدك لاعتقادها أنها سخام.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>إغلاق رغم وجود أيقونة صينية النظام</guilabel
+></term>
+<listitem>
+<para
+>يتيح لك هذا الخيار ضبط التطبيق ليغلق تمامًا، حتى إذا كانت هناك أيقونة صينية نظام مضبوطة، والتي من شأنها عادةً إبقاء التطبيق قيد التشغيل. لتمكين الميزة، أضف إلى قسم <quote
+>[General]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>تجاهل umask</guilabel
+></term>
+<listitem>
+<para
+>في الإصدارات السابقة لـ 1.9، كان بريدك يحفظ جميع المرفقات على القرص مع تعيين الأذون على 600 &mdash; للقراءة أو الكتابة فقط من قبل مالك الملف. واستجابة لتعليقات المستخدمين، جُعل هذا قابلًا للضبط في بريدك الإصدار 1.9، مع تغيير القيم المبدئية لاحترام umask المحدد في حساب المستخدم أثناء حفظ الملفات على القرص. لتمكين هذه الميزة، أضف إلى قسم <quote
+>[General]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>تحقق من حالة خارج المكتب عند بدء التشغيل</guilabel
+></term>
+<listitem>
+<para
+>مع تمكين هذا الخيار، سيتحقق بريدك عند كل بدء تشغيل مما إذا كان هناك رد تلقائي "خارج المكتب" نشط، وسيظهر تحذيرًا إذا كان الأمر كذلك. لتعطيل الميزة، أضف إلى قسم <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>السماح بإعدادات خارج المكتب</guilabel
+></term>
+<listitem>
+<para
+>في حال كنت لا تريد أن يتمكن المستخدمون من رفع سكربتات "خارج المكتب" الخاصة بهم إلى الخادم، يمكنك الإضافة إلى قسم <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>السماح برفع خارج المكتب ولكن بدون إعدادات</guilabel
+></term>
+<listitem>
+<para
+>إذا كنت تريد السماح لمستخدميك برفع سكربتات "خارج المكتب" الخاصة بهم ولكنك لا تريدهم أن يتمكنوا من تغيير النطاق الذي سيتم التفاعل معه وإعداد التفاعل مع السخام، فيمكنك الإضافة إلى قسم <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>نطاق خارج المكتب</guilabel
+></term>
+<listitem>
+<para
+>عند تحرير سكربتات الإجازة (خارج المكتب)، قد يحدد المستخدم نطاقًا لقصر إرسال مثل هذه الردود عليه. سيؤدي تطبيق القيم المبدئية على حوار ضبط "خارج المكتب" عبر الزر المقابل إلى استعادة هذا النطاق، في حال قام المستخدم بتغييره. لتحميل هذا الإعداد مسبقًا بقيمة مبدئية، أضف إلى قسم <quote
+>[OutOfOffice]</quote
+>:</para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>OutOfOfficeDomain=myMailDomain.test</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain myMailDomain.test</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>تفاعل خارج المكتب مع السخام</guilabel
+></term>
+<listitem>
+<para
+>مبدئيًّا، لا تُرسل ردود "خارج المكتب" على الرسائل الموسومة بـ سخام. لتجاوز هذا السلوك، أضف إلى قسم [OutOfOffice]:</para>
+<itemizedlist>
+<listitem
+><para
+>ملف الإعدادات:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

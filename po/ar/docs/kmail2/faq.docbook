@@ -1,0 +1,1481 @@
+<chapter id="faq">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author
+>&David.Rugge; &David.Rugge.mail;</author>
+<author
+>&David.Bryant; &David.Bryant.mail;</author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-04-09</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>الأسئلة الشائعة (&FAQ;)</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
+> -->
+
+<qandaset id="faq-set">
+
+<qandaentry>
+  <question
+><para
+>كيف يمكنني ضبط فيرفوكس ليكون المتصفح المبدئي؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تريد النقر على رابط في بريدك ليُفتح في <application
+>فيرفوكس</application
+>. حاليًا، يُستخدم متصفح آخر، وتريد تغيير هذا.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> سيؤثر هذا التغيير على كيدي بالكامل، وليس بريدك فقط. اختر <menuchoice
+> <guimenu
+>إعدادات النظام</guimenu
+><guisubmenu
+>التطبيقات المبدئية</guisubmenu
+><guimenuitem
+>متصفح الويب</guimenuitem
+><guimenuitem
+>موزيلا فيرفوكس</guimenuitem
+></menuchoice
+>.</para>
+
+    <para
+>إذا كنت مديرًا وتريد تطبيق هذا الإعداد آليًا لمستخدميك، فافعل الآتي.</para>
+    <itemizedlist>
+      <listitem>
+        <para
+>شغل <screen
+># qtpaths --paths ConfigLocation</screen
+> في الطرفية. سيعرض هذا المسار (المسارات) المؤدية إلى ملفات الضبط لبرامج كيدي في نظامك. استخدم المسار الذي يبدأ في دليل المنزل لكل مستخدم، وحدد مكان الملف المسمى <filename
+>kdeglobals</filename
+>، ثم أضف هذا السطر تحت الفئة <guilabel
+>[General]</guilabel
+>:</para>
+        <para
+><userinput
+>BrowserApplication[$e]=firefox.desktop</userinput>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para
+>يمكنك أيضًا تجربة المخطط في <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
+>دروس/تعديل_قيم_برمجيات_كيدي_المبدئية</ulink
+></para>
+    <note
+><para
+>يعتمد الموقع الفيزيائي الفعلي لمتغيرات الضبط على التوزيعة. لا تتفاجأ إذا لم تعمل بعض التعليمات المتعلقة بتعديل متغيرات الضبط الموثقة في ويكي كيدي معك. المنتدى العام لتوزيعتك هو مكان جيد لطلب المساعدة.</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أتحكم في اتصال تشكيلة التجوال الخاصة بي؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> لقد أعددت <emphasis
+>تشكيلة تجوال</emphasis
+> لتتمكن من الوصول إلى خادمك المنزلي أثناء سفرك، لكنها تستمر في محاولة الاتصال حتى عندما تكون في المنزل. رُطل الاتصال الآلي في شاشات الإعداد.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> توجه إلى <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guisubmenu
+>اضبط بريدك</guisubmenu
+><guimenuitem
+>الحسابات</guimenuitem
+><guimenuitem
+>الاستلام (تبويب)</guimenuitem
+> <guimenuitem
+>(اختر الحساب المراد استثناؤه)</guimenuitem
+><guimenuitem
+>خيارات الجلب</guimenuitem
+> </menuchoice
+>، ثم أزل العلامة عن <guilabel
+>ضمنه في فحص البريد اليدوي</guilabel
+>. سيستثني هذا التشكيلة عند النقر على أيقونة التنزيل، لكن الحساب سيظل متاحًا في القائمة المنسدلة، مما يسهل جلب بريدك عندما تكون بعيدًا عن المنزل.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أخزن الرسائل المرسلة في مجلد خاص؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تريد تخزين الرسائل التي أرسلتها في مجلد خاص. ربما تستخدم خادم &IMAP; وترغب في تخزين بريدك المرسل على الخادم، وليس في مجلد محلي.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> في بريدك، توجه إلى <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guisubmenu
+>اضبط بريدك</guisubmenu
+><guimenuitem
+>الهويات</guimenuitem
+><guimenuitem
+>(اختر هوية)</guimenuitem
+><guimenuitem
+>تعديل</guimenuitem
+><guimenuitem
+>متقدم</guimenuitem
+><guimenuitem
+>مجلد البريد المرسل</guimenuitem
+></menuchoice
+> واختر المجلد الذي تريد استخدامه.</para>
+    <para
+>بدلًا من ذلك، يمكنك استخدام حقل <guilabel
+>مجلد البريد المرسل</guilabel
+> (الذي يمكن الوصول إليه عبر قائمة <guimenu
+>عرض</guimenu
+> في نافذة الملحن) لتجاوز مجلد البريد المرسل المبدئي لرسالة معينة.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أنقل رسائل البريد المهملة إلى مجلد خاص؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تريد تخزين المهملات في مجلد خاص. ربما تستخدم خادم &IMAP; وتريد تخزين الرسائل المهملة على الخادم، وليس محليًا.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> في حوار الإعدادات، اختر حساب &IMAP; من صفحة <guilabel
+>الحسابات</guilabel
+>. انقر على <guibutton
+>تعديل</guibutton
+> وغير موقع مجلد المهملات عبر تبويب <guilabel
+>متقدم</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #5 -->
+<qandaentry>
+  <question
+><para
+>كيف يمكنني تخزين الرسائل المعماة بشكل غير معمى؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تتبادل البريد المعمى مع صديق، لكنك تود تخزين نسختك الخاصة دون تعمية بمجرد فتح الرسالة.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> لتخزين رسائل البريد التي فُكت تعميتها مرة واحدة في تنسيق غير معمى بعد ذلك، أضف هذا العنصر إلى ملف ضبط <filename
+>kmail2rc</filename
+> في قسم [Reader]:</para>
+    <para
+><userinput
+>store-displayed-messages-unencrypted=true</userinput
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أرشح البريد المزعج على خادم &IMAP;؟</para
+></question>
+  <!--FIXME replace this with a link to the sieve section?-->
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تنوي قراءة بريدك من خادم &IMAP;، وتتساءل كيف سيحدث الترشيح والتعامل مع البريد المزعج.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> يمكن للحاسوب الذي يحتوي بالفعل على بريدك أن يصبح خادم &IMAP; الخاص بك. سيتعين عليك ضبط تطبيق خادم. <application
+>Dovecot</application
+> هو أحد هذه التطبيقات، والدليل الموجود على صفحات الويب الخاصة بالمشروع يجعل إعداده بسيطًا نسبيًا. يبقى أمامك مشكلة الترشيح، فمن المنطقي القيام بذلك على الخادم (عندما توجه بريدك إلى الخادم ستشاهد المجلدات التي أُنشئت على ذلك النظام). هناك خيارات متعددة، من أشهرها <application
+>Procmail</application
+>، وهناك أيضًا <application
+>Imapfilter</application
+>. تتوفر معلومات وفيرة على الإنترنت حول إعداد هذه البرمجيات. مناقشة هذه الحزم مفتوحة المصدر يخرج عن نطاق توثيق بريدك.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أحصل على مساحة شاشة أكبر في بريدك؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تستخدم بريدك على حاسوب محمول، وتجد أن عرض <emphasis
+>التجميع</emphasis
+> الجديد يترك لك مساحة شاشة ضئيلة جدًا.</para>
+
+    <para
+><emphasis
+>الحل:</emphasis
+> إذا أردت تغيير قائمة الرسائل لتستخدم كل رسالة سطرًا واحدًا بدلًا من سطرين، اذهب إلى <menuchoice
+><guimenu
+>عرض</guimenu
+><guisubmenu
+>قائمة الرسائل</guisubmenu
+> <guimenuitem
+>السمة</guimenuitem
+></menuchoice
+> وغير السمة إلى <guilabel
+>تقليدي</guilabel
+>. إذا أردت تعطيل التجميع حسب التاريخ، غير التجميع باستخدام <menuchoice
+><guimenu
+>عرض</guimenu
+> <guisubmenu
+>قائمة الرسائل</guisubmenu
+><guimenuitem
+>التجميع</guimenuitem
+></menuchoice
+> إلى <guilabel
+>قائمة بريدية قياسية</guilabel
+>. الآن سيبدو بريدك تمامًا كما كان في الإصدارات المبكرة من البرنامج.</para>
+
+    <para
+>في <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guisubmenu
+>اضبط بريدك</guisubmenu
+> <guimenuitem
+>المظهر</guimenuitem
+><guimenuitem
+>الخطوط</guimenuitem
+></menuchoice
+> يمكنك اختيار <guilabel
+>استخدم خطوطًا مخصصة</guilabel
+> لتغيير إعداد قائمة الرسائل. يمكنك أيضًا ضبط حجم الخط في حوار <guilabel
+>استخدم خطوطًا مخصصة</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف يمكنني إيقاف تلميحات مجلدات بريدك؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تستخدم بريدك على حاسوب محمول، وتجد أن <emphasis
+>التلميحات</emphasis
+> التي تظهر تخفي الكثير من أسماء المجلدات.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> انقر بزر الفأرة الأيمن على ترويسة "الاسم" فوق <guilabel
+>قائمة المجلدات</guilabel
+> وحدد <guilabel
+>أبدًا</guilabel
+> تحت <guilabel
+>اعرض التلميحات</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أخفي تلميحات قائمة الرسائل؟</para
+></question>
+  <answer>
+    <para
+>في بريدك، تبويب <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guisubmenu
+>اضبط بريدك</guisubmenu
+><guimenuitem
+>المظهر</guimenuitem
+><guimenuitem
+>قائمة الرسائل</guimenuitem
+> </menuchoice
+>، أزل العلامة عن <menuchoice
+><guimenu
+>عام</guimenu
+><guimenuitem
+>اعرض تلميحات الرسائل وترويسات المجموعات</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>بدلًا من ذلك، انقر بزر الفأرة الأيمن على إحدى الترويسات فوق قائمة الرسائل وأزل تحديد مربع الاختيار المسمى <guilabel
+>اعرض التلميحات</guilabel
+>.</para>
+    <note
+><para
+>لا تظهر الترويسات فوق قائمة الرسائل إذا كنت قد اخترت السمة "الذكية".</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- <qandaentry>
+<question
+><para
+>How can I remove alternate line colorings?</para
+></question>
+<answer>
+<para
+>In <menuchoice
+><guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Application
+Appearance</guisubmenu
+><guimenuitem
+>Colors</guimenuitem
+><guimenuitem
+>Colors</guimenuitem
+></menuchoice
+>, for each color
+set except <guilabel
+>Common Colors</guilabel
+> (which doesn't have it), change the <guilabel
+>Alternate
+Background</guilabel
+> to be the same as the <guilabel
+>Normal Background</guilabel
+>.</para>
+<para
+><emphasis
+>Mandriva</emphasis
+> and <emphasis
+>Mageia</emphasis
+> doesn't use the name <guilabel
+>System
+Settings</guilabel
+>.  As in <guilabel
+>KControl</guilabel
+>, the KDE 3 control centre, they name it <quote
+>Configure your
+Desktop</quote
+> to distinguish it from <quote
+>Configure your Computer</quote
+>, a.k.a. the Mandriva/Mageia Control
+Center (MCC). Other than this name change, the method is as described above.</para>
+</answer>
+</qandaentry
+> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
+
+<!-- FAQ #10 -->
+<qandaentry id="transfer-mail-and-settings">
+  <question>
+    <para
+>كيف أنقل بريدي وإعداداتي إلى حاسوب آخر (أو إلى حساب مستخدم آخر على نفس الحاسوب)؟</para>
+  </question>
+  <answer>
+    <para
+>استخدم <menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>استورد/صدر بيانات بريدك...</guimenuitem
+></menuchoice
+> لاستيراد وتصدير الإعدادات والبيانات. يرجى مراجعة <ulink url="help:/pimsettingexporter"
+>مُصدّر إعدادات PIM</ulink
+> للتفاصيل.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>لماذا لا أستطيع نسخ مجلدات بريدي إلى ذاكرة USB؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تقوم بإعداد حاسوب جديد وتريد نقل كل بريدك. قررت نسخ كل شيء إلى ذاكرة USB. بدأت المهمة، ثم تلقيت رسالة فشل:</para>
+    <screen
+>تعذر النسخ ............ معامل غير صالح</screen>
+
+    <para
+><emphasis
+>الحل:</emphasis
+> ذاكرة USB الخاصة بك مهيأة بنظام ملفات <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
+>VFAT</ulink
+>، ولذلك لا يمكنها التعامل مع أسماء مجلدات <emphasis
+>maildir</emphasis
+> (ولا يمكنها التعامل مع <emphasis
+>الأذون</emphasis
+>، مما قد يسبب العديد من المشاكل الأخرى). لديك خياران: إما تهيئة ذاكرة الـ USB بنظام ext2 (أو ext3 / 4 -- وفي هذه الحالة يجب أن تدرك أنه لا يمكن قراءتها بواسطة ويندوز دون تثبيت برامج إضافية) أو إنشاء ملف .tar أو .zip لبريدك، ثم نسخه إلى الذاكرة وفك الأرشيف على المضيف الجديد.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>لماذا لا تطبق مرشحاتي على الرسائل الواردة من حسابات &IMAP;؟</para
+></question>
+  <answer>
+    <para
+>وضع &IMAP; العادي لا يدعم الترشيح، لكن نوع حساب &IMAP; غير المتصل الجديد يدعمه. يمكنك تجربة استخدام الترشيح من جانب الخادم (اسأل مديرك عن كيفية تثبيت المرشحات على الخادم، وبأي تنسيق)، بما أن &IMAP; يتمحور حول إدارة بريدك <emphasis
+>على الخادم</emphasis
+>. انظر <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guisubmenu
+>اضبط بريدك...</guisubmenu
+><guimenuitem
+>الاستلام</guimenuitem
+><guimenuitem
+>(أحد حسابات &IMAP;)</guimenuitem
+></menuchoice
+>، ثم انقر على <guilabel
+>تعديل...</guilabel
+> وتبويب <guilabel
+>الترشيح</guilabel
+> لضبط الترشيح من جانب الخادم باستخدام لغة البرمجة <ulink url="http://sieve.info/"
+>Sieve</ulink
+> (إذا كان خادم &IMAP; الخاص بك يدعمها).</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="pgp-faq">
+<question
+><para
+>ما الذي يجب علي معرفته إذا أردت استخدام <application
+>PGP</application
+> أو <application
+>GnuPG</application
+> مع بريدك؟</para
+></question>
+
+  <answer>
+    <para
+>يوفر بريدك واجهة بسيطة وسهلة الاستخدام للوظائف الأساسية لهذه البرامج؛ ومع ذلك، ينبغي عليك فهم كيفية عمل هذه البرامج وما قد يجعل استخدامها غير آمن. بعض القضايا الهامة:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para
+>ينبغي عليك <emphasis
+>حقًا</emphasis
+> اختبار ما إذا كانت التعمية تعمل قبل استخدامها. يعتمد بريدك جزئيًا على سلاسل أخطاء <application
+>PGP</application
+> أو <application
+>GnuPG</application
+>، والتي غالبًا ما تتغير بين الإصدارات المختلفة.</para>
+      </listitem>
+
+      <listitem>
+        <para
+>لن يعمي بريدك الرسائل باستخدام مفتاح عام غير موثوق به (غير موقع). إذا أردت التعمية باستخدام مفتاح كهذا، فيجب عليك التحقق من هوية صاحب المفتاح وعندها فقط توقع المفتاح بمفتاحك السري. إذا كنت لا تريد أو لا تستطيع التحقق من هوية صاحب المفتاح، ولكنك لا تزال تريد تعمية الرسالة، فيرجى توقيع المفتاح محليًا باستخدام <userinput
+><command
+>gpg</command
+> <option
+>--lsign</option
+> <replaceable
+>معرف_المفتاح</replaceable
+></userinput
+>.</para>
+      </listitem>
+
+      <listitem>
+        <para
+>الوثوق بمفتاح عام خارجي دون التحقق منه ليس فكرة جيدة.</para>
+      </listitem>
+
+      <listitem>
+        <para
+>بدءًا من إصدار GnuPG 1.0.7، يتعين عليك ضبط مفتاحك الخاص ليكون موثوقًا به كثقة مطلقة للمالك: لم يعد القيام بذلك يتم ضمنيًا نيابة عنك.</para>
+      </listitem>
+    </itemizedlist>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>أين يحفظ بريدك إعداداتي وبريدي؟</para
+></question>
+  <answer>
+    <para
+>تُخزن معظم إعدادات بريدك في <filename
+>~/.config/kmail2rc</filename
+>&nbsp;.</para>
+    <para
+>تُخزن المدخلات التي يتحكم بها <emphasis
+>أكونادي</emphasis
+> في هذه المجلدات:</para>
+      <itemizedlist>
+        <listitem
+><para
+><filename class="directory"
+>~/.local/share/</filename
+>.</para
+></listitem>
+        <listitem
+><para
+><filename class="directory"
+>~/.config/akonadi/</filename
+>.</para
+></listitem>
+      </itemizedlist>
+    <para
+>لاحظ أن بعض الملفات مخفية: تذكر نسخها أيضًا إذا أردت عمل نسخة احتياطية أو أرشفة رسائلك. للأمان، استخدم <ulink url="help:/pimdataexporter"
+>مُصدّر بيانات PIM</ulink
+> لنسخ بريدك وإعداداتك احتياطيًا.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #15 -->
+<qandaentry id="faq-index-regeneration">
+  <question
+><para
+>لماذا أعاد بريدك توليد فهرس مجلد ما؟</para
+></question>
+  <answer>
+    <para
+>يعيد بريدك توليد فهرس المجلد كلما بدا الفهرس قديمًا، أي كلما كانت محتويات المجلد أحدث من الفهرس. يعيد بريدك توليد الفهرس في هذه الحالة لمنع فقدان الرسائل أو تلفها.</para>
+    <para
+>قد يرجع قِدَم الفهرس لعدة أسباب؛ وهذه أكثرها شيوعًا. <itemizedlist>
+        <listitem
+><para
+>قام برنامج آخر بتعديل محتويات المجلد. إذا أردت استخدام بريدك مع procmail فيرجى قراءة <link linkend="faq-procmail"
+>هذا السؤال الشائع</link
+>. إذا أردت استخدام بريدك مع عميل بريد إلكتروني آخر فيرجى قراءة <link linkend="faq-other-muas"
+>هذا السؤال الشائع</link
+>.</para
+></listitem>
+        <listitem
+><para
+>إذا كان مجلد بريدك على وحدة تخزين موصولة عبر NFS، وإذا كانت الساعة في خادم NFS متأخرة عن الساعة في حاسوبك، فإن خادم NFS يبلغ أحيانًا عن تاريخ ملف خاطئ لملف الفهرس. في هذه الحالة يستنتج بريدك أن الفهرس قديم، رغم أنه ليس كذلك في الواقع. لإصلاح هذه المشكلة، يجب عليك (أو على مدير النظام) التأكد من أن الساعة في خادم NFS والساعة في حاسوبك متزامنتان دائمًا. إحدى طرق تحقيق ذلك هي استخدام عفريت ntp.</para
+></listitem>
+      </itemizedlist>
+    </para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>لماذا لا يبدأ بريدك بالعمل؟</para
+></question>
+  <answer>
+    <para
+><emphasis
+>المشكلة:</emphasis
+> تريد بدء بريدك من بيئة سطح مكتب دنيا مثل <ulink url="https://en.wikipedia.org/wiki/Fvwm2"
+>fvwm2</ulink
+>، لكنه لا يبدأ.</para>
+    <para
+><emphasis
+>الحل:</emphasis
+> يحدث هذا لأنك تفتقر إلى وظائف <emphasis
+>dbus</emphasis
+>. ابدأ بريدك من نافذة طرفية باستخدام dbus-launch، هكذا:</para>
+    <screen
+># dbus-launch kmail</screen
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-other-muas">
+  <question
+><para
+>هل يمكنني استخدام بريدك مع عميل بريد إلكتروني مختلف، مثل <application
+>mutt</application
+>؟</para
+></question>
+  <answer>
+    <para
+>إذا كنت تستخدم تنسيق mbox لمجلداتك، فليس من الممكن استخدام عميل بريد إلكتروني مختلف أثناء تشغيل بريدك. مع <application
+>mutt</application
+>، قد تحدث مشاكل أيضًا حتى إذا لم يكن كلا البرنامجين يعملان في نفس الوقت. نوصي باستخدام تنسيق maildir إذا أردت استخدام mutt مع بريدك.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry
+><!-- Valid for 4.12-->
+  <question
+><para
+>كيف يمكنني تحويل صناديق بريدي من mbox إلى maildir؟</para
+></question>
+  <answer>
+    <para
+>لا توجد طريقة آلية للقيام بذلك. يجب عليك إنشاء مجلد جديد بتنسيق maildir، ثم نسخ الرسائل من مجلد mbox إلى هذا المجلد الجديد. تذكر مواءمة أي قواعد مرشح متصلة بالمجلد القديم قبل حذفه.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف يمكنني إزالة المرفقات من رسالة دون إزالة الرسالة نفسها؟</para
+></question>
+  <answer>
+    <para
+>افتح قائمة السياق بالنقر بزر الفأرة الأيمن على المرفق واختر <guimenuitem
+>احذف المرفق</guimenuitem
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #20 -->
+<qandaentry>
+  <question
+><para
+>كيف أجعل بريدك يفحص الرسائل الجديدة عند بدء التشغيل؟</para
+></question>
+  <answer>
+    <para
+>إذا أردت أن يفحص بريدك الرسائل الجديدة دائمًا عند بدء التشغيل، ففعل خيار <guilabel
+>افحص البريد عند بدء التشغيل</guilabel
+> في <link linkend="configure-accounts-receiving"
+>صفحة ضبط الحسابات</link
+>. بدلًا من ذلك، ابدأ بريدك باستخدام <command
+>kmail <option
+>--check</option
+></command
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>أين يمكنني العثور على قائمة بالتغييرات بين إصدار من بريدك والإصدار الذي يليه؟</para
+></question>
+  <answer>
+    <para
+>تسرد شاشة الترحيب جميع التغييرات الهامة لإصدارك. تُعرض عند اختيار <menuchoice
+><guimenu
+>مساعدة</guimenu
+><guimenuitem
+>مقدمة عن بريدك</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>أنا من أولئك الأشخاص الذين تتكون رسائلهم من 100 سطر مقتبس وسطر واحد من كتابتي. لسبب غريب، يزعج هذا الآخرين. هل يمكن لبريدك مساعدتي وتحسين حياة الجميع؟</para
+></question>
+  <answer>
+    <para
+>بالتأكيد. ما عليك سوى اختيار جزء قصير وذو صلة من الرسالة الأصلية بالفأرة قبل النقر على "رد". سيقتبس الملحن هذا الجزء فقط من الرسالة الأصلية.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>لماذا تظهر بعض الرسائل قيمة "غير معروف" في حقل <guilabel
+>التاريخ</guilabel
+>؟ ولماذا يكون التاريخ غير صحيح أحيانًا؟</para
+></question>
+  <answer>
+    <para
+>على الأرجح، ترويسة "Date:" في هذه الرسائل معطوبة ولا يستطيع بريدك تفسيرها. هذا ليس علة في بريدك، بل في البرنامج الذي أرسل البريد.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>توقيعي يحتوي على شرطتين فوقه. ما الأمر؟</para
+></question>
+  <answer>
+    <para
+>فصل التوقيع عن متن الرسالة بشرطتين ومسافة في سطر واحد هو استخدام شائع. تسمح هذه الرموز لعملاء البريد الذين يتعرفون عليها بقص التوقيع من الرد. إذا كان توقيعك لا يتضمن هذا الفاصل، فسيضيفه بريدك آليًا.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #25 -->
+<qandaentry>
+  <question
+><para
+>هل هناك أي علل معروفة في بريدك؟</para
+></question>
+  <answer>
+    <para
+>هناك عدد غير قليل، كما يمكنك أن ترى من خلال الاستعلام في <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
+>صفحة بجزيلا</ulink
+> الخاصة ببريدك. حتى وقت كتابة هذا النص (أبريل 2021)، فإن حوالي 70% من العلل المبلغ عنها غير مؤكدة أو لا يمكن إعادة إنتاجها. إجمالًا، نعتقد أن بريدك هو برمجية متينة.</para>
+    <warning
+><para
+>ينبغي ألا تشغل بريدك بينما يقوم عميل بريد إلكتروني آخر بالوصول إلى الملفات في دليل البريد؛ إذا فعلت ذلك، فقد تفقد رسائلك. لاحظ أنه يجب عليك عمل نسخ احتياطية لرسائلك -- وجميع بياناتك الهامة -- بانتظام. هذه مجرد نظافة رقمية جيدة.</para
+></warning
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>لماذا لا يعرض بريدك رسائل &HTML; بشكل صحيح؟</para
+></question>
+  <answer>
+    <para
+>تُعطل الإشارات إلى المحتوى الخارجي، مثل الصور، مبدئيًا، حيث يمكن لمرسلي البريد المزعج استخدامها لتتبع ما إذا كنت قد قرأت الرسالة ومتى. يمكن تفعيل تحميل الإشارات الخارجية في تبويب <guilabel
+>الأمان</guilabel
+> في حوار ضبط بريدك. الملحقات (مثل <trademark class="registered"
+>Adobe</trademark
+> <application
+>Flash</application
+>) وجافا وجافا سكريبت لن تُعرض في بريدك لأسباب أمنية، ولا توجد طريقة لتفعيلها.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>هل يمكنني استخدام إصدارين مختلفين من بريدك في نفس الوقت؟ وهل يمكنني العودة من إصدار حالي لبريدك إلى إصدار أقدم؟</para
+></question>
+  <answer>
+    <para
+>يجب عليك تشغيل مثيل واحد فقط من بريدك في كل مرة. نوصي أيضًا بالالتزام بإصدار معين وعدم التبديل ذهابًا وإيابًا بين الإصدارات المختلفة. قد ينجح التراجع إلى إصدار أقدم، ولكنه قد يسبب مشاكل لأن تنسيقات ملفات الفهرس قد تغيرت على سبيل المثال. الترقية لا ينبغي أن تسبب أي مشكلة أبدًا.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>هل يدعم بريدك ملفات uuencoded؟</para
+></question>
+  <answer>
+    <para
+>المرفقات بتنسيق uuencoded غير مدعومة. احفظ البريد الذي يحتوي على مرفقات uuencoded، ثم استخدم <command
+>uudecode</command
+> لفك ترميز المرفقات.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>انهار بريدك أثناء كتابتي لرسالة. هل فقدت تلك الرسالة الآن؟</para
+></question>
+  <answer>
+    <para
+>يحاول بريدك حفظ بريدك في <filename class="directory"
+>~/.local/share/kmail2/autosave/</filename
+> في حالة الانهيار. في المرة القادمة التي تبدأ فيها بريدك، ينبغي أن يظهر ملحن البريد مع رسالتك مرة أخرى؛ وإذا لم يحدث ذلك، فحاول فتح الملفات في <filename class="directory"
+>~/.local/share/kmail2/autosave/</filename
+> باستخدام محرر. إذا لم تكن هناك ملفات في ذلك المجلد، فهذا يعني أن الانهيار كان سيئًا لدرجة أن بريدك لم يتمكن من حفظ رسالتك.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #30 -->
+<qandaentry>
+  <question
+><para
+>لقد أعددت مجلدًا ليكون مدركًا للقائمة البريدية، لكن رسائل القائمة لا تُحفظ في ذلك المجلد. ما المشكلة؟</para
+></question>
+  <answer>
+    <para
+>ربط مجلد بقائمة بريدية لا علاقة له بترشيح رسائل القائمة البريدية &mdash; يتعين عليك إضافة قاعدة مرشح جديدة يدويًا. ومع ذلك، بمجرد ربط مجلد بقائمة بريدية يمكنك استخدام <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>رد على القائمة البريدية...</guimenuitem
+></menuchoice
+> أو <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>رسالة جديدة إلى القائمة البريدية...</guimenuitem
+></menuchoice
+> وسيُضبط عنوان القائمة البريدية في حقل <guilabel
+>إلى:</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>خادم SMTP الخاص بي يتطلب استيثاقًا. هل يدعم بريدك هذا؟</para
+></question>
+  <answer>
+    <para
+>يمكن ضبط <guilabel
+>الاستيثاق</guilabel
+> في تبويب <guilabel
+>متقدم</guilabel
+> من <link linkend="configure-accounts-sending"
+>حوار ضبط SMTP</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-procmail">
+  <question
+><para
+>هل يمكنني استخدام بريدك و <application
+>procmail</application
+>؟</para
+></question>
+  <answer>
+    <para
+>نعم، ولكن من المهم القيام بذلك بالطريقة الصحيحة وإلا قد تفقد البريد. لاستخدام <application
+>procmail</application
+> وبريدك، يجب عليك إعداد بريدك لجلب البريد الجديد من ملفات التخزين المؤقت (spoolfiles) التي يضع فيها <application
+>procmail</application
+> بريدك. <emphasis
+>لا</emphasis
+> تضبط procmail لتسليم البريد إلى مجلد بريدك، فهذا لا يمكن أن يعمل.</para>
+
+    <para
+>لكل ملف تخزين مؤقت لـ procmail، يجب عليك إنشاء حساب يجلب منه بريدك البريد الجديد. تحتاج أيضًا إلى تحديد اسم ملف القفل الصحيح لهذا الحساب. عند إعداد الحساب، سيقوم بريدك ببعض التحليل البسيط لملف <filename
+>.procmail</filename
+> الخاص بك، وسيحاول سرد كل ملف تخزين مؤقت وجده، وأيضًا ملفات القفل بجانب عنصر <guilabel
+>ملف قفل procmail</guilabel
+>. يسمح procmail للمستخدم بتحديد ملفات القفل بثلاث طرق مختلفة، لذا لا توجد طريقة لإنشاء مراسلة بين ملفات التخزين المؤقت وملفات القفل؛ الأمر يعود إليك للتأكد من تحديد ملف القفل الصحيح لكل ملف تخزين مؤقت.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>التدقيق الإملائي لا يتعرف على المحارف غير الإنجليزية. لماذا؟</para
+></question>
+  <answer>
+    <para
+>قبل أن تتمكن من استخدام التدقيق الإملائي، يجب عليك ضبطه. يمكنك القيام بذلك في نافذة الملحن، تحت <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>مدقق إملائي...</guimenuitem
+> </menuchoice
+>. يمكنك اختيار قاموس هناك.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أستخدم مجلدات بريد <application
+>Eudora</application
+> أو نيتسكيب أو <application
+>Outlook</application
+> أو غيرها في بريدك؟</para
+></question>
+  <answer>
+    <para
+>انظر قسم <link linkend="importing-options"
+>الاستعادة والاستيراد في بريدك</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #35 -->
+<qandaentry>
+  <question
+><para
+>هل يمكنني استخدام التعمية مع حساب POP3 العادي (غير المزود بـ <acronym
+>SSL</acronym
+>)؟</para
+></question>
+  <answer>
+    <para
+>إذا كان خادم POP3 الخاص بك يشغل عفريت <application
+>ssh</application
+>، فيمكنك استخدام ssh لنفق اتصال POP3 الخاص بك باستخدام الأمر التالي:</para>
+
+    <para
+><userinput
+><command
+>ssh</command
+> <option
+>-L 11000:127.0.0.1:110 user@host</option
+></userinput
+></para>
+
+    <para
+>عدل ضبط بريدك لجلب البريد عبر POP3 من <userinput
+>localhost</userinput
+> وسيقوم ssh بنفق الاتصال لك. </para>
+
+    <note
+><para
+>إذا كانت الرسائل غير المعماة قد أُرسلت بالفعل عبر الإنترنت، فإن الميزة الوحيدة لاستخدام <application
+>ssh</application
+> هي أن <emphasis
+>كلمة السر</emphasis
+> الخاصة بك ستُرسل معماة إلى خادم POP3.</para
+></note>
+
+    <para
+>لمزيد من التفاصيل حول إعداد ssh، راجع <ulink url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html"
+>صفحة الويب هذه</ulink
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-file-locking">
+  <question
+><para
+>هل يقفل بريدك المجلدات التي يستخدمها؟</para
+></question>
+  <answer>
+    <para
+>لا يقفل بريدك الملفات في <filename class="directory"
+>~.local/share</filename
+>.</para>
+    <para
+>لتجنب خطر فقدان البريد <emphasis
+>عند استخدام حساب محلي،</emphasis
+> من الضروري التأكد من أن بريدك يستخدم نفس آلية القفل التي يستخدمها وكيل تسليم البريد الخاص بك.</para>
+
+    <para
+>هناك خمسة خيارات قفل مختلفة يمكنك استخدامها:</para>
+
+      <itemizedlist>
+        <listitem
+><para
+><guilabel
+>ملف قفل Procmail</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>قفل Mutt dotlock</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>قفل Mutt dotlock ذو صلاحيات</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>FCNTL</guilabel
+> (مبدئي)</para
+></listitem>
+        <listitem
+><para
+><guilabel
+>بلا (استخدمه بحذر)</guilabel
+></para
+></listitem>
+      </itemizedlist>
+
+    <para
+>يستخدم <guilabel
+>ملف قفل Procmail</guilabel
+> أداة مساعدة صغيرة تأتي مع <application
+>procmail</application
+> تسمى <command
+>lockfile</command
+>. يمكنك استخدام هذا إذا كان مجلد بريدك في مجلد تمتلك فيه إذن كتابة. لن يعمل هذا مع ملف <filename class="directory"
+>/var/spool/mail/user</filename
+> في معظم الحالات. سيقوم بإنشاء ملفات <filename
+>.lock</filename
+> في حسابك عندما يفحص بريدك البريد الجديد. يرجى ملاحظة أن هذا سيعمل فقط إذا كان <application
+>procmail</application
+> مثبتًا على نظامك.</para>
+
+    <para
+>يستخدم كل من <guilabel
+>Mutt dotlock</guilabel
+> و <guilabel
+>Mutt dotlock ذو صلاحيات</guilabel
+> أداة مساعدة صغيرة تأتي مع <application
+>mutt</application
+> تسمى <command
+>mutt_dotlock</command
+>. يمكن استخدام <guilabel
+>Mutt dotlock</guilabel
+> بنفس طريقة خيار <guilabel
+>ملف قفل Procmail</guilabel
+>، مع نفس القيد فيما يتعلق بمجلدات <filename class="directory"
+>/var/spool/mail/</filename
+>. يمكن لخيار <guilabel
+>Mutt dotlock ذو صلاحيات</guilabel
+> إنشاء ملفات قفل في مجلد <filename class="directory"
+>/var/spool/mail</filename
+>. <command
+>mutt_dotlock</command
+> هو برنامج setgid وسيشغله هذا الخيار في وضع setgid. يرجى ملاحظة أن هذه الخيارات ستعمل فقط إذا كان <application
+>mutt</application
+> مثبتًا على نظامك.</para>
+
+    <para
+>يستخدم <guilabel
+>FCNTL</guilabel
+> استدعاء النظام <function
+>fcntl()</function
+>.</para>
+
+    <warning
+><para
+>قد يؤدي استخدام قفل FCNTL إلى توقف النظام عندما يكون ملف تخزين البريد على جهاز موصول عبر NFS.</para
+></warning>
+
+    <para
+>إذا كنت لا تريد استخدام أي قفل، فإن خيار <guilabel
+>بلا</guilabel
+> متاح. ومع ذلك، هناك مخاطر لفقدان البريد عند عدم استخدام القفل.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أترك الرسائل على خادم POP3؟</para
+></question>
+  <answer>
+    <para
+>إذا أردت ترك جميع الرسائل على الخادم، افتح نافذة <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط بريدك...</guimenuitem
+> </menuchoice
+>. انقر على صفحة <guilabel
+>الحسابات</guilabel
+>. اختر حسابك من قائمة الحسابات وانقر على زر <guibutton
+>تعديل...</guibutton
+>. يحتوي هذا الحوار على إعداد <guilabel
+>اترك الرسائل المجلوبة على الخادم</guilabel
+> (تبويب متقدم) والذي يمكنك تفعيله.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أدرج تذييل نصي آليًا داخل رسائلي؟</para
+></question>
+  <answer>
+    <para
+>يُسمى التذييل النصي أيضًا بالتوقيع (لا ينبغي الخلط بينه وبين التوقيع التعموي). اختر <menuchoice
+><guimenu
+>إعدادات</guimenu
+> <guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+>. ابحث في صفحة <guilabel
+>الهوية</guilabel
+> عن تبويب <guilabel
+>التوقيع</guilabel
+> وأضف توقيعك هناك. ثم اذهب إلى تبويب <guilabel
+>عام</guilabel
+> في صفحة <guilabel
+>الملحن</guilabel
+> وفعل <xref linkend="configure-composer-general-append-signature"/>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف أعد Sendmail ليعمل مع بريدك إذا كان لدي اتصال هاتفي؟</para
+></question>
+  <answer>
+    <para
+>أولًا يجب عليك التحقق لمعرفة ما إذا كانت توزيعتك يمكنها القيام بذلك نيابة عنك. من المحتمل أن يكون قد وُضع الإعداد بالفعل أثناء التثبيت.</para>
+
+    <para
+>إذا لم يكن الأمر كذلك، فقد تود إلقاء نظرة على <ulink url="https://www.tldp.org/HOWTO/Mail-Queue.html"
+>دليل الكيفية لصف البريد</ulink
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #40 -->
+<qandaentry>
+  <question
+><para
+>لقد رأيت عروضًا لسلوك التحكم عن بعد مع بريدك. هل هناك أي وثائق حول الواجهات المتاحة؟</para
+></question>
+  <answer>
+    <para
+>يمكنك الحصول على قائمة بالوظائف باستخدام هذا الأمر في الصدفة: <userinput
+><command
+>qdbus</command
+><option
+>org.kde.kmail /KMail</option
+></userinput
+>. ثم يمكنك التحكم في بريدك هكذا: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
+></userinput
+>. يمكنك أيضًا استخدام <application
+>qdbusviewer</application
+> لتصفح الطرق المتاحة في واجهة رسومية.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>عندما أرد على رسالة، يُقتبس جزء منها فقط. لماذا؟</para
+></question>
+  <answer>
+    <para
+>يمكن أن يحدث هذا عندما تحتوي الرسالة على شرطتين ومسافة في سطر واحد. يُنظر إلى هذا كبداية للتوقيع. لن يُقتبس باقي الرسالة، لأن بريدك يقوم بقص التوقيع عندما ترد على رسالة.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>أنا أستخدم &IMAP; فقط. هل يمكنني التخلص من تلك المجلدات المحلية في قائمة المجلدات، أو على الأقل إبقاؤها مطوية طوال الوقت؟</para
+></question>
+  <answer>
+    <para
+>لا، لا يمكنك التخلص منها. تعمل المجلدات المحلية كملاذ أخير عندما يكون خادم &IMAP; غير متاح. على الرغم من أنك تستخدم &IMAP; فقط، إلا أن بريدك يستخدم صندوق الصادر لإرسال الرسائل. إذا أخفينا جميع المجلدات المحلية، فلن تتمكن من إصلاح الرسائل في صندوق الصادر التي لا يمكن إرسالها لسبب ما. ولكن من الممكن إبقاء المجلدات المحلية مطوية. ما عليك فعله هو الذهاب إلى <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+> والذهاب إلى قسم متفرقات. هناك يمكنك ضبط المجلد عند بدء التشغيل. إذا قمت بتغيير ذلك إلى مجلد في حساب &IMAP;، فستظل المجلدات المحلية مطوية عند بدء تشغيل بريدك.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف يمكنني مراقبة سلسلة رسائل معينة؟</para
+></question>
+  <answer>
+    <para
+>إذا أردت متابعة سلسلة رسائل، انقر بزر الفأرة الأيمن واختر <menuchoice
+><guimenu
+>علم سلسلة الرسائل</guimenu
+> <guimenuitem
+>راقب سلسلة الرسائل</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>من هذه النقطة فصاعدًا، ستُعلم جميع الرسائل في السلسلة التي تبدأ بهذه الرسالة على أنها <guilabel
+>مراقبة</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>كيف يمكنني مراقبة سلاسل الرسائل الخاصة بي؟</para
+></question>
+  <answer>
+    <para
+>هذا مفيد في حال كنت مسجلًا في قائمة بريدية مثل kdepim-users@kde.org وتريد ترشيح السلاسل التي تشارك فيها.</para>
+      <itemizedlist>
+        <listitem>
+          <para
+>أنشئ مرشحًا لتعليم جميع رسائلك الواردة إلى قائمة بريدية كمراقبة</para>
+          <para
+>لإنشاء مرشح اذهب إلى:</para>
+          <para
+><menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط المرشحات</guimenuitem
+></menuchoice
+></para>
+            <itemizedlist>
+              <listitem>
+	            <para
+>اختر <guilabel
+>طابق كل ما يلي</guilabel
+></para>
+              </listitem>
+              <listitem>
+	            <para
+>أضف الشروط: <itemizedlist>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>من</guimenu
+><guisubmenu
+>يحتوي</guisubmenu
+><guimenuitem
+> </guimenuitem
+></menuchoice
+> <replaceable
+>بريدك@نطاقك</replaceable
+> <footnote
+><para
+>استبدل <replaceable
+>بريدك@نطاقك</replaceable
+>&nbsp;بعنوان بريدك الصادر</para
+></footnote
+></para>
+	                </listitem>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>معرف القائمة</guimenu
+><guimenuitem
+>يحتوي</guimenuitem
+></menuchoice
+> <replaceable
+>معرف_القائمة</replaceable
+><footnote
+><para
+>استبدل <replaceable
+>معرف_القائمة</replaceable
+> بمعرف قائمة بريدية محدد (مثل &lt;kdepim-users.kde.org&gt;) أو مجرد <quote
+>.</quote
+> لتضمين البريد الصادر إلى جميع القوائم البريدية التي تحتوي على <quote
+>.</quote
+> في معرفها (كلهم تقريبًا).</para
+></footnote
+></para>
+	                </listitem>
+	              </itemizedlist>
+	            </para>
+              </listitem>
+              <listitem>
+	            <para
+>تحت <guilabel
+>إجراءات المرشح</guilabel
+> اختر <menuchoice
+><guimenu
+>علم بـ</guimenu
+> <guimenuitem
+>مراقب</guimenuitem
+></menuchoice
+>.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para
+>في تبويب <guilabel
+>متقدم</guilabel
+>.</para>
+              <itemizedlist>
+                <listitem>
+	              <para
+>أزل العلامة عن <guilabel
+>إذا طابق هذا المرشح، أوقف المعالجة هنا</guilabel
+>، لكي تُنفذ المرشحات الأخرى مثل فرز الرسائل الواردة من القائمة البريدية إلى المجلدات الفرعية.</para>
+                </listitem>
+                <listitem>
+	              <para
+>ضع هذا المرشح قبل المرشحات الأخرى التي قد توقف عملية الترشيح، أو ببساطة ضعه في البداية. (يُغير ترتيب المرشحات باستخدام السهمين لأعلى ولأسفل، تحت قائمة <guilabel
+>المرشحات المتاحة</guilabel
+>.)</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para
+>أنشئ بحثًا في رسائل القائمة البريدية</para>
+              <para
+>اذهب إلى المجلد الذي تُخزن فيه رسائل قائمتك البريدية (مثل المجلدات المحلية/KDE-PIM-USERS) واضغط مفتاح <keycap
+>S</keycap
+> أو من القائمة <menuchoice
+><guimenu
+>تحرير</guimenu
+><guimenuitem
+>ابحث عن رسائل</guimenuitem
+></menuchoice
+>:</para>
+                <itemizedlist>
+                  <listitem>
+	                <para
+>اختر <guilabel
+>طابق كل ما يلي</guilabel
+><footnote
+><para
+>انتبه لخيار <guilabel
+>ضمن المجلدات الفرعية</guilabel
+>.</para
+></footnote
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>أضف الشرط: <menuchoice
+><guimenu
+>حالة الرسالة</guimenu
+><guisubmenu
+>هي</guisubmenu
+> <guimenuitem
+>مراقب</guimenuitem
+></menuchoice
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>أعطِ البحث اسمًا معلوماتيًا (<guilabel
+>اسم مجلد البحث</guilabel
+>) مثل <replaceable
+>KDE-PIM-USERS-Watched</replaceable
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>أجرِ البحث. بعد أن يُنفذ يمكنك إغلاق نافذة البحث.</para>
+                  </listitem>
+                </itemizedlist>
+              <para
+>الآن كلما بدأت سلسلة رسائل أو شاركت في واحدة، ستُعلم بـ <guilabel
+>مراقب</guilabel
+>.</para>
+        </listitem>
+      </itemizedlist>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #45 -->
+<qandaentry>
+  <question
+><para
+>كيف يمكنني استخدام ترجمة البريد الإلكتروني؟</para
+></question>
+  <answer>
+    <para
+>لترجمة النص في نافذة الملحن، اقرأ قسم <link linkend="using-the-translator"
+>استخدام المترجم المدمج</link
+></para>
+    <para
+>في لوحة معاينة الرسالة، ظلل النص الذي تود ترجمته واختر <guimenuitem
+>ترجم</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+>) من قائمة السياق عند النقر بزر الفأرة الأيمن.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+</qandaset>
+
+</chapter>

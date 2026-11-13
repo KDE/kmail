@@ -1,0 +1,135 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2020-08-16</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>مقدمة</title>
+
+<screenshot>
+<screeninfo
+>شاشة ترحيب بريدك</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>شاشة ترحيب بريدك</phrase>
+    </textobject>
+    <caption>
+      <para
+>شاشة ترحيب بريدك</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>يرحب بك فريق بريدك في بريدك، وهو عميل بريد إلكتروني سهل الاستخدام من كيدي. هدفنا هو جعل بريدك برنامجًا جميلًا وبديهيًا في آن واحد دون التضحية بالقوة. </para>
+
+<para
+>إذا لم يسبق لك إعداد عميل بريد إلكتروني على نظام يونكس من قبل، فنقترح عليك قراءة قسم <link linkend="getting-started"
+>البدء</link
+> أولًا.</para>
+<sect1 id="features">
+<title
+>بعض مزايا بريدك</title>
+<para
+>إليك دليل موجز لبعض المزايا الرائعة المتوفرة في بريدك</para>
+<itemizedlist>
+<listitem>
+<para
+>لا يتعين عليك استخدام الفأرة عند العمل مع بريدك. يمكن القيام بكل شيء باستخدام <link linkend="keyboard-shortcuts"
+>اختصارات لوحة المفاتيح</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>على الرغم من أن بريدك موثوق للغاية، إلا أنه يجب عليك الاحتفاظ بنسخ احتياطية لرسائلك، أي استخدم أحد خيارات التصدير/الأرشفة المدرجة في <link linkend="backups"
+>خيارات النسخ الاحتياطي</link
+> لنسخ إعداداتك وبريدك الإلكتروني احتياطيًا بانتظام.</para>
+</listitem>
+<listitem>
+<para
+>يسهل بريدك استيراد البريد الإلكتروني من العديد من تطبيقات البريد الإلكتروني المختلفة. الخيارات موصوفة في <link linkend="import-restore"
+>الاستعادة والاستيراد في بريدك</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>يمكنك فصل رسائلك إلى فئات مختلفة باستخدام خيارات <link linkend="folders"
+>المجلدات</link
+> الواسعة في بريدك. تشمل المزايا تعاملًا خاصًا لمجلدات محددة: القوائم البريدية، وacl (لبروتوكول IMAP فقط)، والأرشفة.</para
+> <!-- todo: start a glossary -->
+</listitem>
+<listitem>
+<para
+>يمكنك استكمال إعداد المجلدات باستخدام <link linkend="filters"
+>مرشحات</link
+> عالية الضبط.</para>
+</listitem>
+<listitem>
+<para
+>يكتشف بريدك <link linkend="configure-security-email-scams"
+>عمليات الاحتيال</link
+> الشائعة عبر البريد الإلكتروني مبدئيًا. يمكنك أيضًا محاربة البريد المزعج والفيروسات عن طريق إنشاء مرشحات تعمل مع برامج خارجية لفحص البريد الإلكتروني عند وروده. انظر <link linkend="the-anti-spam-wizard"
+>مكافحة البريد المزعج</link
+> و <link linkend="the-anti-virus-wizard"
+>مكافحة الفيروسات</link
+> للتفاصيل.</para>
+</listitem>
+<listitem>
+<para
+>من السهل إدارة حسابات بريد إلكتروني متعددة باستخدام <link linkend="configure-identity"
+>هويات</link
+> مختلفة.</para>
+</listitem>
+</itemizedlist>
+<para
+>نأمل أن تستمتع ببريدك!</para>
+<sect2 id="getting-help">
+<title
+>الحصول على مساعدة</title>
+
+<para
+>يمكن العثور على الصفحة الرئيسية لبريدك في <ulink url="https://apps.kde.org/kmail2/"
+>https://apps.kde.org/kmail2/</ulink
+>. ستجد هناك روابط مفيدة (مثل القوائم البريدية للمستخدمين والمطورين، وصفحات ويكي المجتمع). يرجى الإبلاغ عن أي علل في بريدك باستخدام <menuchoice
+><guimenu
+>مساعدة</guimenu
+><guimenuitem
+>أبلغ عن علة...</guimenuitem
+></menuchoice
+>.</para>
+</sect2>
+
+</sect1>
+</chapter>

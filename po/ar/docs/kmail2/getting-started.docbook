@@ -1,0 +1,816 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2020-08-18</date>
+<releaseinfo
+>5.14.2 (تطبيقات 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>البدء</title>
+
+<para
+>هذه مقدمة قصيرة لبريدك واستخدامه حتى تتمكن من البدء في العمل معه على الفور. لمزيد من المعلومات المتعمقة، راجع قسم <link linkend="using-kmail"
+>استخدام بريدك</link
+>.</para>
+
+<sect1 id="account-wizard">
+<title
+>مرشد الحسابات</title>
+
+<para
+>في المرة الأولى التي تشغل فيها بريدك، سيرحب بك مرشد الحسابات.</para>
+<note
+><para
+>إذا احتجت في أي وقت إلى تشغيل مرشد الحسابات مرة أخرى، فيمكنك العثور عليه تحت <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>أضف حسابًا</guimenuitem
+></menuchoice
+>.</para
+></note>
+<para
+>سيقودك المرشد عبر عملية إنشاء حساب بريد إلكتروني. ستختلف شاشاتك اعتمادًا على مقدار ما يمكن للمرشد تحديده بنفسه. فيما يلي مخطط عام للشاشات التي ستواجهها أثناء استخدام هذا المرشد.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<procedure id="procedure-add-an-email-account">
+  <step id="Provide-personal-data">
+    <para
+>الشاشة الأولى للمرشد هي <guilabel
+>توفير البيانات الشخصية</guilabel
+>. ستطلب منك معلومات حسابك الأساسية: <guilabel
+>الاسم الكامل:</guilabel
+>، و <guilabel
+>عنوان البريد الإلكتروني</guilabel
+>، و <guilabel
+>كلمة المرور</guilabel
+>. مبدئيًا، وُسم خيار <guilabel
+>ابحث عن إعدادات المزود على الإنترنت</guilabel
+>، لذا سيحاول المرشد استرجاع المعلومات اللازمة من خادم البريد الإلكتروني. أزل الوسم عن هذا الخيار إذا كنت مستخدمًا خبيرًا وتريد ضبط تكوين متقدم. انقر على زر <guibutton
+>التالي</guibutton
+> عند الانتهاء.</para>
+
+    <screenshot>
+    <screeninfo
+>مرشد الحسابات</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>مرشد الحسابات</phrase>
+        </textobject>
+        <caption>
+        <para
+>حوار "توفير البيانات الشخصية"</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+
+    <note
+><para
+>يجب أن تستخدم حسابات جي‌ميل بروتوكول IMAP. إذا كنت قد فعلت التحقق بخطوتين لحساب جي‌ميل الخاص بك، فستضطر إلى الحصول على رمز تحقق من جوجل كجزء من عملية إعداد الحساب الأولية. لن تضطر إلى إجراء التحقق الثنائي بعد إنشاء حساب بريدك، لأن جوجل تضع علامة على رابط IMAP الخاص بك كونه موثوقًا تمامًا.</para
+></note>
+
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  <step id="GPG-security">
+
+    <para
+>تساعدك الشاشة التالية في إعداد مفاتيح التعمية لبريدك.</para>
+
+    <screenshot>
+    <screeninfo
+>مرشد الحسابات 2</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>مرشد الحسابات 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>حوار خيارات التعمية</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+
+    <para
+>إذا كنت ترغب في تأمين اتصالاتك باستخدام GnuPG، يمكنك توليد مفتاح جديد ونشره على خادم مفاتيح عام، أو يمكنك استيراد مفتاح موجود. إذا قررت توليد زوج مفاتيح جديد، فلا تنسَ كلمة المرور المستخدمة لتوليده. ستحتاج إلى كلمة المرور تلك في كل مرة تريد فيها استخدام المفتاح. </para>
+    <para
+>عند إرسال بريد، يبحث بريدك اختياريًا عن مفاتيح تعمية للمستلمين، ويعمي الرسالة إذا عُثر على مفتاح. يمكن لبريدك أيضًا توقيع بريدك تعميًا، بحيث يمكن لكل مستلم التحقق من أن رسالتك لم يُعبث بها. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+
+  <step id="Select-account-type">
+    <para
+>ستظهر شاشة <guilabel
+>اكتمل الإعداد</guilabel
+> إذا حدد المرشد نوع الحساب بنجاح. انقر على <guibutton
+>تفاصيل...</guibutton
+> لعرض الإعدادات التي وضعها بريدك. انقر على زر <guibutton
+>إنهاء</guibutton
+> لإعداد الحساب، وإكمال المرشد، وإغلاق النافذة. </para>
+
+    <screenshot>
+    <screeninfo
+>مرشد الحسابات 3</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard3.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>مرشد الحسابات 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>حوار اختيار نوع الحساب</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+
+    <para
+>إذا لم يتمكن المرشد من تحديد نوع حسابك، فستظهر شاشة <guilabel
+>اختر نوع الحساب</guilabel
+>. اختر نوع حسابك من القائمة (إذا كنت لا تعرف، فستحتاج إلى الاتصال بمزود خدمة البريد الإلكتروني). إذا لم يكن نوع حسابك مدرجًا، فانقر على زر <guibutton
+>تحقق من المزيد على الإنترنت</guibutton
+>. بمجرد اختيار نوع الحساب، انقر على زر <guibutton
+>التالي</guibutton
+>، وستظهر لك شاشة <guilabel
+>الإعدادات الشخصية</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+
+  <step id="Personal-settings">
+
+    <para
+>إذا لم يتمكن المرشد من تحديد موقع خادم البريد الإلكتروني الخاص بك عن طريق البحث في الإنترنت، فستظهر شاشة <guibutton
+>الإعدادات الشخصية</guibutton
+>.</para>
+
+    <screenshot>
+    <screeninfo
+>مرشد الحسابات 4</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard4.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>مرشد الحسابات 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>حوار "الإعدادات الشخصية"</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+
+    <para
+>تأكد من إدخال كل هذه المعلومات بشكل صحيح. اختر <guilabel
+>نزل كل الرسائل للاستخدام دون اتصال</guilabel
+> إذا كنت تريد أن تكون رسائلك متاحة عندما لا يكون لديك اتصال بالإنترنت (لبروتوكول IMAP فقط). انقر على زر <guibutton
+>التالي</guibutton
+> عند الانتهاء. ستظهر شاشة <guilabel
+>اكتمل الإعداد</guilabel
+>.</para>
+
+    <para
+>وُضع إعداد حسابك الآن، ويمكنك النقر على زر <guibutton
+>إنهاء</guibutton
+> لإكمال المرشد وإغلاق النافذة، أو النقر على زر <guibutton
+>تفاصيل...</guibutton
+> لمراجعة إعدادات الحساب.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+</procedure>
+
+  <para
+>إذا كنت ترغب في إنشاء حساب يدويًا، يرجى مواصلة قراءة هذا الفصل. خلاف ذلك، يمكنك تخطي هذا الجزء بأمان إلى <link linkend="testing-your-setup"
+>اختبار إعدادك</link
+>.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title
+>البدء السريع للتكوين اليدوي</title>
+  <screenshot>
+    <screeninfo
+>شاشة التكوين</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="configure.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>شاشة التكوين</phrase>
+        </textobject>
+        <caption>
+        <para
+>شاشة تكوين بريدك الرئيسة</para>
+        </caption>
+      </mediaobject>
+  </screenshot>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>تتكون نافذة <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guisubmenu
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+>اضبط بريدك...</guisubmenu
+></menuchoice
+> من ستة أقسام: <guilabel
+>الحسابات</guilabel
+>، و <guilabel
+>المظهر</guilabel
+>، و <guilabel
+>المؤلف</guilabel
+>، و <guilabel
+>الأمان</guilabel
+>، و <guilabel
+>متفرقات</guilabel
+>، و <guilabel
+>الملحقات</guilabel
+>. </para>
+
+  <para
+>لبدء إرسال واستقبال الرسائل، لن تضطر إلا إلى تغيير بعض الإعدادات في صفحة <guilabel
+>الحسابات</guilabel
+>. فيما يلي ملخص موجز للخطوات التي يجب عليك اتخاذها لإعداد حساب بريد جديد. للحصول على وصف أكثر تفصيلًا، يرجى قراءة فصل <link linkend="configure-generalinfo"
+>اضبط بريدك</link
+>.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <sect2 id="setting-your-identity">
+    <title
+>ضبط هويتك </title>
+
+    <para
+>لإنشاء هوية جديدة، انقر على زر <guilabel
+>أضف...</guilabel
+> في لسان <guilabel
+>الهويات</guilabel
+> المرتبط بصفحة <guilabel
+>الحسابات</guilabel
+>. ستظهر نافذة منبثقة صغيرة.</para>
+
+    <screenshot>
+    <screeninfo
+>حوار الهوية الجديدة</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>حوار الهوية الجديدة</phrase>
+        </textobject>
+        <caption>
+        <para
+>إضافة هوية جديدة</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+
+    <para
+>لديك بعض الخيارات هنا. أعطِ الهوية الجديدة اسمًا، واختر أحد الخيارات المتاحة ("بحقول فارغة" أو "استخدم قيم إعدادات النظام"). ثم انقر على <guilabel
+>موافق</guilabel
+>. ستظهر شاشة تكوين الهوية.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+    <screenshot>
+    <screeninfo
+>يتبع حوار الهوية الجديدة</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>يتبع حوار الهوية الجديدة</phrase>
+        </textobject>
+        <caption>
+        <para
+>تكوين الهوية الجديدة</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+    <para
+>الإعدادات في لسان <guilabel
+>عام</guilabel
+> واضحة تمامًا. املأ حقل <guilabel
+>اسمك</guilabel
+> باسمك الكامل (على سبيل المثال، <userinput
+>زايد السعيدي</userinput
+>) وحقل <guilabel
+>المنظمة</guilabel
+> (اختياري) بالمعلومات المناسبة. بعد ذلك، املأ حقل <guilabel
+>عنوان البريد الإلكتروني</guilabel
+> بعنوان بريدك الإلكتروني (على سبيل المثال <userinput
+>john@example.net</userinput
+>). </para>
+    <para
+>إذا كنت تستخدم <application
+>PGP</application
+> أو <application
+>GnuPG</application
+>، يمكنك ضبط مفاتيح OpenPGP و/أو شهادات S/MIME الخاصة بك في لسان <link linkend="configure-identity-cryptography"
+><guilabel
+>التعمية</guilabel
+></link
+>. </para>
+    <para
+>يمكن استخدام لساني <guilabel
+>متقدم</guilabel
+> و <guilabel
+>القوالب</guilabel
+> لتفصيل الطريقة التي ستُنسق وتُعالج بها الرسائل الصادرة من هذه الهوية. انظر <link linkend="configure-generalinfo"
+>اضبط بريدك</link
+> للحصول على تعليمات أكثر تفصيلًا. </para>
+    <para
+>اختياريًا، انتقل إلى لسان <guilabel
+>التوقيع</guilabel
+> وأدخل توقيعك. هذا جزء قصير من الكلام سيُلحق آليًا بجميع رسائلك. ليس له علاقة بـ <emphasis
+>التواقيع الرقمية</emphasis
+>. قد ترغب أيضًا في إدراج صورة شخصية صغيرة في ترويسات الرسائل الصادرة عبر لسان <guilabel
+>الصورة</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+  <title
+>إعداد حسابك</title>
+
+  <para
+>تحتوي صفحة <guilabel
+>الحسابات</guilabel
+> أيضًا على الإعدادات التي تخبر بريدك بكيفية إرسال واستقبال رسائل البريد الإلكتروني الخاصة بك. يمكن أن تختلف العديد من هذه الإعدادات اختلافًا كبيرًا اعتمادًا على طريقة إعداد نظامك، وعلى نوع الشبكة التي يقع فيها خادم البريد الخاص بك. إذا كنت لا تعرف الخيار الذي يجب اختياره أو ما يجب وضعه في حقل ما، فاستشر مزود خدمة الإنترنت أو مدير النظام.</para>
+</sect2>
+
+<sect2 id="sending-mail">
+  <title
+>إرسال الرسائل</title>
+  <para
+>إليك إحدى الطرق لإنشاء حساب بريد صادر.</para>
+
+  <screenshot>
+    <screeninfo
+>خيارات الحساب الصادر</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>خيارات الحساب الصادر</phrase>
+        </textobject>
+        <caption>
+        <para
+>اختيار نوع حساب بريد إلكتروني صادر</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+
+  <para
+>عند النقر على زر <guibutton
+>أضف...</guibutton
+> في لسان <guilabel
+>الإرسال</guilabel
+>، ستظهر هذه الشاشة. إذا كان حاسوبك متصلًا مباشرة بالإنترنت، فستحتاج على الأرجح إلى اختيار SMTP. إذا كنت بحاجة إلى استخدام Sendmail أو Microsoft EWS، فيرجى استشارة فصل <link linkend="configure-accounts-sending"
+>التكوين</link
+>. أيًا كان نوع الحساب الصادر الذي تختاره، وسم المربع المسمى "اجعل هذا الحساب الصادر المبدئي". (يمكنك تغيير ذلك بسهولة لاحقًا إذا كان لديك أكثر من حساب بريد إلكتروني واحد.)</para>
+
+  <para
+>عند اختيار خيار <guilabel
+>SMTP</guilabel
+> والنقر على زر <guibutton
+>✓ أنشئ واضبط</guibutton
+>، ستظهر شاشة التكوين التالية.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <screenshot>
+    <screeninfo
+>حوار تكوين الإرسال</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>حوار تكوين الإرسال</phrase>
+        </textobject>
+        <caption>
+        <para
+>تكوين حساب SMTP</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>كحد أدنى، يجب عليك تقديم معرف مورد موحد (URI) لخادم البريد الإلكتروني. إذا كانت خدمة البريد الإلكتروني الخاصة بك تتطلب استيثاقًا قبل إرسال الرسائل، فوسم مربع "الخادم يتطلب استيثاقًا" وقدم عنوان بريدك الإلكتروني وكلمة المرور. إذا كنت تريد أن يتذكر بريدك كلمة المرور الخاصة بك، فوسم مربع "خزن كلمة مرور SMTP". إذا لم تكن قد أنشأت محفظة بعد، فسيُطلب منك تقديم كلمة مرور.</para>
+
+  <para
+>تحقق من أن الاتصال بخادم SMTP يعمل عن طريق اختيار لسان <guilabel
+>متقدم</guilabel
+> والنقر على زر <guibutton
+>كشف آلي</guibutton
+>. سيقوم بريدك بالاستعلام من خادم SMTP الخاص بك عن الإعدادات الصحيحة (التعمية، ورقم المنفذ، وطريقة الاستيثاق). بعد كشف الإعدادات المناسبة، يصبح الحساب الصادر جاهزًا للاستخدام. (يرجى الرجوع إلى <link linkend="configure-accounts-sending"
+>التكوين</link
+> إذا كان اتصال SMTP يتطلب ضبطًا دقيقًا إضافيًا.)</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+</sect2>
+
+<sect2 id="receiving-mail">
+  <title
+>استقبال الرسائل</title>
+
+  <para
+>مبدئيًا، عُرفت <guilabel
+>المجلدات المحلية</guilabel
+> (الوارد، الصادر، المرسل، المهملات، المسودات، والقوالب) في مجلد بريدك الرئيس مسبقًا في هذا اللسان. باستخدام المربع المنسدل، يمكنك ضبط <guilabel
+>خيارات الاسترجاع</guilabel
+> لهذه المجلدات. (لاحظ أن بريدك يستخدم تنسيق Maildir لتخزين الرسائل على قرصك الصلب: تُخزن كل رسالة كملف منفصل. يعتمد الموقع الدقيق لمجلد بريدك الرئيس على توزيعة لينكس التي ثبتها، ولكنه ربما يكون في مكان ما في ~/.local/share/.)</para>
+
+  <para
+>لإعداد حساب حتى تتمكن من استقبال البريد، اضغط على زر <guibutton
+>أضف...</guibutton
+> في لسان <guilabel
+>الاستقبال</guilabel
+>. اختر "حساب مخصص..." من القائمة المنسدلة. سيُطلب منك بعد ذلك تحديد نوع الحساب. سيختار معظم المستخدمين <guilabel
+>خادم بريد POP3</guilabel
+> أو <guilabel
+>خادم بريد IMAP</guilabel
+>. إذا كنت تريد استخدام ملف بريد محلي (<guilabel
+>Mbox</guilabel
+>)، فيرجى مراجعة <link linkend="faq-file-locking"
+>الأسئلة الشائعة حول قفل الملفات</link
+>.</para>
+
+  <screenshot>
+    <screeninfo
+>حوار تكوين الاستقبال</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="receiving.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>حوار تكوين الاستقبال</phrase>
+        </textobject>
+        <caption>
+        <para
+>تكوين حساب IMAP</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>إذا اخترت POP3 أو IMAP، فستظهر نافذة إعدادات الحساب. أولًا، املأ حقل <guilabel
+>اسم الحساب</guilabel
+> لتسمية حسابك. يمكنك اختيار أي اسم تريده. يجب ملء <guilabel
+>اسم المستخدم</guilabel
+>، و <guilabel
+>كلمة المرور</guilabel
+>، و <guilabel
+>خادم البريد الوارد</guilabel
+> (أو <guilabel
+>خادم IMAP</guilabel
+>) بالمعلومات المناسبة من مزود خدمة الإنترنت أو مدير النظام. إذا كنت تريد أن يتحقق بريدك من الرسائل الجديدة آليًا، فوسم مربع <guilabel
+>فعل فحص البريد على فترات</guilabel
+> واضبط الفترة الزمنية التي ترغب فيها.</para>
+
+  <para
+>بعد ذلك، انقر على لسان <guilabel
+>متقدم</guilabel
+> ثم زر <guibutton
+>كشف آلي</guibutton
+>. سيقوم بريدك بالاستعلام من خادم الرسائل الواردة لتحديد الإعدادات الصحيحة لهذا الحساب (التعمية، ورقم المنفذ، وطريقة الاستيثاق).</para>
+
+  <sect3 id="receiving-mail-imap">
+    <title
+>خيارات ذات صلة ببروتوكول IMAP فقط</title>
+
+    <para
+>إذا وسمت <guilabel
+>اضغط المجلدات آليًا</guilabel
+> في لسان تكوين <guilabel
+>متقدم</guilabel
+>، فسيقوم بريدك بإزالة الرسائل التي حذفتها من الخادم بمجرد مغادرتك لذلك المجلد. خلاف ذلك، تُوسم الرسائل فقط بأنها محذوفة والأمر متروك لك لضغط المجلدات يدويًا.</para>
+
+  </sect3>
+
+
+  <sect3 id="receiving-mail-pop3">
+    <title
+>خيارات ذات صلة ببروتوكول POP3 فقط</title>
+
+    <para
+>اختر <guilabel
+>اترك الرسائل المجلوبة على الخادم</guilabel
+> في لسان تكوين <guilabel
+>متقدم</guilabel
+> إذا كنت تريد ترك رسائلك على الخادم بعد تنزيلها. هناك سبع طرق لتحديد المدة التي ستُحتفظ فيها بالرسائل القديمة بعد تنزيلها: إلى غير مسمى (اترك كل الخيارات دون اختيار)، أو عدد الأيام / عدد الرسائل / الحجم الأقصى للوارد من جهة الخادم (اختر واحدًا أو اثنين أو الثلاثة جميعًا). إذا لم يُوسم هذا المربع، فستُحذف جميع الرسائل فورًا من الخادم البعيد بعد اكتمال التنزيل.</para>
+
+    <para
+>في لسان <guilabel
+>متقدم</guilabel
+>، يمكنك أيضًا اختيار <guilabel
+>استخدم أنابيب المهام لتنزيل بريد أسرع</guilabel
+> إذا كان خادمك يدعم ذلك. اختبر هذا للتأكد من أنه يعمل بأمان.</para>
+
+    <para
+>مجلد <guilabel
+>الوارد</guilabel
+> هو المجلد المبدئي للرسائل الواردة. إذا كنت تريد تغيير ذلك لسبب ما، يمكنك القيام بذلك باستخدام <guilabel
+>المجلد الوجهة</guilabel
+>. ولكن ما تريده على الأرجح هو <link linkend="filters"
+>مرشح</link
+>.</para>
+
+    <para
+>باستخدام <guilabel
+>أمر مسبق</guilabel
+>، يمكنك تحديد برنامج يجب على بريدك تنفيذه قبل جلب البريد. يرجى تحديد المسار الكامل (لا تستخدم <quote
+>~</quote
+>) ولاحظ أن بريدك لن يستمر حتى يعود البرنامج.</para>
+
+  </sect3>
+
+  <sect3 id="receiving-mail-imap-pop3">
+    <title
+>خيارات لكل من IMAP و POP3</title>
+
+    <para
+>في لسان <guilabel
+>الاستقبال</guilabel
+>، تحت <guilabel
+>خيارات الاسترجاع</guilabel
+>، اختر <guilabel
+>ضمن في فحص البريد اليدوي</guilabel
+> إذا كنت تريد فحص هذا الحساب كلما استدعيت <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>افحص البريد</guimenuitem
+></menuchoice
+>. إذا لم تختر هذا الخيار، فلا يزال بإمكانك التحقق من الرسائل الجديدة في هذا الحساب باستخدام <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>افحص البريد في &gt; </guimenuitem
+></menuchoice
+>.</para>
+
+    <para
+>يدعم بريدك التعمية عبر <guilabel
+>SSL/TLS</guilabel
+> و <guilabel
+>STARTTLS</guilabel
+> (يُفضل <guilabel
+>SSL/TLS</guilabel
+> إذا كان متوفرًا).</para>
+
+    <para
+>يدعم بريدك تسع طرق للاستيثاق:</para>
+
+    <itemizedlist>
+      <listitem
+><para
+><guilabel
+>نص واضح</guilabel
+>، </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>خالص</guilabel
+>، </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>ولوج</guilabel
+>، </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>CRAM-MD5</guilabel
+> (يوصى به إذا لم يكن <guilabel
+>DIGEST-MD5</guilabel
+> متوفرًا)،</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>DIGEST-MD5</guilabel
+> (يوصى به)،</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>NTLM</guilabel
+>،</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>GSSAPINTLM</guilabel
+>،</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>APOP (ويعرف أيضًا بـ مجهول)</guilabel
+>، و </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>جي‌ميل</guilabel
+>.</para
+></listitem>
+    </itemizedlist>
+
+    <para
+>إن <guilabel
+>DIGEST-MD5</guilabel
+> و <guilabel
+>CRAM-MD5</guilabel
+> و <guilabel
+>APOP</guilabel
+> آمنة بحد ذاتها. الخيارات الأخرى آمنة فقط عند استخدامها مع <guilabel
+>SSL</guilabel
+> أو <guilabel
+>TLS</guilabel
+>. يجب عليك فقط استخدام <guilabel
+>نص واضح</guilabel
+> إذا كان خادمك لا يدعم أيًا من طرق الاستيثاق الأخرى. <guilabel
+>مجهول</guilabel
+> مدعوم في IMAP، ولكن <guilabel
+>APOP</guilabel
+> غير مدعوم. استيثاق <guilabel
+>جي‌ميل</guilabel
+> متاح فقط لحسابات IMAP التي تستخدم خدمة جي‌ميل من جوجل.</para>
+
+    <para
+>استخدم زر <guibutton
+>كشف آلي</guibutton
+> في لسان <guilabel
+>متقدم</guilabel
+> لاختيار أكثر الإعدادات أمانًا التي يدعمها خادمك آليًا.</para>
+
+    <para
+>أنت الآن جاهز لاستقبال البريد. لبروتوكول IMAP، ما عليك سوى فتح مجلداتك في شجرة المجلدات في نافذة بريدك الرئيسة. يتصل بريدك بعد ذلك بخادمك ويعرض الرسائل التي يجدها. لبروتوكول POP3 استخدم <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>افحص البريد</guimenuitem
+></menuchoice
+>.</para>
+
+  </sect3>
+</sect2>
+
+<sect2 id="testing-your-setup">
+  <title
+>اختبار إعدادك</title>
+
+  <para
+>أولًا، يجب عليك إرسال رسالة إلى نفسك لاختبار التكوين الخاص بك. لإرسال رسالة، إما أن تضغط على <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>، أو تختار زر <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;جديد</guiicon
+>، أو تختار عنصر القائمة <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>رسالة جديدة...</guimenuitem
+></menuchoice
+>. ستظهر <link linkend="the-composer-window"
+>نافذة المؤلف</link
+>. املأ حقل <guilabel
+>إلى:</guilabel
+> بعنوان بريدك الإلكتروني واكتب شيئًا في حقل <guilabel
+>الموضوع</guilabel
+>. أرسل الرسالة باختيار <menuchoice
+><guimenu
+>رسالة</guimenu
+><guimenuitem
+>أرسل البريد</guimenuitem
+> </menuchoice
+>.</para>
+
+  <para
+>للتحقق من بريدك الإلكتروني، اختر <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>افحص البريد</guimenuitem
+></menuchoice
+>. في الزاوية السفلية اليمنى من النافذة الرئيسة، سيشير شريط التقدم إلى عدد الرسائل التي تُنزل. إذا استلمت الرسالة التي أرسلتها للتو، فتهانينا! ولكن، إذا استلمت أي رسائل خطأ أثناء اختبار إعدادك، فتأكد من أن اتصالك بالشبكة يعمل وأعد التحقق من إعداداتك في <menuchoice
+><guimenu
+>إعدادات</guimenu
+> <guimenuitem
+>اضبط بريدك...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+</sect1>
+
+</chapter>
