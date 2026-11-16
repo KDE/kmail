@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-10 00:58+0000\n"
-"PO-Revision-Date: 2026-11-14 18:37+0300\n"
+"PO-Revision-Date: 2026-11-15 20:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -233,7 +233,7 @@ msgstr "Solaris üzerindeki çökmeleri düzelt"
 
 #: aboutdata.cpp:136
 msgid "Choice of fonts for new/unread/important messages"
-msgstr "Yeni/okunmamış/önemli iletiler için yazıtipi seçimi"
+msgstr "Yeni/okunmamış/önemli iletiler için yazı tipi seçimi"
 
 #: aboutdata.cpp:140
 msgid "Fix Quick Search keyboard navigation"
@@ -679,7 +679,7 @@ msgstr "Genel"
 #: configuredialog/configureappearancepage.cpp:91
 #, kde-format
 msgid "Fonts"
-msgstr "Yazıtipleri"
+msgstr "Yazı Tipleri"
 
 #: configuredialog/configureappearancepage.cpp:97
 #, kde-format
@@ -720,7 +720,7 @@ msgstr "İleti Listesi — Eylem Ögesi İletileri"
 
 #: configuredialog/configureappearancepage.cpp:134
 msgid "Fixed Width Font"
-msgstr "Eş Aralıklı Yazıtipi"
+msgstr "Eş Aralıklı Yazı Tipi"
 
 #: configuredialog/configureappearancepage.cpp:135
 msgid "Composer"
@@ -734,7 +734,7 @@ msgstr "Yazıcı Çıktısı"
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
-msgstr "Ö&zel yazıtipi kullan"
+msgstr "Ö&zel yazı tipi kullan"
 
 #: configuredialog/configureappearancepage.cpp:166
 #, kde-format
@@ -1936,7 +1936,7 @@ msgstr "B&oşlukları Temizle"
 #, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
-msgstr "Eş A&ralıklı Yazıtipi Kullan"
+msgstr "Eş A&ralıklı Yazı Tipi Kullan"
 
 #: editor/kmcomposerwin.cpp:1383
 #, kde-format
