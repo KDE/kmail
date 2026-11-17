@@ -9,6 +9,5 @@ target_link_libraries(
     KPim6::AkonadiCore
     KF6::SyntaxHighlighting
     kmailprivate
+    qt6keychain
 )
-
-target_link_libraries(sievedebugdialog qt6keychain)

@@ -7,6 +7,5 @@ target_link_libraries(
     KF6::I18n
     KPim6::AkonadiCore
     kmailprivate
+    qt6keychain
 )
-
-target_link_libraries(vacationmultiservertest qt6keychain)

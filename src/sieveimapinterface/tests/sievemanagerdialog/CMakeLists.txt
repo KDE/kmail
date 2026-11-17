@@ -7,6 +7,5 @@ target_link_libraries(
     KPim6::KSieveUi
     KPim6::AkonadiCore
     kmailprivate
+    qt6keychain
 )
-
-target_link_libraries(sievemanagerdialog qt6keychain)

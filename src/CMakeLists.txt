@@ -526,6 +526,8 @@ target_link_libraries(
         KF6::StatusNotifierItem
         LibGpgError::LibGpgError
         ${kmail_userfeedback_LIB}
+        KF6::TextAddonsWidgets
+        qt6keychain
 )
 if(TARGET KF6::TextEditTextToSpeech)
     target_link_libraries(kmailprivate PRIVATE KF6::TextEditTextToSpeech)
@@ -538,8 +540,6 @@ if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     target_link_libraries(kmailprivate PRIVATE KPim6::PimCommonActivities)
 endif()
 
-target_link_libraries(kmailprivate PRIVATE KF6::TextAddonsWidgets)
-
 if(KPim6AkonadiSearch_FOUND)
     target_link_libraries(
         kmailprivate
@@ -548,8 +548,6 @@ if(KPim6AkonadiSearch_FOUND)
             KPim6::AkonadiSearchPIM
     )
 endif()
-
-target_link_libraries(kmailprivate PRIVATE qt6keychain)
 
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim6::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim6::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
