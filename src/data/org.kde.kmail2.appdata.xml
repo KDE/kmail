@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>org.kde.kmail2</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>GPL-2.0+</project_license>
+  <project_license>GPL-2.0-or-later</project_license>
   <developer id="org.kde">
     <name translate="no">KDE</name>
   </developer>
@@ -357,6 +357,7 @@
   <url type="donation">https://www.kde.org/community/donations/?app=kmail&amp;source=appdata</url>
   <url type="vcs-browser">https://invent.kde.org/pim/kmail/</url>
   <url type="contact">https://go.kde.org/matrix/#/#kontact:kde.org</url>
+  <url type="contribute">https://community.kde.org/Get_Involved</url>
   <custom>
     <value key="KDE::irc">#kontact</value>
     <value key="KDE::mailinglist">kdepim-users@kde.org</value>
