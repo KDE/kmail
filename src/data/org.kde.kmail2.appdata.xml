@@ -446,7 +446,7 @@
   </provides>
   <launchable type="desktop-id">org.kde.kmail2.desktop</launchable>
   <releases>
-    <release version="6.9.0" type="snapshot">
+    <release version="6.9.0" date="2026-12-10">
       <description>
         <ul>
           <li>Add Snooze Agent</li>
