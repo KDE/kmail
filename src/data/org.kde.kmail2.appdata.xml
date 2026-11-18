@@ -450,6 +450,14 @@
     <binary>kmail</binary>
   </provides>
   <launchable type="desktop-id">org.kde.kmail2.desktop</launchable>
+  <keywords>
+    <keyword>email</keyword>
+    <keyword>mail</keyword>
+    <keyword>mail client</keyword>
+    <keyword translate="no">IMAP</keyword>
+    <keyword translate="no">POP3</keyword>
+    <keyword translate="no">SMTP</keyword>
+  </keywords>
   <releases>
     <release version="6.9.0" date="2026-12-10">
       <description>
