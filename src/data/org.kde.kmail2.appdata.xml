@@ -363,6 +363,10 @@
     <value key="KDE::mailinglist">kdepim-users@kde.org</value>
     <value key="KDE::mailinglist-devel">kde-pim@kde.org</value>
   </custom>
+  <branding>
+    <color type="primary" scheme_preference="light">#cdecfc</color>
+    <color type="primary" scheme_preference="dark">#135b8a</color>
+  </branding>
   <screenshots>
     <screenshot type="default">
       <image>https://cdn.kde.org/screenshots/kmail/kmail.png</image>
