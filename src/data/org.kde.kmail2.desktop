@@ -205,6 +205,7 @@ Comment[zh_CN]=使用 KMail 发送，接收和管理您的邮件
 Comment[zh_TW]=用 KMail 傳送、接收與管理您的郵件
 StartupNotify=true
 Categories=Qt;KDE;Office;Network;Email;
+Keywords=email;mail;mail client;IMAP;POP3;SMTP;
 MimeType=x-scheme-handler/mailto;
 InitialPreference=10
 Actions=Composer;CheckMail;
