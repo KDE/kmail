@@ -1594,21 +1594,18 @@ void KMComposerWin::initializePluginActions()
 {
     if (guiFactory()) {
         QHash<QString, QList<QAction *>> hashActions;
-        QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *>> localEditorManagerActionsType(mPluginEditorManagerInterface->actionsType());
-        while (localEditorManagerActionsType.hasNext()) {
-            localEditorManagerActionsType.next();
-            if (QList<QAction *> lst = localEditorManagerActionsType.value(); !lst.isEmpty()) {
-                const QString actionlistname = "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
+        const QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> localEditorManagerActionsType = mPluginEditorManagerInterface->actionsType();
+        for (auto it = localEditorManagerActionsType.cbegin(), end = localEditorManagerActionsType.cend(); it != end; ++it) {
+            if (const QList<QAction *> lst = it.value(); !lst.isEmpty()) {
+                const QString actionlistname = "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(it.key());
                 hashActions.insert(actionlistname, lst);
             }
         }
-        QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *>> localEditorConvertTextManagerActionsType(
-            mPluginEditorConvertTextManagerInterface->actionsType());
-        while (localEditorConvertTextManagerActionsType.hasNext()) {
-            localEditorConvertTextManagerActionsType.next();
-            if (QList<QAction *> lst = localEditorConvertTextManagerActionsType.value(); !lst.isEmpty()) {
-                const QString actionlistname =
-                    "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
+        const QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> localEditorConvertTextManagerActionsType =
+            mPluginEditorConvertTextManagerInterface->actionsType();
+        for (auto it = localEditorConvertTextManagerActionsType.cbegin(), end = localEditorConvertTextManagerActionsType.cend(); it != end; ++it) {
+            if (QList<QAction *> lst = it.value(); !lst.isEmpty()) {
+                const QString actionlistname = "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(it.key());
                 if (hashActions.contains(actionlistname)) {
                     lst = hashActions.value(actionlistname) + lst;
                     hashActions.remove(actionlistname);
