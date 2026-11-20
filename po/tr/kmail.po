@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-10 00:58+0000\n"
-"PO-Revision-Date: 2026-11-16 19:09+0300\n"
+"PO-Revision-Date: 2026-11-19 19:36+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3834,7 +3834,7 @@ msgstr[1] "%2 dağıtım listeleri boş olduğundan bunu kullanamazsınız."
 #: job/clearcachejobinfolderandsubfolderjob.cpp:72
 #, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Akonadi Önbelleğini Temizle"
+msgstr "Akonadi Ön Belleğini Temizle"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:54
@@ -5047,13 +5047,13 @@ msgstr "&E-posta Listesi Yönetimi…"
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr "Akonadi Önbelleğini &Temizle…"
+msgstr "Akonadi Ön Belleğini &Temizle…"
 
 #: kmmainwidget.cpp:3123
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Bu Klasördeki ve Tüm Alt Klasörlerindeki Akonadi Önbelleğini &Temizle"
+msgstr "Bu Klasördeki ve Tüm Alt Klasörlerindeki Akonadi Ön Belleğini &Temizle"
 
 #: kmmainwidget.cpp:3128
 #, kde-format

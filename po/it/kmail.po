@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-10 00:58+0000\n"
-"PO-Revision-Date: 2026-11-04 16:04+0100\n"
+"PO-Revision-Date: 2026-11-19 15:52+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -8203,11 +8203,10 @@ msgid "An informative text about the current mode!"
 msgstr "Un testo informativo sulla modalità corrente."
 
 #: undosend/undosendcombobox.cpp:22
-#, fuzzy, kde-format
-#| msgid "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1 secondi"
+msgstr[0] "un secondo"
 msgstr[1] "%1 secondi"
 
 #: undosend/undosendcombobox.cpp:25

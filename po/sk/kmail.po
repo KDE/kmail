@@ -6833,8 +6833,7 @@ msgid "Specifies the policy used when displaying policy"
 msgstr "Určuje politiku použitú pri zobrazovaní politiky"
 
 #: snooze/snoozemenu.cpp:16
-#, fuzzy, kde-format
-#| msgid "Snooze"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
 msgstr "Odložiť"
@@ -6870,17 +6869,16 @@ msgid "Custom…"
 msgstr "Vlastné…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
-#, fuzzy, kde-format
-#| msgid "Snooze"
+#, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr "Odložiť"
+msgstr "Odložiť do"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "Pripomenúť:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
@@ -8113,12 +8111,11 @@ msgid "An informative text about the current mode!"
 msgstr "An informative text about aktuálny mode!"
 
 #: undosend/undosendcombobox.cpp:22
-#, fuzzy, kde-format
-#| msgid "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1 sekúnd"
-msgstr[1] "%1 sekúnd"
+msgstr[0] "1 sekunda"
+msgstr[1] "%1 sekundy"
 msgstr[2] "%1 sekúnd"
 
 #: undosend/undosendcombobox.cpp:25
