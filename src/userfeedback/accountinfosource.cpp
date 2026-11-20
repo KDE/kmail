@@ -11,6 +11,7 @@
 #include <KUserFeedback/Provider>
 #include <MailCommon/MailUtil>
 #include <MailTransport/TransportManager>
+#include <QMap>
 #include <QVariant>
 
 using namespace Qt::Literals::StringLiterals;
