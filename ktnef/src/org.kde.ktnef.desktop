@@ -182,4 +182,14 @@ Comment[zh_TW]=TNEF 檔案檢視器
 MimeType=application/ms-tnef;
 Categories=Qt;KDE;X-KDE-Utilities-PIM;Office;Network;Email;
 Keywords=TNEF;winmail.dat;attachment;email;Outlook;
+Keywords[ar]=TNEF;winmail.datملحق;بريد إلكتروني;أوتلوك;
+Keywords[bg]=TNEF;winmail.dat;прикачени файлове;имейл;Outlook;
+Keywords[ca]=TNEF;winmail.dat;adjunt;correu electrònic;Outlook;
+Keywords[ca@valencia]=TNEF;winmail.dat;adjunt;correu electrònic;Outlook;
+Keywords[it]=TNEF;winmail.dat;allegato;posta elettronica;Outlook;
+Keywords[pt_BR]=TNEF;winmail.dat;anexo;e-mail;Outlook;
+Keywords[ru]=TNEF;winmail;вложение;почта;Outlook;
+Keywords[sk]=TNEF;winmail.dat;príloha;email;Outlook;
+Keywords[tr]=TNEF;winmail.dat;attachment;email;Outlook;ilişik;ek;e-posta;ileti;
+Keywords[uk]=TNEF;winmail.dat;attachment;email;Outlook;тнеф;долучення;пошта;аутлук;
 
