@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-05 00:56+0000\n"
-"PO-Revision-Date: 2026-11-14 22:14+0100\n"
+"PO-Revision-Date: 2026-11-17 12:06+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -66,19 +66,23 @@ msgid_plural ""
 "Do you want to unsnooze the %1 selected messages?\n"
 "They will come back without notification."
 msgstr[0] ""
+"Желаете ли да спрете отлагането на избраното съобщение?\n"
+"То ще се върне без известие."
 msgstr[1] ""
+"Желаете ли да спрете отлагането на %1 избрани съобщение?\n"
+"Те ще се върнат без известие."
 
 #: snoozeconfigurewidget.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "Unsnooze Messages"
-msgstr ""
+msgstr "Отмяна на отлагане на съобщения"
 
 #: snoozeconfigurewidget.cpp:140
 #, kde-format
 msgctxt "@action:button"
 msgid "Unsnooze"
-msgstr ""
+msgstr "Отмяна на отлагане"
 
 #: snoozeconfigurewidget.cpp:177
 #, kde-format
@@ -96,4 +100,4 @@ msgstr "Събуждане сега"
 #, kde-format
 msgctxt "@action"
 msgid "Unsnooze"
-msgstr ""
+msgstr "Отмяна на отлагане"
