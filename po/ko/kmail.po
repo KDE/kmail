@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:58+0000\n"
+"POT-Creation-Date: 2026-11-21 01:12+0000\n"
 "PO-Revision-Date: 2026-09-29 00:50+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -8011,12 +8011,12 @@ msgstr "<b>받는 사람:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>제목:</b> %1"
 
-#: userfeedback/accountinfosource.cpp:24
+#: userfeedback/accountinfosource.cpp:25
 #, kde-format
 msgid "Account information"
 msgstr "계정 정보"
 
-#: userfeedback/accountinfosource.cpp:29
+#: userfeedback/accountinfosource.cpp:30
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr "KMail에서 설정한 계정의 개수와 형식입니다(수신과 발신 모두)."

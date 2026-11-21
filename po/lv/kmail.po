@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:58+0000\n"
+"POT-Creation-Date: 2026-11-21 01:12+0000\n"
 "PO-Revision-Date: 2025-08-21 12:57+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -8176,12 +8176,12 @@ msgstr "<b>Kam:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Temats:</b> %1"
 
-#: userfeedback/accountinfosource.cpp:24
+#: userfeedback/accountinfosource.cpp:25
 #, kde-format
 msgid "Account information"
 msgstr "Konta informācija"
 
-#: userfeedback/accountinfosource.cpp:29
+#: userfeedback/accountinfosource.cpp:30
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""

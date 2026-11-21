@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:58+0000\n"
+"POT-Creation-Date: 2026-11-21 01:12+0000\n"
 "PO-Revision-Date: 2026-11-11 23:00+0200\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -8248,12 +8248,12 @@ msgstr "<b>Кому:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Тема:</b> %1"
 
-#: userfeedback/accountinfosource.cpp:24
+#: userfeedback/accountinfosource.cpp:25
 #, kde-format
 msgid "Account information"
 msgstr "Сведения об учётной записи"
 
-#: userfeedback/accountinfosource.cpp:29
+#: userfeedback/accountinfosource.cpp:30
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""

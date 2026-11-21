@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:58+0000\n"
+"POT-Creation-Date: 2026-11-21 01:12+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -8249,13 +8249,13 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: userfeedback/accountinfosource.cpp:24
+#: userfeedback/accountinfosource.cpp:25
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Account information"
 msgstr "යැවීම තහවුරු කරමි"
 
-#: userfeedback/accountinfosource.cpp:29
+#: userfeedback/accountinfosource.cpp:30
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""

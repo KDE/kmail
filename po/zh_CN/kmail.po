@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:58+0000\n"
+"POT-Creation-Date: 2026-11-21 01:12+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -7892,12 +7892,12 @@ msgstr "<b>到：</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>主题：</b> %1"
 
-#: userfeedback/accountinfosource.cpp:24
+#: userfeedback/accountinfosource.cpp:25
 #, kde-format
 msgid "Account information"
 msgstr "账户信息"
 
-#: userfeedback/accountinfosource.cpp:29
+#: userfeedback/accountinfosource.cpp:30
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr "KMail 中已配置的账户数量及类型 (接收账户和发送账户)。"
