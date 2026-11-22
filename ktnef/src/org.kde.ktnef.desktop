@@ -190,6 +190,7 @@ Keywords[cs]=TNEF;winmail.dat;příloha;e-mail;Outlook;
 Keywords[es]=TNEF;winmail.dat;adjunto;email;correo electrónico;Outlook;
 Keywords[he]=TNEF;winmail.dat;צרופה;קובץ מצורף;דוא״ל;דוא"ל;אאוטלוק;
 Keywords[it]=TNEF;winmail.dat;allegato;posta elettronica;Outlook;
+Keywords[ko]=첨부;첨부 파일;이메일;아웃룩;
 Keywords[nl]=TNEF;winmail.dat;bijlage;e-mail;Outlook;
 Keywords[pt_BR]=TNEF;winmail.dat;anexo;e-mail;Outlook;
 Keywords[ru]=TNEF;winmail;вложение;почта;Outlook;

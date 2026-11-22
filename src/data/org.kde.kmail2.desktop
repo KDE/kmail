@@ -214,6 +214,7 @@ Keywords[cs]=e-mail;pošta;poštovní klient;IMAP;POP3;SMTP;
 Keywords[es]=email;correo electrónico;mail;correo;cliente de email;cliente de correo electrónico;cliente de correo;IMAP;POP3;SMTP;
 Keywords[he]=דוא"ל;דוא״ל;לקוח דוא"ל;לקוח דוא״ל;IMAP;POP3;SMTP;
 Keywords[it]=posta elettronica;posta;client di posta;IMAP;POP3;SMTP;
+Keywords[ko]=이메일;메일;메일 클라이언트;
 Keywords[nl]=e-mail;mail;e-mail-client;IMAP;POP3;SMTP;
 Keywords[pt_BR]=e-mail;correio;cliente de e-mail;IMAP;POP3;SMTP;
 Keywords[ru]=электронная почта;почта;почтовый клиент;IMAP;POP3;SMTP;
