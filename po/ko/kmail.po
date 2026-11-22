@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:14+0000\n"
-"PO-Revision-Date: 2026-09-29 00:50+0200\n"
+"PO-Revision-Date: 2026-11-22 00:25+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -522,19 +522,18 @@ msgstr "가져오기 옵션"
 #: configuredialog/configureaccessibilitypage.cpp:28
 #, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "텍스트 읽어주기"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "서식 있는 텍스트"
+msgstr "음성 텍스트 변환"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr ""
+msgstr "텍스트 읽어주기 활성화"
 
 #: configuredialog/configureaccountpage.cpp:56
 #, kde-format
@@ -4421,10 +4420,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "후속 작업 알림 에이전트가 등록되지 않았습니다."
 
 #: kmlaunchexternalcomponent.cpp:69
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "나중에 보내기 에이전트가 등록되지 않았습니다."
+msgstr "지연 에이전트가 등록되지 않았습니다."
 
 #: kmlaunchexternalcomponent.cpp:81 kmlaunchexternalcomponent.cpp:89
 #, kde-format
@@ -6101,11 +6099,10 @@ msgid "Archive Message"
 msgstr "메시지 파일로 압축"
 
 #: messageactions.cpp:89
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "&KMail 설정(&C)…"
+msgstr "지연 설정(&C)…"
 
 #: messageactions.cpp:90
 #, kde-format
@@ -6449,7 +6446,7 @@ msgstr "폴더 선택 대화 상자에서 가장 최근에 선택된 폴더입�
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "텍스트 읽어주기 활성화"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
@@ -6729,52 +6726,49 @@ msgstr "정책을 표시할 때 사용할 정책"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
-msgstr ""
+msgstr "지연"
 
 #: snooze/snoozemenu.cpp:21
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "1시간 후"
 
 #: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "8시간 후"
 
 #: snooze/snoozemenu.cpp:31
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "내일"
 
 #: snooze/snoozemenu.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "다음 메시지(&N)"
+msgstr "다음 주"
 
 #: snooze/snoozemenu.cpp:42
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "사용자 정의 계정…"
+msgstr "사용자 정의…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr ""
+msgstr "다음까지 지연"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "다음에 깨우기:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
