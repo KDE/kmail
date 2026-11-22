@@ -1,0 +1,100 @@
+# Copyright (C) 2026 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# SPDX-FileCopyrightText: 2026 Shinjo Park <kde@peremen.name>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2026-11-05 00:56+0000\n"
+"PO-Revision-Date: 2026-11-22 00:26+0100\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 25.12.3\n"
+
+#: snoozeagent.cpp:38
+#, kde-format
+msgid "Snooze Agent"
+msgstr "지연 에이전트"
+
+#: snoozeagent.cpp:172
+#, kde-format
+msgid "Snoozed"
+msgstr "지연됨"
+
+#: snoozeconfigurewidget.cpp:54
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "삭제"
+
+#: snoozeconfigurewidget.cpp:55
+#, kde-format
+msgctxt "@action:button"
+msgid "Wake Up Now"
+msgstr "지금 깨우기"
+
+#: snoozeconfigurewidget.cpp:64
+#, kde-format
+msgctxt "@title:column send mail from"
+msgid "From"
+msgstr "보낸 사람"
+
+#: snoozeconfigurewidget.cpp:65
+#, kde-format
+msgctxt "@title:column mail subject"
+msgid "Subject"
+msgstr "제목"
+
+#: snoozeconfigurewidget.cpp:66
+#, kde-format
+msgctxt "@title:column when the message comes back"
+msgid "Wake Up"
+msgstr "깨우기"
+
+#: snoozeconfigurewidget.cpp:136
+#, kde-format
+msgid ""
+"Do you want to unsnooze the selected message?\n"
+"It will come back without notification."
+msgid_plural ""
+"Do you want to unsnooze the %1 selected messages?\n"
+"They will come back without notification."
+msgstr[0] ""
+"선택한 메시지 %1개의 지연을 깨우시겠습니까?\n"
+"알림 없이 되돌아올 것입니다."
+
+#: snoozeconfigurewidget.cpp:139
+#, kde-format
+msgctxt "@title:window"
+msgid "Unsnooze Messages"
+msgstr "메시지 지연 해제"
+
+#: snoozeconfigurewidget.cpp:140
+#, kde-format
+msgctxt "@action:button"
+msgid "Unsnooze"
+msgstr "지연 해제"
+
+#: snoozeconfigurewidget.cpp:177
+#, kde-format
+msgctxt "@action"
+msgid "Show Message"
+msgstr "메시지 보기"
+
+#: snoozeconfigurewidget.cpp:180
+#, kde-format
+msgctxt "@action"
+msgid "Wake Up Now"
+msgstr "지금 깨우기"
+
+#: snoozeconfigurewidget.cpp:182
+#, kde-format
+msgctxt "@action"
+msgid "Unsnooze"
+msgstr "지연 해제"
