@@ -460,6 +460,7 @@
           <li xml:lang="he">נוסף סוכן נודניק</li>
           <li xml:lang="it">Aggiunto agente di sospensione</li>
           <li xml:lang="ka">ჩაჩუმების აგენტის დამატება</li>
+          <li xml:lang="ko">지연 에이전트 추가</li>
           <li xml:lang="nl">Snooze-agent toevoegen</li>
           <li xml:lang="pt-BR">Adicionar agente de adiamento</li>
           <li xml:lang="ru">Добавлен агент отложенных писем</li>
@@ -478,6 +479,7 @@
           <li xml:lang="he">מימוש פעילויות פלזמה.</li>
           <li xml:lang="it">Implementate le attività di Plasma.</li>
           <li xml:lang="ka">განხორციელდა Plasma-ის აქტივობები.</li>
+          <li xml:lang="ko">Plasma 활동을 구현했습니다.</li>
           <li xml:lang="nl">Plasma activiteiten implementeren.</li>
           <li xml:lang="pt-BR">Atividades do Plasma implementadas.</li>
           <li xml:lang="ru">Реализована поддержка комнат Plasma.</li>
