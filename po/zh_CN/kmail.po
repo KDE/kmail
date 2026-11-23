@@ -522,10 +522,9 @@ msgid "Text to Speech"
 msgstr ""
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "富文本"
+msgstr ""
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
@@ -985,7 +984,7 @@ msgstr "可用标签(&V)"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
-msgstr "新加标签"
+msgstr "添加新标签"
 
 #: configuredialog/configureappearancepage.cpp:963
 #, kde-format
@@ -4346,10 +4345,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "后续提醒代理未注册。"
 
 #: kmlaunchexternalcomponent.cpp:69
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "延迟发送助手未注册。"
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:81 kmlaunchexternalcomponent.cpp:89
 #, kde-format
@@ -6005,11 +6003,10 @@ msgid "Archive Message"
 msgstr "归档信件"
 
 #: messageactions.cpp:89
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "配置 KMail(&C)..."
+msgstr ""
 
 #: messageactions.cpp:90
 #, kde-format
@@ -6649,19 +6646,16 @@ msgid "Tomorrow"
 msgstr ""
 
 #: snooze/snoozemenu.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "下一条消息(&N)"
+msgstr ""
 
 #: snooze/snoozemenu.cpp:42
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "自定义账户..."
+msgstr ""
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
 #, kde-format
@@ -7621,15 +7615,11 @@ msgstr "OCSP 响应签名："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Enter here the address of the server for online validation of "
-#| "certificates (OCSP responder). The URL is usually starting with http://."
+#, kde-format
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with https://."
 msgstr ""
-"在此输入在线证书校验(OCSP 响应者)服务器的地址。此 URL 通常以 http:// 开头。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
@@ -7866,11 +7856,10 @@ msgid "An informative text about the current mode!"
 msgstr "关于当前模式的信息文本！"
 
 #: undosend/undosendcombobox.cpp:22
-#, fuzzy, kde-format
-#| msgid "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1 秒"
+msgstr[0] ""
 
 #: undosend/undosendcombobox.cpp:25
 #, kde-format
