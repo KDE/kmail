@@ -227,7 +227,7 @@
       <li xml:lang="sk">Bezpečný - KMail má bezpečné predvolené nastavenia na ochranu vášho súkromia, skvelú podporu šifrovania end-to-end a detekciu spamu.</li>
       <li xml:lang="sl">Varno - KMail ima varne privzete nastavitve za zaščito vaše zasebnosti, celovito podporo za šifriranje in odkrivanje neželene pošte.</li>
       <li xml:lang="sv">Säkert: Kmail har säkra standardinställningar för att skydda din integritet, enastående genomgående krypteringsstöd, och skräppostdetektering.</li>
-      <li xml:lang="tr">Güvenli — KMail öntanımlı ayarları gizliliğinizi korur, uçtan uca şifreleme ve istenmeyen posta algılama desteği sunar.</li>
+      <li xml:lang="tr">Güvenli — KMail varsayılan ayarları gizliliğinizi korur, uçtan uca şifreleme ve istenmeyen posta algılama desteği sunar.</li>
       <li xml:lang="uk">Безпека — типові параметри роботи KMail є безпечними, вони захистять ваші конфіденційні дані, забезпечать наскрізне шифрування даних та запобігатимуть появі спаму.</li>
       <li xml:lang="zh-CN">安全可靠 - KMail 具有安全的默认设置、良好的端到端加密支持、可靠的垃圾邮件检测功能，为您的隐私保驾护航。</li>
       <li xml:lang="zh-TW">安全 — KMail 的預設值安全保護您的隱私，也支援偵測垃圾信以及點對點加密。</li>
@@ -740,7 +740,7 @@
         <p xml:lang="sl">Upoštevajte, da so vse te zmožnosti umetne inteligence privzeto onemogočene in jih morate izrecno omogočiti v nastavitvah KMail.</p>
         <p xml:lang="sv">Observera att alla AI-funktioner är normal inaktiverade och man måste uttryckligen aktivera dem i Kmails inställningar.</p>
         <p xml:lang="ta">இயல்பிருப்பாக, மேற்கண்ட AI (செயற்கை நுண்ணறிவு) அம்சங்கள் முடக்கப்பிருக்கும். அவற்றை கேமெயிலின் அமைப்புகளுக்குள் சென்று கைமுறையாக இயக்க வேண்டும்.</p>
-        <p xml:lang="tr">Öntanımlı olarak tüm bu yapay zekâ özelliklerinin devre dışı olduğunu ve bunları KMail ayarlarında açıkça etkinleştirmeniz gerektiğini unutmayın.</p>
+        <p xml:lang="tr">Varsayılan olarak tüm bu yapay zekâ özelliklerinin devre dışı olduğunu ve bunları KMail ayarlarında açıkça etkinleştirmeniz gerektiğini unutmayın.</p>
         <p xml:lang="uk">Зауважте, що типово усі ці можливості ШІ вимкнено, і вам слід явним чином увімкнути їх у параметрах KMail.</p>
         <p xml:lang="zh-CN">注意默认情况下，所有这些AI功能都被禁用，您需要在 KMail 设置中明确启用它们。</p>
       </description>
