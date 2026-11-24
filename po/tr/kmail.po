@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-22 01:06+0000\n"
-"PO-Revision-Date: 2026-11-19 19:36+0300\n"
+"PO-Revision-Date: 2026-11-23 18:14+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -628,7 +628,7 @@ msgstr "Sonra gönder"
 #: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Defa&ult send method:"
-msgstr "Ö&ntanımlı gönderme yöntemi:"
+msgstr "&Varsayılan gönderme yöntemi:"
 
 #: configuredialog/configureaccountpage.cpp:124
 #, kde-format
@@ -880,12 +880,12 @@ msgstr "Ö&zel biçim:"
 #: configuredialog/configureappearancepage.cpp:608
 #, kde-format
 msgid "Default aggregation:"
-msgstr "Öntanımlı toplama:"
+msgstr "Varsayılan toplama:"
 
 #: configuredialog/configureappearancepage.cpp:626
 #, kde-format
 msgid "Default theme:"
-msgstr "Öntanımlı tema:"
+msgstr "Varsayılan tema:"
 
 #: configuredialog/configureappearancepage.cpp:663
 #, kde-format
@@ -1167,7 +1167,7 @@ msgid ""
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
 "Yanıtlarken veya iletirken, iletiyi alındığı özgün biçimde alıntılayın. "
-"İşaretlenmezse yanıt öntanımlı olarak düz metin biçiminde olacaktır."
+"İşaretlenmezse yanıt varsayılan olarak düz metin biçiminde olacaktır."
 
 #: configuredialog/configurecomposerpage.cpp:243
 #, kde-format
@@ -3272,13 +3272,13 @@ msgstr "Başkalarının şifreleme yeğlediğinizi bilmesine izin ver"
 #: identity/identitydialog.cpp:577
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr "Güvenlik öntanımlıları global ayarlarının üzerine yaz"
+msgstr "Güvenlik varsayılanları global ayarlarının üzerine yaz"
 
 #: identity/identitydialog.cpp:580
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr "Öntanımlıların üzerine yaz:"
+msgstr "Varsayılanların üzerine yaz:"
 
 #: identity/identitydialog.cpp:585
 #, kde-format
@@ -3464,13 +3464,13 @@ msgstr "Kendiliğinden düzeltme dili:"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
-msgstr "Öntanımlı alan adını geri yükle"
+msgstr "Varsayılan alan adını geri yükle"
 
 #: identity/identitydialog.cpp:748
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "Öntanımlı &alan:"
+msgstr "Varsayılan &alan:"
 
 #: identity/identitydialog.cpp:754
 #, kde-format
@@ -3478,8 +3478,8 @@ msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr ""
-"<qt> <p>Öntanımlı alan. Kullanıcı adını tamamlamak için e-posta adreslerinin "
-"tamamınından meydana gelir.</p></qt>"
+"<qt> <p>Varsayılan alan. Kullanıcı adını tamamlamak için e-posta "
+"adreslerinin tamamınından meydana gelir.</p></qt>"
 
 #: identity/identitydialog.cpp:771
 #, kde-format
@@ -3604,7 +3604,7 @@ msgid ""
 "folders will be used."
 msgstr ""
 "Kimlik için tanımlanmış olan bazı özel klasörler (artık) yok; bu nedenle "
-"öntanımlı klasörler kullanılacak."
+"varsayılan klasörler kullanılacak."
 
 #: identity/identitydialog.cpp:1324
 #, kde-format
@@ -3721,7 +3721,7 @@ msgstr "Yeniden Adlandır"
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
-msgstr "Öntanımlı Olarak Ayarla"
+msgstr "Varsayılan Olarak Ayarla"
 
 #: identity/newidentitydialog.cpp:39
 #, kde-format
@@ -4427,9 +4427,9 @@ msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] ""
-"Aşağıdaki kimlik, öntanımlı taşıyıcıyı kullanacak şekilde değiştirildi:"
+"Aşağıdaki kimlik, varsayılan taşıyıcıyı kullanacak şekilde değiştirildi:"
 msgstr[1] ""
-"Aşağıdaki %1 adet kimlik, öntanımlı taşıyıcıyı kullanacak şekilde "
+"Aşağıdaki %1 adet kimlik, varsayılan taşıyıcıyı kullanacak şekilde "
 "değiştirildi:"
 
 #: kmkernel.cpp:1552
@@ -6638,7 +6638,7 @@ msgstr "Tez klasör arama satırını göster"
 #: settings/kmail.kcfg:176
 #, kde-format
 msgid "Forward Inline As Default."
-msgstr "Satır içi metni öntanımlı olarak iletin."
+msgstr "Satır içi metni varsayılan olarak iletin."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg:179
@@ -6688,7 +6688,7 @@ msgid ""
 msgstr ""
 "<qt><p>KMail’in giden her iletiniz için İleti Durum Bildirimleri (MDN’ler) "
 "göndermesini istiyorsanız bu seçeneği etkinleştirin.</p><p>Bu seçenek "
-"yalnızca öntanımlıları etkiler; düzenleyici ekranında her ileti için MDN "
+"yalnızca varsayılanları etkiler; düzenleyici ekranında her ileti için MDN "
 "isteğini etkin veya devre dışı yapabilirsiniz, bunun için <em>Seçenekler</"
 "em> → <em>Durum Bildirimi İste</em> menü ögesini seçin.</p></qt>"
 
@@ -6744,7 +6744,7 @@ msgstr "Şifreleme etiketi göstergesini göster"
 #: settings/kmail.kcfg:265
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr "Öntanımlı Gönder Kısayolunun Geçerliliğini Denetle"
+msgstr "Varsayılan Gönder Kısayolunun Geçerliliğini Denetle"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:316
@@ -7009,13 +7009,13 @@ msgstr "Seçili kimliği kaldır"
 #: ui/identityngpage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
-msgstr "Seçili kimliği öntanımlı olarak kullan"
+msgstr "Seçili kimliği varsayılan olarak kullan"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
 #: ui/identityngpage.ui:89
 #, kde-format
 msgid "Set as &Default"
-msgstr "Ö&ntanımlı Olarak Ayarla"
+msgstr "&Varsayılan Olarak Ayarla"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/incompleteindexdialog.ui:29
@@ -7285,7 +7285,7 @@ msgstr "&İletiyi Aç"
 #: ui/securitypageencryptiontab.ui:17
 #, kde-format
 msgid "Security defaults"
-msgstr "Güvenlik Öntanımlıları"
+msgstr "Güvenlik Varsayılanları"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AlwaysEncryptDrafts)
 #: ui/securitypageencryptiontab.ui:23
@@ -7588,7 +7588,7 @@ msgstr ""
 "İnternet’ten yüklemek için geçerli hiçbir neden yoktur; çünkü gönderen kişi "
 "her zaman ilgili görselleri iletiye doğrudan ekleyebilir.</p><p>KMail’in "
 "HTML görüntüleme özelliğinin bu şekilde yanlış kullanılmasına karşı önlem "
-"olarak, bu özellik öntanımlı olarak <em>devre dışı</em> kılınmıştır.</"
+"olarak, bu özellik varsayılan olarak <em>devre dışı</em> kılınmıştır.</"
 "p><p>İsterseniz HTML iletilerine eklenmemiş görsellerin görüntülenmesini "
 "etkinleştirebilirsiniz; ancak yukarıda bahsedilen sorunlara karşı dikkatli "
 "olmalısınız.</p></qt>"
@@ -7878,7 +7878,7 @@ msgid ""
 "certificate policy is allowed. If this option is selected, policies are not "
 "checked."
 msgstr ""
-"Öntanımlı ayar olarak GnuPG, ~/.gnupg/policies.txt dosyasını kullanarak bir "
+"Varsayılan ayar olarak GnuPG, ~/.gnupg/policies.txt dosyasını kullanarak bir "
 "sertifika politikasına izin verilip verilmediğini denetler. Bu seçenek "
 "seçilirse politikalar denetlenmez."
 
@@ -8212,7 +8212,7 @@ msgstr "Hesap Sihirbazı Başlatılamadı"
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
 msgid "Message Default Format"
-msgstr "Öntanımlı İleti Biçimi"
+msgstr "Varsayılan İleti Biçimi"
 
 #: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
