@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-11-25 01:26+0000\n"
 "PO-Revision-Date: 2025-08-20 10:38+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -63,3 +63,15 @@ msgstr "Antoni Bella"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "antonibella5@yahoo.com"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/mailmergeconfigurewidget.ui:31
+#, kde-format
+msgid "Modify…"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, removeItem)
+#: ui/mailmergeconfigurewidget.ui:38
+#, kde-format
+msgid "Remove"
+msgstr ""
