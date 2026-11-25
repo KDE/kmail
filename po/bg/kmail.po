@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:14+0000\n"
-"PO-Revision-Date: 2026-11-07 22:45+0200\n"
+"PO-Revision-Date: 2026-11-24 22:23+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -5654,7 +5654,7 @@ msgstr "&Повтаряне"
 #: kmmainwidget.cpp:4255
 #, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Повтаряне: \"%1\""
+msgstr "&Повтаряне: „%1“"
 
 #: kmmainwidget.cpp:4312
 #, kde-format
