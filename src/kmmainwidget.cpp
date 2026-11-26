@@ -755,8 +755,17 @@ void KMMainWidget::layoutSplitters()
     const int folderViewWidth = KMailSettings::self()->folderViewWidth();
     const int ftHeight = KMailSettings::self()->folderTreeHeight();
     int headerHeight = KMailSettings::self()->searchAndHeaderHeight();
-    const int messageViewerWidth = KMailSettings::self()->readerWindowWidth();
-    const int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
+    int messageViewerWidth = KMailSettings::self()->readerWindowWidth();
+    int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
+
+    // If the reader window at the side was never stored, the stored message list width belongs to another
+    // layout; if it was squeezed to almost nothing by such a width, it is unusable: start over with the defaults
+    if (readerWindowAtSide && (KMailSettings::self()->readerWindowWidthItem()->isDefault() || messageViewerWidth < 200)) {
+        KMailSettings::self()->searchAndHeaderWidthItem()->setDefault();
+        KMailSettings::self()->readerWindowWidthItem()->setDefault();
+        messageViewerWidth = KMailSettings::self()->readerWindowWidth();
+        headerWidth = KMailSettings::self()->searchAndHeaderWidth();
+    }
     int messageViewerHeight = KMailSettings::self()->readerWindowHeight();
 
     int ffvHeight = mFolderViewSplitter ? KMKernel::self()->mailCommonSettings()->favoriteCollectionViewHeight() : 0;
@@ -930,7 +939,11 @@ void KMMainWidget::writeConfig(bool force)
         }
 
         KMailSettings::self()->setSearchAndHeaderHeight(headersHeight);
-        KMailSettings::self()->setSearchAndHeaderWidth(mMessagePane->width());
+        // With a long folder list and the reader window below or hidden, the message list takes all
+        // the remaining width, so its width isn't meaningful (and would squeeze a reader window at the side)
+        if (!mLongFolderList || (mReaderWindowActive && !mReaderWindowBelow)) {
+            KMailSettings::self()->setSearchAndHeaderWidth(mMessagePane->width());
+        }
         if (mFavoriteCollectionsView) {
             KMKernel::self()->mailCommonSettings()->setFavoriteCollectionViewHeight(mFavoriteCollectionsView->height());
             KMailSettings::self()->setFolderTreeHeight(mFolderTreeWidget->height());
