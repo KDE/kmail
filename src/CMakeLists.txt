@@ -117,6 +117,10 @@ target_sources(
         searchdialog/searchdescriptionattribute.cpp
         searchdialog/incompleteindexdialog.cpp
         identity/identitydialog.cpp
+        identity/signatureconfigurator.cpp
+        identity/signatureconfigurator.h
+        identity/signaturerichtexteditor.cpp
+        identity/signaturerichtexteditor_p.h
         identity/xfaceconfigurator.cpp
         identity/encodedimagepicker.cpp
         identity/newidentitydialog.cpp
@@ -512,6 +516,7 @@ target_link_libraries(
         KF6::KIOCore
         KF6::Contacts
         KPim6::PimTextEdit
+        KF6::TextCustomEditor
         KPim6::MessageViewer
         KF6::IconThemes
         KF6::IconWidgets

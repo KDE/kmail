@@ -15,6 +15,7 @@
 #include "identityexpirespamfolderdialog.h"
 #include "identityfolderrequester.h"
 #include "identityinvalidfolder.h"
+#include "signatureconfigurator.h"
 
 #include <QGpgME/Job>
 
@@ -36,7 +37,6 @@
 #include <templateparser/templatesconfiguration_kfg.h>
 // other kdepim headers:
 #include <KIdentityManagementCore/Identity>
-#include <KIdentityManagementWidgets/SignatureConfigurator>
 
 #include <PimCommon/PimUtil>
 #include <TextAutoCorrectionWidgets/AutoCorrectionLanguage>
@@ -794,7 +794,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new KIdentityManagementWidgets::SignatureConfigurator(mTabWidget);
+    mSignatureConfigurator = new KMail::SignatureConfigurator(mTabWidget);
     mTabWidget->addTab(mSignatureConfigurator, i18n("Signature"));
 
     //

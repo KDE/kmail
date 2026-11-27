@@ -199,3 +199,20 @@ target_link_libraries(
     KPim6::MailCommon
     kmailprivate
 )
+
+add_executable(
+    signaturerichtexteditortest
+    signaturerichtexteditortest.cpp
+    signaturerichtexteditortest.h
+    ../identity/signaturerichtexteditor.cpp
+)
+add_test(NAME signaturerichtexteditortest COMMAND signaturerichtexteditortest)
+ecm_mark_as_test(signaturerichtexteditortest)
+target_include_directories(signaturerichtexteditortest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
+target_link_libraries(
+    signaturerichtexteditortest
+    Qt::Test
+    KPim6::IdentityManagementCore
+    KPim6::PimTextEdit
+    KF6::XmlGui
+)
