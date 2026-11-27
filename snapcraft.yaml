@@ -111,7 +111,7 @@ parts:
         after:
         - kde-neon
         parse-info:
-        - usr/share/metainfo/org.kde.kmail.appdata.xml
+        - usr/share/metainfo/org.kde.kmail2.metainfo.xml
         plugin: cmake
         build-packages:
         - libkf5doctools-dev

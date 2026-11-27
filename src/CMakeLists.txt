@@ -751,7 +751,7 @@ install(
     DESTINATION ${KDE_INSTALL_APPDIR}
 )
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/settings/kmail.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(FILES data/org.kde.kmail2.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 install(FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 install(FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} RENAME kontact.notifyrc)
