@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-25 01:26+0000\n"
-"PO-Revision-Date: 2026-01-28 19:12+0200\n"
-"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
+"PO-Revision-Date: 2026-11-27 07:57+0200\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -67,10 +67,10 @@ msgstr "kekcuha@gmail.com"
 #: ui/mailmergeconfigurewidget.ui:31
 #, kde-format
 msgid "Modify…"
-msgstr ""
+msgstr "Изменить…"
 
 #. i18n: ectx: property (text), widget (QPushButton, removeItem)
 #: ui/mailmergeconfigurewidget.ui:38
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
