@@ -1234,7 +1234,6 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:382
 #, fuzzy, kde-format
-#| msgid "Composer"
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Ny melding"
@@ -2354,9 +2353,6 @@ msgstr "Send s&einare"
 
 #: editor/kmcomposerwin.cpp:3167
 #, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -3877,8 +3873,6 @@ msgstr "Vel emne på meldinga"
 
 #: kmail_options.h:17
 #, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
 msgid "Subject"
 msgstr "Emne"
 
@@ -3889,7 +3883,6 @@ msgstr ""
 
 #: kmail_options.h:18 kmail_options.h:19 kmail_options.h:20
 #, fuzzy, kde-format
-#| msgid "&Address Book"
 msgid "Address"
 msgstr "&Adressebok"
 
@@ -3917,7 +3910,6 @@ msgstr "Les meldingstekst frå fila «file»"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
-#| msgid "&File"
 msgid "File"
 msgstr "&Fil"
 
@@ -3940,8 +3932,6 @@ msgstr "Legg vedlegg til e-posten (kan gjerast fleire gongar)"
 
 #: kmail_options.h:24
 #, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
 msgid "Attachment Url"
 msgstr "Vedlegg"
 
@@ -3982,7 +3972,6 @@ msgstr "Vis den oppgjevne meldingsfila"
 
 #: kmail_options.h:29
 #, fuzzy, kde-format
-#| msgid "Message"
 msgid "Message Url"
 msgstr "Melding"
 
@@ -3994,8 +3983,6 @@ msgstr "Vel meldingstekst"
 
 #: kmail_options.h:30
 #, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
 msgid "Body Message"
 msgstr "Kopier melding"
 
@@ -4371,7 +4358,6 @@ msgstr "Ingen agent for oppfylgingspåminning er registrert. "
 
 #: kmlaunchexternalcomponent.cpp:69
 #, fuzzy, kde-format
-#| msgid "Followup Reminder Agent was not registered."
 msgid "Snooze Agent was not registered."
 msgstr "Ingen agent for oppfylgingspåminning er registrert. "
 
@@ -4457,7 +4443,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:1408
 #, fuzzy, kde-format
-#| msgid "(no templates)"
 msgctxt "@action"
 msgid "(loading templates…)"
 msgstr "(ingen malar)"
@@ -4859,16 +4844,12 @@ msgstr "Rediger vekkemeldingar …"
 
 #: kmmainwidget.cpp:3073
 #, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
 msgctxt "@action"
 msgid "Expand All"
 msgstr "Utvid &alle trådar"
 
 #: kmmainwidget.cpp:3078
 #, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
 msgctxt "@action"
 msgid "Collapse All"
 msgstr "&Fald saman alle trådar"
@@ -5251,7 +5232,6 @@ msgstr "&Legg til konto …"
 
 #: kmmainwidget.cpp:3472
 #, fuzzy, kde-format
-#| msgid "What's next?"
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr "Kva skjer?"
@@ -5746,7 +5726,6 @@ msgstr ""
 
 #: kmundoredomanager.cpp:134
 #, fuzzy, kde-format
-#| msgid "Moving messages"
 msgid "Move messages"
 msgstr "Flyttar meldingar"
 
@@ -6536,12 +6515,6 @@ msgstr "Be alltid om &meldingskvitteringar"
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:213
 #, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -7056,7 +7029,6 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
 #, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
 msgid "Enable drag and drop messages into folders"
 msgstr "Send &meldingar i utboksmappa:"
 
@@ -7620,9 +7592,6 @@ msgstr "Signatur til OCSP-tilbydar:"
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
 #, fuzzy, kde-format
-#| msgid ""
-#| "Enter here the address of the server for online validation of "
-#| "certificates (OCSP responder). The URL is usually starting with http://."
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with https://."
@@ -7927,7 +7896,6 @@ msgstr ""
 
 #: util.cpp:41
 #, fuzzy, kde-format
-#| msgid "Email Address:"
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "E-postadresse:"
@@ -7940,7 +7908,6 @@ msgstr ""
 
 #: util.cpp:43
 #, fuzzy, kde-format
-#| msgid "&Send Mail"
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "&Send e-post"
